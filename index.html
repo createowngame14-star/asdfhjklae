@@ -1706,14 +1706,125 @@
   </footer>
 
   <script>
-    // КЛЮЧИ И АВТОРИЗАЦИОННЫЕ ДАННЫЕ
-    const GIGACHAT_AUTH = "MDE5ZTk4ZGYtZTA0Ny03NDdiLTlmNmEtNzVlMmUxNmVmYTYxOmY5M2Q4MDNjLTMwM2QtNDIzYS1iNTRlLWY2ZGNhZTdlNTE3Yw==";
-    const BACKUP_ROUTER_KEY = "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";
+    // ==========================================
+    // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА (ROLEID AI PROXY)
+    // ==========================================
+    const WORKER_URL = "https://crimson-wave-c3d6.wamq812.workers.dev";
 
+    // Каскад проверенных бесплатных моделей
+    const FREE_MODELS = [
+      "meta-llama/llama-3.3-70b-instruct:free",
+      "google/gemini-2.0-flash-exp:free",
+      "mistralai/mistral-small-24b-instruct-2501:free",
+      "deepseek/deepseek-r1:free"
+    ];
+
+    let chatHistory = [
+      {
+        role: "system",
+        content: "Ты официальный ИИ-помощник проекта ROLEID (roleid.ru). Ты выступаешь строго от лица команды ROLEID. Ни в коем случае не упоминай Cloudflare, OpenRouter, Llama, DeepSeek или Google. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай кратко, емко, дружелюбно и на русском языке."
+      }
+    ];
+
+    const btnToggleChat = document.getElementById('btn-toggle-ai-chat');
+    const btnCloseChat = document.getElementById('btn-close-ai-chat');
+    const chatModal = document.getElementById('ai-chat-modal');
+    const chatInput = document.getElementById('ai-chat-input');
+    const btnSendChat = document.getElementById('ai-chat-send');
+    const chatMessages = document.getElementById('ai-chat-messages');
+
+    if (btnToggleChat && chatModal) {
+      btnToggleChat.addEventListener('click', () => {
+        chatModal.classList.toggle('open');
+        if (chatModal.classList.contains('open') && chatInput) chatInput.focus();
+      });
+    }
+
+    if (btnCloseChat && chatModal) {
+      btnCloseChat.addEventListener('click', () => {
+        chatModal.classList.remove('open');
+      });
+    }
+
+    function appendMessage(text, sender) {
+      if (!chatMessages) return;
+      const msg = document.createElement('div');
+      msg.className = `ai-msg ${sender}`;
+      msg.innerText = text;
+      chatMessages.appendChild(msg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendAiMessage() {
+      if (!chatInput) return;
+      const query = chatInput.value.trim();
+      if (!query) return;
+
+      appendMessage(query, 'user');
+      chatInput.value = '';
+      chatHistory.push({ role: "user", content: query });
+
+      const loadingMsg = document.createElement('div');
+      loadingMsg.className = 'ai-msg bot';
+      loadingMsg.innerText = 'ROLEID AI печатает...';
+      chatMessages.appendChild(loadingMsg);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+
+      let answerReceived = false;
+      let lastErrorText = "";
+
+      for (const modelId of FREE_MODELS) {
+        try {
+          const res = await fetch(WORKER_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              model: modelId,
+              messages: chatHistory,
+              temperature: 0.7,
+              max_tokens: 500
+            })
+          });
+
+          if (!res.ok) {
+            const errData = await res.json().catch(() => ({}));
+            lastErrorText = errData.error?.message || `Ошибка ${res.status}`;
+            console.warn(`Модель ${modelId} занята:`, lastErrorText);
+            continue;
+          }
+
+          const data = await res.json();
+          if (data.choices && data.choices[0] && data.choices[0].message) {
+            const reply = data.choices[0].message.content;
+            loadingMsg.innerText = reply;
+            chatHistory.push({ role: "assistant", content: reply });
+            answerReceived = true;
+            break;
+          }
+        } catch (e) {
+          console.warn(`Сбой запроса к ${modelId}:`, e);
+        }
+      }
+
+      if (!answerReceived) {
+        loadingMsg.innerText = `Не удалось связаться с сервером (${lastErrorText || 'сеть'}). Попробуйте отправить сообщение еще раз.`;
+      }
+    }
+
+    if (btnSendChat) btnSendChat.addEventListener('click', sendAiMessage);
+    if (chatInput) {
+      chatInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') sendAiMessage();
+      });
+    }
+
+    // ==========================================
+    // 2. SERVICE WORKER & PWA УСТАНОВКА
+    // ==========================================
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v13';
+          const CACHE_NAME = 'roleid-cache-v16';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1730,18 +1841,23 @@
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      btnPwaInstall.style.display = 'inline-flex';
+      if (btnPwaInstall) btnPwaInstall.style.display = 'inline-flex';
     });
 
-    btnPwaInstall.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') showToast('Приложение успешно установлено!');
-      deferredPrompt = null;
-      btnPwaInstall.style.display = 'none';
-    });
+    if (btnPwaInstall) {
+      btnPwaInstall.addEventListener('click', async () => {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        if (outcome === 'accepted') showToast('Приложение успешно установлено!');
+        deferredPrompt = null;
+        btnPwaInstall.style.display = 'none';
+      });
+    }
 
+    // ==========================================
+    // 3. ТЕМЫ ОФОРМЛЕНИЯ
+    // ==========================================
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
 
@@ -1757,6 +1873,9 @@
     });
     setTheme(currentTheme);
 
+    // ==========================================
+    // 4. БОКОВОЕ МЕНЮ (DRAWER)
+    // ==========================================
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -1765,18 +1884,18 @@
     const tabContents = document.querySelectorAll('.tab-content');
 
     function openSidebar() {
-      sidebarDrawer.classList.add('open');
-      sidebarBackdrop.classList.add('open');
+      if (sidebarDrawer) sidebarDrawer.classList.add('open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.add('open');
     }
 
     function closeSidebar() {
-      sidebarDrawer.classList.remove('open');
-      sidebarBackdrop.classList.remove('open');
+      if (sidebarDrawer) sidebarDrawer.classList.remove('open');
+      if (sidebarBackdrop) sidebarBackdrop.classList.remove('open');
     }
 
-    btnOpenSidebar.addEventListener('click', openSidebar);
-    btnCloseSidebar.addEventListener('click', closeSidebar);
-    sidebarBackdrop.addEventListener('click', closeSidebar);
+    if (btnOpenSidebar) btnOpenSidebar.addEventListener('click', openSidebar);
+    if (btnCloseSidebar) btnCloseSidebar.addEventListener('click', closeSidebar);
+    if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
 
     sidebarNavItems.forEach(item => {
       item.addEventListener('click', () => {
@@ -1795,10 +1914,14 @@
       });
     });
 
+    // ==========================================
+    // 5. ИНДИКАТОР ПОЛА И БАЗА ИМЕН/ФАМИЛИЙ
+    // ==========================================
     const genderSelect = document.getElementById('filter-gender');
     const genderIcon = document.getElementById('gender-indicator-icon');
 
     function updateGenderFilterIcon() {
+      if (!genderIcon || !genderSelect) return;
       genderIcon.classList.remove('gender-male', 'gender-female');
       if (genderSelect.value === 'male') {
         genderIcon.classList.add('gender-male');
@@ -1806,8 +1929,10 @@
         genderIcon.classList.add('gender-female');
       }
     }
-    updateGenderFilterIcon();
-    genderSelect.addEventListener('change', updateGenderFilterIcon);
+    if (genderSelect) {
+      updateGenderFilterIcon();
+      genderSelect.addEventListener('change', updateGenderFilterIcon);
+    }
 
     const DB = {
       russiaMaleNames: [
@@ -1978,6 +2103,9 @@
       };
     }
 
+    // ==========================================
+    // 6. ГЕНЕРАТОР НИКОВ (СЛОТ-МАШИНА)
+    // ==========================================
     let currentList = [];
     let savedFavs = JSON.parse(localStorage.getItem('crmp_fav_names_v7') || '[]');
     let recentHistory = JSON.parse(localStorage.getItem('crmp_history_v1') || '[]');
@@ -1994,7 +2122,9 @@
 
     function renderHistory() {
       const container = document.getElementById('history-chips');
-      document.getElementById('history-count').innerText = recentHistory.length;
+      const countEl = document.getElementById('history-count');
+      if (countEl) countEl.innerText = recentHistory.length;
+      if (!container) return;
       if (!recentHistory.length) {
         container.innerHTML = `<span style="color: var(--text-dim); font-size: 0.85rem;">История пуста. Нажмите «Сгенерировать».</span>`;
         return;
@@ -2007,35 +2137,41 @@
       `).join('');
     }
 
-    document.getElementById('btn-clear-history').addEventListener('click', () => {
-      recentHistory = [];
-      localStorage.removeItem('crmp_history_v1');
-      renderHistory();
-    });
-
-    document.getElementById('history-chips').addEventListener('click', (e) => {
-      const delNick = e.target.dataset.delHistory;
-      if (delNick) {
-        recentHistory = recentHistory.filter(x => x !== delNick);
-        localStorage.setItem('crmp_history_v1', JSON.stringify(recentHistory));
+    const btnClearHistory = document.getElementById('btn-clear-history');
+    if (btnClearHistory) {
+      btnClearHistory.addEventListener('click', () => {
+        recentHistory = [];
+        localStorage.removeItem('crmp_history_v1');
         renderHistory();
-        return;
-      }
-      const chip = e.target.closest('.nick-chip');
-      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
-    });
+      });
+    }
+
+    const historyChips = document.getElementById('history-chips');
+    if (historyChips) {
+      historyChips.addEventListener('click', (e) => {
+        const delNick = e.target.dataset.delHistory;
+        if (delNick) {
+          recentHistory = recentHistory.filter(x => x !== delNick);
+          localStorage.setItem('crmp_history_v1', JSON.stringify(recentHistory));
+          renderHistory();
+          return;
+        }
+        const chip = e.target.closest('.nick-chip');
+        if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+      });
+    }
 
     const namesGrid = document.getElementById('names-grid');
     const btnGenerate = document.getElementById('btn-generate');
 
     function generate() {
-      if (isSpinning) return;
+      if (isSpinning || !namesGrid) return;
 
-      const countryPick = document.getElementById('filter-faction').value;
-      const genderPick = document.getElementById('filter-gender').value;
-      const count = Math.min(parseInt(document.getElementById('filter-count').value, 10) || 3, 6);
+      const countryPick = document.getElementById('filter-faction')?.value || 'all';
+      const genderPick = document.getElementById('filter-gender')?.value || 'male';
+      const count = Math.min(parseInt(document.getElementById('filter-count')?.value, 10) || 3, 6);
 
-      let customSurname = document.getElementById('custom-surname').value.trim();
+      let customSurname = document.getElementById('custom-surname')?.value.trim() || '';
       if (customSurname) {
         customSurname = customSurname.charAt(0).toUpperCase() + customSurname.slice(1);
       }
@@ -2055,7 +2191,7 @@
 
       currentList = results;
       isSpinning = true;
-      btnGenerate.disabled = true;
+      if (btnGenerate) btnGenerate.disabled = true;
 
       namesGrid.classList.toggle('is-single', currentList.length === 1);
 
@@ -2124,44 +2260,53 @@
         const spinDuration = 750 + i * 240;
 
         requestAnimationFrame(() => {
-          reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.12, 0.85, 0.18, 1.0)`;
-          reel.style.transform = `translateY(${targetTranslateY}px)`;
+          if (reel) {
+            reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.12, 0.85, 0.18, 1.0)`;
+            reel.style.transform = `translateY(${targetTranslateY}px)`;
+          }
         });
 
         setTimeout(() => {
-          reel.classList.remove('spinning');
-          card.classList.add('just-locked');
+          if (reel) reel.classList.remove('spinning');
+          if (card) card.classList.add('just-locked');
           saveHistory(currentList[i].nick);
 
-          setTimeout(() => card.classList.remove('just-locked'), 400);
+          setTimeout(() => {
+            if (card) card.classList.remove('just-locked');
+          }, 400);
 
           completedCount++;
           if (completedCount === currentList.length) {
             isSpinning = false;
-            btnGenerate.disabled = false;
+            if (btnGenerate) btnGenerate.disabled = false;
           }
         }, spinDuration);
       }
     }
 
-    namesGrid.addEventListener('click', (e) => {
-      if (isSpinning) return;
-      const bioBtn = e.target.closest('.btn-bio-card');
-      if (bioBtn) {
-        e.stopPropagation();
-        openBio(currentList[bioBtn.dataset.bioIdx]);
-        return;
-      }
-      const favBtn = e.target.closest('.btn-fav-icon');
-      if (favBtn) {
-        e.stopPropagation();
-        toggleFav(favBtn.dataset.fav);
-        return;
-      }
-      const card = e.target.closest('.modern-card');
-      if (card && card.dataset.nick) copyText(card.dataset.nick);
-    });
+    if (namesGrid) {
+      namesGrid.addEventListener('click', (e) => {
+        if (isSpinning) return;
+        const bioBtn = e.target.closest('.btn-bio-card');
+        if (bioBtn) {
+          e.stopPropagation();
+          openBio(currentList[bioBtn.dataset.bioIdx]);
+          return;
+        }
+        const favBtn = e.target.closest('.btn-fav-icon');
+        if (favBtn) {
+          e.stopPropagation();
+          toggleFav(favBtn.dataset.fav);
+          return;
+        }
+        const card = e.target.closest('.modern-card');
+        if (card && card.dataset.nick) copyText(card.dataset.nick);
+      });
+    }
 
+    // ==========================================
+    // 7. МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА
+    // ==========================================
     const bioModal = document.getElementById('bio-modal');
     const btnCloseBio = document.getElementById('btn-close-bio');
     const bioContentView = document.getElementById('bio-content-view');
@@ -2189,6 +2334,7 @@
     }
 
     function openBio(item) {
+      if (!bioContentView || !bioModal) return;
       currentBioData = generateBioData(item);
       bioContentView.innerHTML = `
         <div class="bio-row"><span class="bio-label">Имя и Фамилия:</span><span class="bio-val">${currentBioData.name}</span></div>
@@ -2201,35 +2347,46 @@
       bioModal.classList.add('open');
     }
 
-    btnCloseBio.addEventListener('click', () => bioModal.classList.remove('open'));
-    bioModal.addEventListener('click', (e) => {
-      if (e.target === bioModal) bioModal.classList.remove('open');
-    });
+    if (btnCloseBio && bioModal) {
+      btnCloseBio.addEventListener('click', () => bioModal.classList.remove('open'));
+      bioModal.addEventListener('click', (e) => {
+        if (e.target === bioModal) bioModal.classList.remove('open');
+      });
+    }
 
-    document.getElementById('btn-copy-bio-bb').addEventListener('click', () => {
-      if (!currentBioData) return;
-      const bb = `[b]1. Имя и Фамилия персонажа:[/b] ${currentBioData.name}\n` +
-                 `[b]2. Никнейм на сервере:[/b] ${currentBioData.nick}\n` +
-                 `[b]3. Пол / Возраст:[/b] ${currentBioData.gender}, ${currentBioData.age}\n` +
-                 `[b]4. Страна / Происхождение:[/b] ${currentBioData.nationality}\n` +
-                 `[b]5. Черты характера:[/b] ${currentBioData.traits}\n` +
-                 `[b]6. Цели персонажа:[/b] ${currentBioData.goal}`;
-      copyText(bb);
-      showToast('Анкета с BB-кодами скопирована!');
-    });
+    const btnCopyBioBb = document.getElementById('btn-copy-bio-bb');
+    if (btnCopyBioBb) {
+      btnCopyBioBb.addEventListener('click', () => {
+        if (!currentBioData) return;
+        const bb = `[b]1. Имя и Фамилия персонажа:[/b] ${currentBioData.name}\n` +
+                   `[b]2. Никнейм на сервере:[/b] ${currentBioData.nick}\n` +
+                   `[b]3. Пол / Возраст:[/b] ${currentBioData.gender}, ${currentBioData.age}\n` +
+                   `[b]4. Страна / Происхождение:[/b] ${currentBioData.nationality}\n` +
+                   `[b]5. Черты характера:[/b] ${currentBioData.traits}\n` +
+                   `[b]6. Цели персонажа:[/b] ${currentBioData.goal}`;
+        copyText(bb);
+        showToast('Анкета с BB-кодами скопирована!');
+      });
+    }
 
-    document.getElementById('btn-copy-bio-plain').addEventListener('click', () => {
-      if (!currentBioData) return;
-      const plain = `Имя и Фамилия: ${currentBioData.name}\n` +
-                    `Ник: ${currentBioData.nick}\n` +
-                    `Пол / Возраст: ${currentBioData.gender}, ${currentBioData.age}\n` +
-                    `Страна / Происхождение: ${currentBioData.nationality}\n` +
-                    `Характер: ${currentBioData.traits}\n` +
-                    `Цель: ${currentBioData.goal}`;
-      copyText(plain);
-      showToast('Текст биографии скопирован!');
-    });
+    const btnCopyBioPlain = document.getElementById('btn-copy-bio-plain');
+    if (btnCopyBioPlain) {
+      btnCopyBioPlain.addEventListener('click', () => {
+        if (!currentBioData) return;
+        const plain = `Имя и Фамилия: ${currentBioData.name}\n` +
+                      `Ник: ${currentBioData.nick}\n` +
+                      `Пол / Возраст: ${currentBioData.gender}, ${currentBioData.age}\n` +
+                      `Страна / Происхождение: ${currentBioData.nationality}\n` +
+                      `Характер: ${currentBioData.traits}\n` +
+                      `Цель: ${currentBioData.goal}`;
+        copyText(plain);
+        showToast('Текст биографии скопирован!');
+      });
+    }
 
+    // ==========================================
+    // 8. ИЗБРАННОЕ
+    // ==========================================
     function toggleFav(nick) {
       const idx = savedFavs.indexOf(nick);
       if (idx === -1) {
@@ -2263,7 +2420,9 @@
 
     function renderFavs() {
       const list = document.getElementById('fav-chips');
-      document.getElementById('fav-count').innerText = savedFavs.length;
+      const countEl = document.getElementById('fav-count');
+      if (countEl) countEl.innerText = savedFavs.length;
+      if (!list) return;
       if (!savedFavs.length) {
         list.innerHTML = `<span style="color: var(--text-dim); font-size: 0.85rem;">Пока ничего не сохранено. Нажмите сердечко у карточки.</span>`;
         return;
@@ -2276,64 +2435,74 @@
       `).join('');
     }
 
-    document.getElementById('fav-chips').addEventListener('click', (e) => {
-      const delNick = e.target.dataset.delFav;
-      if (delNick) {
-        removeFav(delNick);
-        return;
-      }
-      const chip = e.target.closest('.nick-chip');
-      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
-    });
+    const favChips = document.getElementById('fav-chips');
+    if (favChips) {
+      favChips.addEventListener('click', (e) => {
+        const delNick = e.target.dataset.delFav;
+        if (delNick) {
+          removeFav(delNick);
+          return;
+        }
+        const chip = e.target.closest('.nick-chip');
+        if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+      });
+    }
 
-    document.getElementById('btn-clear-fav').addEventListener('click', () => {
-      if (!savedFavs.length) return;
-      if (confirm('Очистить весь список избранного?')) {
-        savedFavs = [];
-        localStorage.removeItem('crmp_fav_names_v7');
-        renderFavs();
-        document.querySelectorAll('.btn-fav-icon').forEach(btn => {
-          btn.classList.remove('active');
-          const svg = btn.querySelector('svg');
-          if (svg) svg.setAttribute('fill', 'none');
-        });
-      }
-    });
+    const btnClearFav = document.getElementById('btn-clear-fav');
+    if (btnClearFav) {
+      btnClearFav.addEventListener('click', () => {
+        if (!savedFavs.length) return;
+        if (confirm('Очистить весь список избранного?')) {
+          savedFavs = [];
+          localStorage.removeItem('crmp_fav_names_v7');
+          renderFavs();
+          document.querySelectorAll('.btn-fav-icon').forEach(btn => {
+            btn.classList.remove('active');
+            const svg = btn.querySelector('svg');
+            if (svg) svg.setAttribute('fill', 'none');
+          });
+        }
+      });
+    }
 
     // ==========================================
-    // ЛОГИКА РАНДОМАЙЗЕРА ЧИСЕЛ
+    // 9. РАНДОМАЙЗЕР ЧИСЕЛ
     // ==========================================
     let numberRollHistory = [];
     const randMinInput = document.getElementById('rand-min');
     const randMaxInput = document.getElementById('rand-max');
     const randResultVal = document.getElementById('rand-result-val');
     const numberHistoryChips = document.getElementById('number-history-chips');
+    const btnRollNumber = document.getElementById('btn-roll-number');
 
-    document.getElementById('btn-roll-number').addEventListener('click', () => {
-      const min = parseInt(randMinInput.value, 10) || 1;
-      const max = parseInt(randMaxInput.value, 10) || 100;
-      if (min >= max) {
-        showToast('Значение "ОТ" должно быть меньше "ДО"!');
-        return;
-      }
-
-      let step = 0;
-      const interval = setInterval(() => {
-        randResultVal.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
-        step++;
-        if (step > 10) {
-          clearInterval(interval);
-          const finalVal = Math.floor(Math.random() * (max - min + 1)) + min;
-          randResultVal.innerText = finalVal;
-          
-          numberRollHistory.unshift(finalVal);
-          if (numberRollHistory.length > 10) numberRollHistory.pop();
-          renderNumberHistory();
+    if (btnRollNumber) {
+      btnRollNumber.addEventListener('click', () => {
+        const min = parseInt(randMinInput?.value, 10) || 1;
+        const max = parseInt(randMaxInput?.value, 10) || 100;
+        if (min >= max) {
+          showToast('Значение "ОТ" должно быть меньше "ДО"!');
+          return;
         }
-      }, 35);
-    });
+
+        let step = 0;
+        const interval = setInterval(() => {
+          if (randResultVal) randResultVal.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+          step++;
+          if (step > 10) {
+            clearInterval(interval);
+            const finalVal = Math.floor(Math.random() * (max - min + 1)) + min;
+            if (randResultVal) randResultVal.innerText = finalVal;
+            
+            numberRollHistory.unshift(finalVal);
+            if (numberRollHistory.length > 10) numberRollHistory.pop();
+            renderNumberHistory();
+          }
+        }, 35);
+      });
+    }
 
     function renderNumberHistory() {
+      if (!numberHistoryChips) return;
       numberHistoryChips.innerHTML = numberRollHistory.map(num => `
         <div class="nick-chip" data-copy="${num}">
           <span># ${num}</span>
@@ -2341,16 +2510,18 @@
       `).join('');
     }
 
-    numberHistoryChips.addEventListener('click', (e) => {
-      const chip = e.target.closest('.nick-chip');
-      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
-    });
+    if (numberHistoryChips) {
+      numberHistoryChips.addEventListener('click', (e) => {
+        const chip = e.target.closest('.nick-chip');
+        if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+      });
+    }
 
     // ==========================================
-    // ЛОГИКА РУЛЕТКИ (КОЛЕСО)
+    // 10. РУЛЕТКА (КОЛЕСО)
     // ==========================================
     const canvas = document.getElementById('roulette-canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas ? canvas.getContext('2d') : null;
     const wheelInput = document.getElementById('wheel-segments-input');
     const wheelWinner = document.getElementById('wheel-winner');
     const btnSpinWheel = document.getElementById('btn-spin-wheel');
@@ -2360,11 +2531,13 @@
     const wheelColors = ['#6366f1', '#181b26', '#8b5cf6', '#181b26', '#ec4899', '#181b26', '#3b82f6', '#181b26', '#10b981', '#181b26'];
 
     function getSegments() {
+      if (!wheelInput) return ['1', '2', '3', '4', '5', '6'];
       const raw = wheelInput.value.split(',').map(s => s.trim()).filter(Boolean);
       return raw.length >= 2 ? raw : ['1', '2', '3', '4', '5', '6'];
     }
 
     function drawWheel() {
+      if (!ctx || !canvas) return;
       const segments = getSegments();
       const numSegments = segments.length;
       const arcSize = (2 * Math.PI) / numSegments;
@@ -2404,50 +2577,52 @@
       ctx.stroke();
     }
 
-    wheelInput.addEventListener('input', drawWheel);
+    if (wheelInput) wheelInput.addEventListener('input', drawWheel);
 
-    btnSpinWheel.addEventListener('click', () => {
-      if (isWheelSpinning) return;
-      isWheelSpinning = true;
-      btnSpinWheel.disabled = true;
-      wheelWinner.innerText = 'Рулетка крутится...';
+    if (btnSpinWheel) {
+      btnSpinWheel.addEventListener('click', () => {
+        if (isWheelSpinning) return;
+        isWheelSpinning = true;
+        btnSpinWheel.disabled = true;
+        if (wheelWinner) wheelWinner.innerText = 'Рулетка крутится...';
 
-      const segments = getSegments();
-      const extraSpins = 5 + Math.random() * 4;
-      const randomStop = Math.random() * 2 * Math.PI;
-      const totalAngle = extraSpins * 2 * Math.PI + randomStop;
-      const duration = 3800;
-      const startAngle = wheelAngle;
-      const startTime = performance.now();
+        const segments = getSegments();
+        const extraSpins = 5 + Math.random() * 4;
+        const randomStop = Math.random() * 2 * Math.PI;
+        const totalAngle = extraSpins * 2 * Math.PI + randomStop;
+        const duration = 3800;
+        const startAngle = wheelAngle;
+        const startTime = performance.now();
 
-      function animateWheel(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
+        function animateWheel(now) {
+          const elapsed = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easeOut = 1 - Math.pow(1 - progress, 3);
 
-        wheelAngle = startAngle + totalAngle * easeOut;
-        drawWheel();
+          wheelAngle = startAngle + totalAngle * easeOut;
+          drawWheel();
 
-        if (progress < 1) {
-          requestAnimationFrame(animateWheel);
-        } else {
-          isWheelSpinning = false;
-          btnSpinWheel.disabled = false;
+          if (progress < 1) {
+            requestAnimationFrame(animateWheel);
+          } else {
+            isWheelSpinning = false;
+            btnSpinWheel.disabled = false;
 
-          const numSegments = segments.length;
-          const arcSize = (2 * Math.PI) / numSegments;
-          const normalized = (2 * Math.PI - (wheelAngle % (2 * Math.PI)) + (3 * Math.PI / 2)) % (2 * Math.PI);
-          const winningIndex = Math.floor(normalized / arcSize) % numSegments;
-          
-          wheelWinner.innerText = `Победитель: ${segments[winningIndex]}`;
-          showToast(`Выпало: ${segments[winningIndex]}`);
+            const numSegments = segments.length;
+            const arcSize = (2 * Math.PI) / numSegments;
+            const normalized = (2 * Math.PI - (wheelAngle % (2 * Math.PI)) + (3 * Math.PI / 2)) % (2 * Math.PI);
+            const winningIndex = Math.floor(normalized / arcSize) % numSegments;
+            
+            if (wheelWinner) wheelWinner.innerText = `Победитель: ${segments[winningIndex]}`;
+            showToast(`Выпало: ${segments[winningIndex]}`);
+          }
         }
-      }
-      requestAnimationFrame(animateWheel);
-    });
+        requestAnimationFrame(animateWheel);
+      });
+    }
 
     // ==========================================
-    // АВТОНОМНЫЙ ГЕНЕРАТОР НЕПОВТОРИМЫХ БИОГРАФИЙ
+    // 11. ГЕНЕРАТОР НЕПОВТОРИМЫХ БИОГРАФИЙ
     // ==========================================
     const BIO_ENGINE = {
       temperaments: [
@@ -2455,7 +2630,7 @@
         "Дисциплинированный, с развитым стратегическим мышлением. Умеет моментально оценивать риски и брать ответственность за поступки.",
         "Харизматичный и проницательный лидер. Обладает врожденным чутьем на людей, тонко выстраивая союзнические отношения.",
         "Скрытный, наблюдательный и немногословный. Предпочитает действовать точно и без предупреждений, высоко ценит верность слову.",
-        "Несгибаемый реалист с железным внутренним стерженем. Ни при каких обстоятельствах не отступает от намеченных ориентиров."
+        "Несгибаемый реалист с железным внутренним стержнем. Ни при каких обстоятельствах не отступает от намеченных ориентиров."
       ],
 
       origins: [
@@ -2540,28 +2715,30 @@
     };
 
     let generatedBioText = '';
+    const btnBuildBio = document.getElementById('btn-build-unique-bio');
 
-    document.getElementById('btn-build-unique-bio').addEventListener('click', () => {
-      let name = document.getElementById('bio-custom-name').value.trim();
-      if (!name) {
-        const tempNick = createNickname('all', false, '');
-        name = tempNick.nick.replace('_', ' ');
-      }
-      const age = parseInt(document.getElementById('bio-custom-age').value, 10) || 26;
-      const role = document.getElementById('bio-role-select').value;
+    if (btnBuildBio) {
+      btnBuildBio.addEventListener('click', () => {
+        let name = document.getElementById('bio-custom-name')?.value.trim() || '';
+        if (!name) {
+          const tempNick = createNickname('all', false, '');
+          name = tempNick.nick.replace('_', ' ');
+        }
+        const age = parseInt(document.getElementById('bio-custom-age')?.value, 10) || 26;
+        const role = document.getElementById('bio-role-select')?.value || 'gos';
 
-      const temperament = rand(BIO_ENGINE.temperaments);
-      const origin = rand(BIO_ENGINE.origins);
-      const childhood = rand(BIO_ENGINE.childhoodAndSchool);
-      const youth = rand(BIO_ENGINE.youth);
-      const turning = rand(BIO_ENGINE.turningPoints[role]);
-      const present = rand(BIO_ENGINE.presentState[role]);
+        const temperament = rand(BIO_ENGINE.temperaments);
+        const origin = rand(BIO_ENGINE.origins);
+        const childhood = rand(BIO_ENGINE.childhoodAndSchool);
+        const youth = rand(BIO_ENGINE.youth);
+        const turning = rand(BIO_ENGINE.turningPoints[role]);
+        const present = rand(BIO_ENGINE.presentState[role]);
 
-      generatedBioText = 
+        generatedBioText = 
 `[b]1. Основная информация:[/b]
-• Имя и Фамилия: ${name}
-• Возраст: ${age} лет
-• Черты характера: ${temperament}
+- Имя и Фамилия: ${name}
+- Возраст: ${age} лет
+- Черты характера: ${temperament}
 
 [b]2. Происхождение и детские годы:[/b]
 ${name} ${origin} ${childhood}
@@ -2573,175 +2750,39 @@ ${turning}
 [b]4. Настоящее время:[/b]
 ${present}`;
 
-      document.getElementById('unique-bio-view').innerText = generatedBioText.replace(/\[\/?b\]/g, '');
-      showToast('Биография успешно сгенерирована!');
-    });
+        const view = document.getElementById('unique-bio-view');
+        if (view) view.innerText = generatedBioText.replace(/\[\/?b\]/g, '');
+        showToast('Биография успешно сгенерирована!');
+      });
+    }
 
-    document.getElementById('btn-copy-unique-bb').addEventListener('click', () => {
-      if (!generatedBioText) return;
-      copyText(generatedBioText);
-      showToast('Анкета с BB-кодами скопирована!');
-    });
+    const btnCopyUniqueBb = document.getElementById('btn-copy-unique-bb');
+    if (btnCopyUniqueBb) {
+      btnCopyUniqueBb.addEventListener('click', () => {
+        if (!generatedBioText) return;
+        copyText(generatedBioText);
+        showToast('Анкета с BB-кодами скопирована!');
+      });
+    }
 
-    document.getElementById('btn-copy-unique-plain').addEventListener('click', () => {
-      if (!generatedBioText) return;
-      copyText(generatedBioText.replace(/\[\/?b\]/g, ''));
-      showToast('Текст скопирован!');
-    });
+    const btnCopyUniquePlain = document.getElementById('btn-copy-unique-plain');
+    if (btnCopyUniquePlain) {
+      btnCopyUniquePlain.addEventListener('click', () => {
+        if (!generatedBioText) return;
+        copyText(generatedBioText.replace(/\[\/?b\]/g, ''));
+        showToast('Текст скопирован!');
+      });
+    }
 
     // ==========================================
-    // ЛОГИКА ВСПЛЫВАЮЩЕГО ИИ-ЧАТА (ROLEID AI ПОМОЩНИК)
+    // 12. УТИЛИТЫ КОПИРОВАНИЯ И ТОСТЫ
     // ==========================================
-    const btnToggleChat = document.getElementById('btn-toggle-ai-chat');
-    const btnCloseChat = document.getElementById('btn-close-ai-chat');
-    const chatModal = document.getElementById('ai-chat-modal');
-    const chatInput = document.getElementById('ai-chat-input');
-    const btnSendChat = document.getElementById('ai-chat-send');
-    const chatMessages = document.getElementById('ai-chat-messages');
-
-    let gigaToken = null;
-    let gigaTokenExpires = 0;
-
-    let chatHistory = [
-      {
-        role: "system",
-        content: "Ты официальный ИИ-ассистент проекта ROLEID (roleid.ru). Ты выступаешь исключительно от лица команды ROLEID. Строго запрещено упоминать, что ты GigaChat, Сбер, DeepSeek, OpenAI или сторонняя нейросеть. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай уверенно, емко, вежливо и профессионально на русском языке."
-      }
-    ];
-
-    btnToggleChat.addEventListener('click', () => {
-      chatModal.classList.toggle('open');
-      if (chatModal.classList.contains('open')) chatInput.focus();
-    });
-
-    btnCloseChat.addEventListener('click', () => {
-      chatModal.classList.remove('open');
-    });
-
-    function appendMessage(text, sender) {
-      const msg = document.createElement('div');
-      msg.className = `ai-msg ${sender}`;
-      msg.innerText = text;
-      chatMessages.appendChild(msg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    // Получение токена GigaChat
-    async function getGigaChatToken() {
-      if (gigaToken && Date.now() < gigaTokenExpires) {
-        return gigaToken;
-      }
-      const rqUID = crypto.randomUUID();
-      const res = await fetch("https://ngw.devices.sberbank.ru:9443/api/v2/oauth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Accept": "application/json",
-          "RqUID": rqUID,
-          "Authorization": "Basic " + GIGACHAT_AUTH
-        },
-        body: "scope=GIGACHAT_API_PERS"
-      });
-      if (!res.ok) throw new Error("GigaChat Auth Error");
-      const data = await res.json();
-      gigaToken = data.access_token;
-      gigaTokenExpires = data.expires_at || (Date.now() + 25 * 60 * 1000);
-      return gigaToken;
-    }
-
-    // Вызов GigaChat
-    async function requestGigaChat(messages) {
-      const token = await getGigaChatToken();
-      const res = await fetch("https://gigachat.devices.sberbank.ru/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          model: "GigaChat",
-          messages: messages,
-          temperature: 0.7,
-          max_tokens: 600
-        })
-      });
-      if (!res.ok) throw new Error("GigaChat Completion Error");
-      const data = await res.json();
-      return data.choices[0].message.content;
-    }
-
-    // Резервный шлюз (если браузер блокирует CORS Сбера)
-    async function requestBackupRouter(messages) {
-      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + BACKUP_ROUTER_KEY
-        },
-        body: JSON.stringify({
-          model: "openrouter/free",
-          messages: messages,
-          temperature: 0.7,
-          max_tokens: 600
-        })
-      });
-      if (!res.ok) throw new Error("Backup Engine Error");
-      const data = await res.json();
-      return data.choices[0].message.content;
-    }
-
-    async function sendAiMessage() {
-      const query = chatInput.value.trim();
-      if (!query) return;
-
-      appendMessage(query, 'user');
-      chatInput.value = '';
-      chatHistory.push({ role: "user", content: query });
-
-      const loadingMsg = document.createElement('div');
-      loadingMsg.className = 'ai-msg bot';
-      loadingMsg.innerText = 'ROLEID AI печатает...';
-      chatMessages.appendChild(loadingMsg);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-
-      let reply = null;
-
-      // 1. Пробуем прямой вызов GigaChat
-      try {
-        reply = await requestGigaChat(chatHistory);
-      } catch (e) {
-        console.warn("GigaChat прямой вызов недоступен из браузера, переключаемся на резервный шлюз:", e);
-      }
-
-      // 2. Если браузер заблокировал CORS Сбера — бесшовно отвечает резервный шлюз
-      if (!reply) {
-        try {
-          reply = await requestBackupRouter(chatHistory);
-        } catch (err) {
-          console.error("Оба шлюза недоступны:", err);
-        }
-      }
-
-      if (reply) {
-        loadingMsg.innerText = reply;
-        chatHistory.push({ role: "assistant", content: reply });
-      } else {
-        loadingMsg.innerText = "Сервис ROLEID временно недоступен. Попробуйте отправить запрос еще раз.";
-      }
-    }
-
-    btnSendChat.addEventListener('click', sendAiMessage);
-    chatInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') sendAiMessage();
-    });
-
-    // УТИЛИТЫ КОПИРОВАНИЯ И ТОСТЫ
     const toast = document.getElementById('toast');
     const toastMsg = document.getElementById('toast-msg');
     let toastTimer;
 
     function showToast(text) {
+      if (!toast || !toastMsg) return;
       toastMsg.innerText = text;
       toast.classList.add('active');
       clearTimeout(toastTimer);
@@ -2754,15 +2795,20 @@ ${present}`;
       });
     }
 
-    document.getElementById('btn-copy-all').addEventListener('click', () => {
-      if (!currentList.length) return;
-      const all = currentList.map(x => x.nick).join('\n');
-      navigator.clipboard.writeText(all).then(() => {
-        showToast(`Скопировано ${currentList.length} ников!`);
+    const btnCopyAll = document.getElementById('btn-copy-all');
+    if (btnCopyAll) {
+      btnCopyAll.addEventListener('click', () => {
+        if (!currentList.length) return;
+        const all = currentList.map(x => x.nick).join('\n');
+        navigator.clipboard.writeText(all).then(() => {
+          showToast(`Скопировано ${currentList.length} ников!`);
+        });
       });
-    });
+    }
 
-    // QR МОДАЛКА
+    // ==========================================
+    // 13. QR-МОДАЛКА
+    // ==========================================
     const qrModal = document.getElementById('qr-modal');
     const btnOpenQr = document.getElementById('btn-open-qr');
     const btnCloseQr = document.getElementById('btn-close-qr');
@@ -2778,47 +2824,57 @@ ${present}`;
       return window.location.href;
     }
 
-    btnOpenQr.addEventListener('click', () => {
-      const targetUrl = getTargetUrl();
-      qrUrlDisplay.innerText = targetUrl;
-      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&color=07080c&bgcolor=ffffff&data=${encodeURIComponent(targetUrl)}`;
-      qrModal.classList.add('open');
-    });
+    if (btnOpenQr) {
+      btnOpenQr.addEventListener('click', () => {
+        const targetUrl = getTargetUrl();
+        if (qrUrlDisplay) qrUrlDisplay.innerText = targetUrl;
+        if (qrImage) qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&color=07080c&bgcolor=ffffff&data=${encodeURIComponent(targetUrl)}`;
+        if (qrModal) qrModal.classList.add('open');
+      });
+    }
 
-    function closeQr() { qrModal.classList.remove('open'); }
-    btnCloseQr.addEventListener('click', closeQr);
-    qrModal.addEventListener('click', (e) => {
-      if (e.target === qrModal) closeQr();
-    });
+    function closeQr() {
+      if (qrModal) qrModal.classList.remove('open');
+    }
+    if (btnCloseQr) btnCloseQr.addEventListener('click', closeQr);
+    if (qrModal) {
+      qrModal.addEventListener('click', (e) => {
+        if (e.target === qrModal) closeQr();
+      });
+    }
 
-    btnCopyLink.addEventListener('click', () => copyText(getTargetUrl()));
+    if (btnCopyLink) btnCopyLink.addEventListener('click', () => copyText(getTargetUrl()));
 
-    btnDownloadQr.addEventListener('click', async () => {
-      if (!qrImage.src) return;
-      try {
-        const response = await fetch(qrImage.src);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = blobUrl;
-        link.download = 'roleid-qr.png';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(blobUrl);
-        showToast('QR-код успешно скачан!');
-      } catch (e) {
-        window.open(qrImage.src, '_blank');
-      }
-    });
+    if (btnDownloadQr) {
+      btnDownloadQr.addEventListener('click', async () => {
+        if (!qrImage || !qrImage.src) return;
+        try {
+          const response = await fetch(qrImage.src);
+          const blob = await response.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = 'roleid-qr.png';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(blobUrl);
+          showToast('QR-код успешно скачан!');
+        } catch (e) {
+          window.open(qrImage.src, '_blank');
+        }
+      });
+    }
 
-    // ГОРЯЧИЕ КЛАВИШИ
+    // ==========================================
+    // 14. ГОРЯЧИЕ КЛАВИШИ И СТАРТОВАЯ ИНИЦИАЛИЗАЦИЯ
+    // ==========================================
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape') {
         closeSidebar();
         closeQr();
-        bioModal.classList.remove('open');
-        chatModal.classList.remove('open');
+        if (bioModal) bioModal.classList.remove('open');
+        if (chatModal) chatModal.classList.remove('open');
         return;
       }
       if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
@@ -2830,13 +2886,22 @@ ${present}`;
       }
     });
 
-    document.getElementById('btn-generate').addEventListener('click', generate);
-    document.getElementById('filter-faction').addEventListener('change', generate);
-    document.getElementById('filter-gender').addEventListener('change', generate);
-    document.getElementById('filter-count').addEventListener('change', generate);
-    document.getElementById('custom-surname').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') generate();
-    });
+    if (btnGenerate) btnGenerate.addEventListener('click', generate);
+
+    const filterFaction = document.getElementById('filter-faction');
+    if (filterFaction) filterFaction.addEventListener('change', generate);
+
+    if (genderSelect) genderSelect.addEventListener('change', generate);
+
+    const filterCount = document.getElementById('filter-count');
+    if (filterCount) filterCount.addEventListener('change', generate);
+
+    const customSurnameInput = document.getElementById('custom-surname');
+    if (customSurnameInput) {
+      customSurnameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') generate();
+      });
+    }
 
     renderHistory();
     renderFavs();
