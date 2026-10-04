@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <!-- Быстрая асинхронная загрузка шрифтов без блокировки экрана -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-
   <title>ROLEID — Лучший генератор RP ников для CRMP, SAMP и GTA 5 RP</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -26,7 +20,6 @@
   <meta property="og:url" content="https://roleid.ru/">
   <meta property="og:title" content="ROLEID — Генератор RP ников и Квенты">
   <meta property="og:description" content="Лучший генератор RP-никнеймов для CRMP, SAMP и GTA 5 RP проектов.">
-  <meta property="og:image" content="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop">
 
   <style>
     :root {
@@ -38,35 +31,35 @@
       --text-muted: #94a3b8;
       --text-dim: #64748b;
 
-      --blob-1: radial-gradient(circle, #6366f1, #3b82f6);
-      --blob-2: radial-gradient(circle, #ec4899, #8b5cf6);
-      --blob-3: radial-gradient(circle, #06b6d4, #6366f1);
+      --blob-1: radial-gradient(circle, rgba(99, 102, 241, 0.35) 0%, rgba(59, 130, 246, 0.15) 45%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(236, 72, 153, 0.3) 0%, rgba(139, 92, 246, 0.15) 50%, transparent 70%);
+      --blob-3: radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, rgba(99, 102, 241, 0.1) 45%, transparent 70%);
       --accent-flow: linear-gradient(135deg, #6366f1, #d946ef, #06b6d4);
       --accent-highlight: #c084fc;
     }
 
     body.theme-crimson {
-      --blob-1: radial-gradient(circle, #dc2626, #991b1b);
-      --blob-2: radial-gradient(circle, #f59e0b, #b45309);
-      --blob-3: radial-gradient(circle, #7f1d1d, #450a0a);
+      --blob-1: radial-gradient(circle, rgba(220, 38, 38, 0.35) 0%, rgba(153, 27, 27, 0.15) 45%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(245, 158, 11, 0.3) 0%, rgba(180, 83, 9, 0.15) 50%, transparent 70%);
+      --blob-3: radial-gradient(circle, rgba(127, 29, 29, 0.25) 0%, transparent 70%);
       --accent-flow: linear-gradient(135deg, #ef4444, #f59e0b, #b91c1c);
       --accent-highlight: #f87171;
       --card-hover-border: rgba(248, 113, 113, 0.4);
     }
 
     body.theme-emerald {
-      --blob-1: radial-gradient(circle, #10b981, #047857);
-      --blob-2: radial-gradient(circle, #06b6d4, #0891b2);
-      --blob-3: radial-gradient(circle, #3b82f6, #1d4ed8);
+      --blob-1: radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, rgba(4, 120, 87, 0.15) 45%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(6, 182, 212, 0.3) 0%, rgba(8, 145, 178, 0.15) 50%, transparent 70%);
+      --blob-3: radial-gradient(circle, rgba(59, 130, 246, 0.25) 0%, transparent 70%);
       --accent-flow: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6);
       --accent-highlight: #34d399;
       --card-hover-border: rgba(52, 211, 153, 0.4);
     }
 
     body.theme-ice {
-      --blob-1: radial-gradient(circle, #0284c7, #1e40af);
-      --blob-2: radial-gradient(circle, #38bdf8, #0369a1);
-      --blob-3: radial-gradient(circle, #6366f1, #4338ca);
+      --blob-1: radial-gradient(circle, rgba(2, 132, 199, 0.35) 0%, rgba(30, 64, 175, 0.15) 45%, transparent 70%);
+      --blob-2: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, rgba(3, 105, 161, 0.15) 50%, transparent 70%);
+      --blob-3: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, transparent 70%);
       --accent-flow: linear-gradient(135deg, #38bdf8, #6366f1, #0284c7);
       --accent-highlight: #38bdf8;
       --card-hover-border: rgba(56, 189, 248, 0.4);
@@ -81,12 +74,14 @@
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
-      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       position: relative;
       overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
 
     .ambient-glow {
@@ -101,20 +96,18 @@
     .blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.25;
       will-change: transform;
       animation: orbitMotion 24s infinite alternate ease-in-out;
     }
 
-    .blob-1 { width: 550px; height: 550px; background: var(--blob-1); top: -10%; left: -8%; }
-    .blob-2 { width: 600px; height: 600px; background: var(--blob-2); bottom: -15%; right: -10%; animation-duration: 28s; animation-direction: alternate-reverse; }
-    .blob-3 { width: 400px; height: 400px; background: var(--blob-3); top: 35%; left: 30%; opacity: 0.15; animation-duration: 20s; }
+    .blob-1 { width: 650px; height: 650px; background: var(--blob-1); top: -10%; left: -8%; }
+    .blob-2 { width: 700px; height: 700px; background: var(--blob-2); bottom: -15%; right: -10%; animation-duration: 28s; animation-direction: alternate-reverse; }
+    .blob-3 { width: 500px; height: 500px; background: var(--blob-3); top: 35%; left: 30%; animation-duration: 20s; }
 
     @keyframes orbitMotion {
       0% { transform: translate3d(0, 0, 0); }
-      50% { transform: translate3d(60px, 50px, 0); }
-      100% { transform: translate3d(-50px, 80px, 0); }
+      50% { transform: translate3d(50px, 40px, 0); }
+      100% { transform: translate3d(-40px, 60px, 0); }
     }
 
     .container {
@@ -455,7 +448,7 @@
       padding: 0.12rem 0.45rem;
       border-radius: 6px;
       font-size: 0.72rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       color: var(--text-muted);
     }
 
@@ -564,7 +557,7 @@
     .card-center { padding: 0.1rem 0; }
 
     .nick-text {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 1.25rem;
       font-weight: 700;
       color: #ffffff;
@@ -618,7 +611,7 @@
       border-radius: 10px;
       padding: 0.4rem 0.8rem;
       font-size: 0.82rem;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       display: inline-flex;
       align-items: center;
       gap: 0.5rem;
@@ -750,7 +743,7 @@
     }
 
     .qr-url-badge {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 0.76rem;
       color: var(--accent-highlight);
       background: rgba(192, 132, 252, 0.08);
@@ -978,7 +971,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно RP-биографии (квента) -->
   <div class="app-modal-backdrop" id="bio-modal">
     <div class="app-modal-card">
       <button class="btn-close-modal" id="btn-close-bio" title="Закрыть">&times;</button>
@@ -999,7 +991,6 @@
     </div>
   </div>
 
-  <!-- Модальное окно QR-кода -->
   <div class="app-modal-backdrop" id="qr-modal">
     <div class="app-modal-card" style="text-align: center;">
       <button class="btn-close-modal" id="btn-close-qr" title="Закрыть">&times;</button>
@@ -1421,7 +1412,7 @@
       currentBioData = generateBioData(item);
       bioContentView.innerHTML = `
         <div class="bio-row"><span class="bio-label">Имя и Фамилия:</span><span class="bio-val">${currentBioData.name}</span></div>
-        <div class="bio-row"><span class="bio-label">RP Никнейм:</span><span class="bio-val" style="font-family:'JetBrains Mono'">${currentBioData.nick}</span></div>
+        <div class="bio-row"><span class="bio-label">RP Никнейм:</span><span class="bio-val" style="font-family:ui-monospace,monospace">${currentBioData.nick}</span></div>
         <div class="bio-row"><span class="bio-label">Пол / Возраст:</span><span class="bio-val">${currentBioData.gender}, ${currentBioData.age}</span></div>
         <div class="bio-row"><span class="bio-label">Страна / Происхождение:</span><span class="bio-val">${currentBioData.nationality}</span></div>
         <div class="bio-row"><span class="bio-label">Место рождения:</span><span class="bio-val">${currentBioData.birthplace}</span></div>
