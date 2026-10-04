@@ -1024,16 +1024,18 @@
 
       try {
         const res = await fetch(SERVERS_API_ENDPOINT);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
 
         if (data && data.success && data.servers && data.servers.length > 0) {
           if (serversSubtitle) serversSubtitle.innerText = `Всего игроков online: ${data.totalOnline} | Обновлено в ${data.updatedAt}`;
           renderServers(data.servers);
         } else {
-          serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Не удалось получить данные онлайна.</div>`;
+          serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Не удалось получить данные онлайна. Проверьте подключение к интернету.</div>`;
         }
       } catch (err) {
-        serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Ошибка запроса к мониторингу.</div>`;
+        console.error("Ошибка загрузки серверов:", err);
+        serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Ошибка запроса к мониторингу. Сервер временно недоступен.</div>`;
       }
     }
 
@@ -1075,6 +1077,7 @@
       newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка ленты...</div>`;
       try {
         const res = await fetch(NEWS_API_ENDPOINT);
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         if (data && data.posts && data.posts.length > 0) {
           newsGrid.innerHTML = data.posts.map(p => `
@@ -1090,7 +1093,8 @@
           newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Новостей пока нет.</div>`;
         }
       } catch (e) {
-        newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Не удалось загрузить новости.</div>`;
+        console.error("Ошибка загрузки новостей:", e);
+        newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Не удалось загрузить новости. Сервер временно недоступен.</div>`;
       }
     }
     btnRefreshNews?.addEventListener('click', () => { loadProjectNews(); showToast('Лента обновлена!'); });
@@ -1223,15 +1227,15 @@
 
     // Никнеймы
     const DB = {
-      russiaMaleNames: ["Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", "Stanislav", "Ruslan", "Viktor", "Timur"],
+      russiaMaleNames: ["Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", "Stanislav", "Ruslan", "Viktor", "Timur", "Alexey", "Nikolay", "Stepan", "Yuri", "Konstantin", "Mark", "Lev", "Semyon", "Arseniy", "Georgiy", "Vyacheslav", "Valentin", "Petr", "Vasiliy", "Eduard", "Anatoliy", "Boris", "German", "Kliment", "Saveliy", "Fedor", "Arkadiy", "Trofim", "Elisey", "Vsevolod", "Rodion", "Iosif", "Emil", "Kamil", "Rinat", "Damir", "Marat", "Alan", "Artur", "Robert", "David", "Makar", "Yegor", "Arsen", "Matvey", "Miroslav", "Savva"],
       usMaleNames: ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Thomas", "Daniel", "Matthew"],
       italyMaleNames: ["Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico", "Antonio", "Enzo"],
       japanMaleNames: ["Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Takeshi", "Hayato"],
-      russiaFemaleNames: ["Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta"],
+      russiaFemaleNames: ["Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta", "Kira", "Eva", "Varvara", "Vasilisa", "Alisa", "Alexandra", "Angelina", "Vladislava", "Ulyana", "Yana", "Zlata", "Margarita", "Vera", "Nadezhda", "Lyubov", "Olga", "Irina", "Svetlana", "Natalia", "Marina", "Galina", "Tatyana", "Larisa", "Ludmila", "Nadezhda", "Oksana", "Yana", "Alyona", "Inna", "Raisa", "Regina", "Stella", "Emma", "Bella", "Daria", "Diana", "Yeseniya", "Zoya", "Lidia", "Maya", "Nina", "Olesya", "Rimma", "Rosa", "Tamara", "Elina", "Yuliana", "Aida", "Aigul", "Aliya", "Amina", "Karina", "Leysan", "Liliya", "Elvira", "Gulnara", "Zukhra", "Aisylu", "Chulpan", "Rezeda", "Landysh"],
       usFemaleNames: ["Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia"],
       italyFemaleNames: ["Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina"],
       japanFemaleNames: ["Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori"],
-      russiaSurnames: ["Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", "Korshun", "Zverev", "Severov", "Molot", "Voronin"],
+      russiaSurnames: ["Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", "Korshun", "Zverev", "Severov", "Molot", "Voronin", "Stepanov", "Nikolaev", "Egorov", "Pavlov", "Kozlov", "Semenov", "Golubev", "Vinogradov", "Bogdanov", "Vorobyov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", "Korshun", "Zverev", "Severov", "Molot", "Voronin", "Krylov", "Nikitin", "Kuzmin", "Petrov", "Scherbakov", "Yakovlev", "Sorokin", "Sergeev", "Zakharov", "Ivanov", "Dmitriev", "Kiselev", "Ilyin", "Gusev", "Titov", "Kudryavtsev", "Baranov", "Kulikov", "Alekseev", "Stepanov", "Yakovlev", "Sorokin"],
       usSurnames: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson"],
       italySurnames: ["Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino"],
       japanSurnames: ["Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"],
@@ -1258,7 +1262,18 @@
         else if (active === 'italy') baseSurname = rand(DB.italySurnames);
         else baseSurname = rand(DB.japanSurnames);
       }
-      let fn = isFemale ? (active === 'russia' ? rand(DB.russiaFemaleNames) : rand(DB.usFemaleNames)) : (active === 'russia' ? rand(DB.russiaMaleNames) : rand(DB.usMaleNames));
+      let fn = '';
+      if (isFemale) {
+        if (active === 'russia') fn = rand(DB.russiaFemaleNames);
+        else if (active === 'us') fn = rand(DB.usFemaleNames);
+        else if (active === 'italy') fn = rand(DB.italyFemaleNames);
+        else fn = rand(DB.japanFemaleNames);
+      } else {
+        if (active === 'russia') fn = rand(DB.russiaMaleNames);
+        else if (active === 'us') fn = rand(DB.usMaleNames);
+        else if (active === 'italy') fn = rand(DB.italyMaleNames);
+        else fn = rand(DB.japanMaleNames);
+      }
       const ln = isFemale ? declineFemaleSurname(baseSurname) : baseSurname;
       return { nick: `${fn}_${ln}`, gender: isFemale ? 'Женский' : 'Мужской', isFemale };
     }
