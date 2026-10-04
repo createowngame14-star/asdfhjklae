@@ -565,6 +565,8 @@
     .status-dot.russia { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; }
     .status-dot.us { background: #3b82f6; box-shadow: 0 0 8px #3b82f6; }
     .status-dot.italy { background: #10b981; box-shadow: 0 0 8px #10b981; }
+    .status-dot.spain { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .status-dot.france { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
     .status-dot.japan { background: #ec4899; box-shadow: 0 0 8px #ec4899; }
 
     .card-actions-mini {
@@ -946,6 +948,8 @@
             <option value="russia">Россия</option>
             <option value="us">США</option>
             <option value="italy">Италия</option>
+            <option value="spain">Испания</option>
+            <option value="france">Франция</option>
             <option value="japan">Япония</option>
           </select>
         </div>
@@ -1159,6 +1163,14 @@
         "Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico",
         "Francesco", "Antonio", "Enzo", "Salvatore", "Vincenzo", "Santino", "Gianni", "Luigi"
       ],
+      spainMaleNames: [
+        "Alejandro", "Carlos", "Mateo", "Diego", "Javier", "Manuel", "Lucas", "Santiago",
+        "Daniel", "Alvaro", "Adrian", "Gabriel", "Hugo", "Pablo", "Rodrigo", "Fernando"
+      ],
+      franceMaleNames: [
+        "Louis", "Gabriel", "Leo", "Raphael", "Arthur", "Jules", "Lucas", "Adam",
+        "Hugo", "Liam", "Paul", "Alexandre", "Antoine", "Julien", "Maxime", "Pierre"
+      ],
       japanMaleNames: [
         "Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Sora",
         "Kaito", "Takeshi", "Yuto", "Makoto", "Tetsuo", "Hayato", "Haruto"
@@ -1175,6 +1187,14 @@
       ],
       italyFemaleNames: [
         "Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina", "Giorgia"
+      ],
+      spainFemaleNames: [
+        "Lucia", "Sofia", "Martina", "Maria", "Paula", "Valeria", "Emma", "Daniela",
+        "Carla", "Alba", "Sara", "Elena", "Carmen", "Claudia", "Vega", "Noa"
+      ],
+      franceFemaleNames: [
+        "Emma", "Jade", "Louise", "Alice", "Chloe", "Lina", "Lea", "Rose",
+        "Anna", "Mila", "Camille", "Manon", "Juliette", "Charlotte", "Ines", "Sarah"
       ],
       japanFemaleNames: [
         "Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori", "Akane"
@@ -1197,6 +1217,14 @@
         "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino",
         "Greco", "Conti", "DeLuca", "Mancini", "Costa", "Giordano", "Lombardi"
       ],
+      spainSurnames: [
+        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez",
+        "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez"
+      ],
+      franceSurnames: [
+        "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand",
+        "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David"
+      ],
       japanSurnames: [
         "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto",
         "Nakamura", "Kobayashi", "Kato", "Yoshida", "Yamada", "Sasaki", "Matsumoto"
@@ -1205,6 +1233,8 @@
         "Borz", "Gasparyan", "Mirzoyan", "Korshun", "Molot",
         "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson",
         "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "DeLuca",
+        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez", "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez",
+        "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David",
         "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"
       ]
     };
@@ -1224,6 +1254,8 @@
       russia: 'Россия',
       us: 'США',
       italy: 'Италия',
+      spain: 'Испания',
+      france: 'Франция',
       japan: 'Япония'
     };
 
@@ -1231,7 +1263,7 @@
       let activeCountry = countryCode;
 
       if (countryCode === 'all') {
-        const pool = ['russia', 'us', 'italy', 'japan'];
+        const pool = ['russia', 'us', 'italy', 'spain', 'france', 'japan'];
         activeCountry = rand(pool);
       }
 
@@ -1240,6 +1272,8 @@
         if (activeCountry === 'russia') baseSurname = rand(DB.russiaSurnames);
         else if (activeCountry === 'us') baseSurname = rand(DB.usSurnames);
         else if (activeCountry === 'italy') baseSurname = rand(DB.italySurnames);
+        else if (activeCountry === 'spain') baseSurname = rand(DB.spainSurnames);
+        else if (activeCountry === 'france') baseSurname = rand(DB.franceSurnames);
         else if (activeCountry === 'japan') baseSurname = rand(DB.japanSurnames);
       }
 
@@ -1248,11 +1282,15 @@
         if (activeCountry === 'russia') fn = rand(DB.russiaFemaleNames);
         else if (activeCountry === 'us') fn = rand(DB.usFemaleNames);
         else if (activeCountry === 'italy') fn = rand(DB.italyFemaleNames);
+        else if (activeCountry === 'spain') fn = rand(DB.spainFemaleNames);
+        else if (activeCountry === 'france') fn = rand(DB.franceFemaleNames);
         else if (activeCountry === 'japan') fn = rand(DB.japanFemaleNames);
       } else {
         if (activeCountry === 'russia') fn = rand(DB.russiaMaleNames);
         else if (activeCountry === 'us') fn = rand(DB.usMaleNames);
         else if (activeCountry === 'italy') fn = rand(DB.italyMaleNames);
+        else if (activeCountry === 'spain') fn = rand(DB.spainMaleNames);
+        else if (activeCountry === 'france') fn = rand(DB.franceMaleNames);
         else if (activeCountry === 'japan') fn = rand(DB.japanMaleNames);
       }
 
@@ -1421,6 +1459,8 @@
       russia: "г. Москва / г. Санкт-Петербург / г. Грозный / Нижегородская область",
       us: "г. Лос-Сантос, штат Сан-Андреас",
       italy: "г. Рим / г. Палермо, Сицилия",
+      spain: "г. Мадрид / г. Барселона / г. Валенсия",
+      france: "г. Марсель / г. Париж / г. Лион",
       japan: "г. Токио / г. Киото"
     };
 
@@ -1428,6 +1468,8 @@
       russia: "Карьерный рост, высокий авторитет и развитие своего дела",
       us: "Построение крупной карьеры и финансовая независимость",
       italy: "Влияние, уважение в обществе и развитие синдиката",
+      spain: "Расширение семейного дела, контроль рынка и авторитет",
+      france: "Финансовый успех, легальный бизнес и высокое признание",
       japan: "Служение традициям клана и защита репутации семьи"
     };
 
