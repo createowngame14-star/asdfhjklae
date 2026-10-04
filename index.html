@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и встроенный ИИ-помощник.">
+  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и официальный ИИ-помощник ROLEID.">
 
   <style>
     :root {
@@ -1237,7 +1237,6 @@
       cursor: pointer;
     }
 
-    /* ТОСТ ПЕРЕМЕЩЕН ВЛЕВО, ЧТОБЫ НЕ ПЕРЕКРЫВАТЬ ЧАТ */
     .toast {
       position: fixed;
       bottom: 2rem;
@@ -1596,7 +1595,7 @@
     </div>
   </div>
 
-  <!-- ВИДЖЕТ ИИ-ЧАТА (DEEPSEEK) -->
+  <!-- ВИДЖЕТ ИИ-ЧАТА (ROLEID AI ASSISTANT) -->
   <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос RP-помощнику">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -1613,7 +1612,7 @@
     </div>
     <div class="ai-chat-messages" id="ai-chat-messages">
       <div class="ai-msg bot">
-        Привет! Я RP-ассистент на базе DeepSeek. Помогу придумать сюжет для персонажа, подобрать редкую фамилию или вспомнить RP-термины. О чем подсказать?
+        Привет! Я официальный RP-ассистент проекта ROLEID. Помогу придумать сюжет для персонажа, подобрать редкую фамилию или вспомнить RP-термины. О чем подсказать?
       </div>
     </div>
     <div class="ai-chat-input-bar">
@@ -1707,13 +1706,12 @@
   </footer>
 
   <script>
-    // DEEPSEEK API KEY
-    const DEEPSEEK_API_KEY = "sk-81d887018a794e0db601bb7c9cdc2503";
+    const OPENROUTER_API_KEY = "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";
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v11';
+          const CACHE_NAME = 'roleid-cache-v12';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1742,7 +1740,6 @@
       btnPwaInstall.style.display = 'none';
     });
 
-    // Темы
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
 
@@ -1758,7 +1755,6 @@
     });
     setTheme(currentTheme);
 
-    // УПРАВЛЕНИЕ БОКОВЫМ МЕНЮ
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -1797,7 +1793,6 @@
       });
     });
 
-    // Индикатор цвета пола в фильтре
     const genderSelect = document.getElementById('filter-gender');
     const genderIcon = document.getElementById('gender-indicator-icon');
 
@@ -2593,7 +2588,7 @@ ${present}`;
     });
 
     // ==========================================
-    // ЛОГИКА ВСПЛЫВАЮЩЕГО ИИ-ЧАТА (DEEPSEEK)
+    // ЛОГИКА ВСПЛЫВАЮЩЕГО ИИ-ЧАТА (ROLEID AI ЧЕРЕЗ OPENROUTER)
     // ==========================================
     const btnToggleChat = document.getElementById('btn-toggle-ai-chat');
     const btnCloseChat = document.getElementById('btn-close-ai-chat');
@@ -2605,7 +2600,7 @@ ${present}`;
     let chatHistory = [
       {
         role: "system",
-        content: "Ты встроенный ИИ-помощник проекта ROLEID. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки. Отвечай кратко, емко, дружелюбно и по делу на русском языке."
+        content: "Ты официальный ИИ-ассистент проекта ROLEID (roleid.ru). Ты выступаешь исключительно от имени проекта ROLEID и его команды. Строго запрещено упоминать, что ты DeepSeek, OpenAI или сторонняя нейросеть. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай уверенно, емко, вежливо и профессионально на русском языке."
       }
     ];
 
@@ -2636,26 +2631,28 @@ ${present}`;
 
       const loadingMsg = document.createElement('div');
       loadingMsg.className = 'ai-msg bot';
-      loadingMsg.innerText = 'Печатает...';
+      loadingMsg.innerText = 'ROLEID AI печатает...';
       chatMessages.appendChild(loadingMsg);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
       try {
-        const res = await fetch("https://api.deepseek.com/chat/completions", {
+        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${DEEPSEEK_API_KEY}`
+            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+            "HTTP-Referer": "https://roleid.ru",
+            "X-Title": "ROLEID"
           },
           body: JSON.stringify({
-            model: "deepseek-chat",
+            model: "deepseek/deepseek-chat:free",
             messages: chatHistory,
             temperature: 0.7,
             max_tokens: 600
           })
         });
 
-        if (!res.ok) throw new Error("Ошибка API DeepSeek");
+        if (!res.ok) throw new Error("Ошибка API OpenRouter");
 
         const data = await res.json();
         const reply = data.choices[0].message.content;
@@ -2663,7 +2660,7 @@ ${present}`;
         loadingMsg.innerText = reply;
         chatHistory.push({ role: "assistant", content: reply });
       } catch (err) {
-        loadingMsg.innerText = "Ошибка соединения с ИИ. Проверьте подключение к сети или баланс аккаунта.";
+        loadingMsg.innerText = "Сервис ROLEID временно недоступен. Попробуйте отправить запрос еще раз.";
       }
     }
 
