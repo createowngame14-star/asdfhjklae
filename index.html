@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и официальный ИИ-помощник ROLEID.">
+  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и официальный ИИ-помощник ROLEID.">
 
   <style>
     :root {
@@ -1706,12 +1706,14 @@
   </footer>
 
   <script>
-    const OPENROUTER_API_KEY = "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";
+    // КЛЮЧИ И АВТОРИЗАЦИОННЫЕ ДАННЫЕ
+    const GIGACHAT_AUTH = "MDE5ZTk4ZGYtZTA0Ny03NDdiLTlmNmEtNzVlMmUxNmVmYTYxOmY5M2Q4MDNjLTMwM2QtNDIzYS1iNTRlLWY2ZGNhZTdlNTE3Yw==";
+    const BACKUP_ROUTER_KEY = "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";
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v12';
+          const CACHE_NAME = 'roleid-cache-v13';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -2453,7 +2455,7 @@
         "Дисциплинированный, с развитым стратегическим мышлением. Умеет моментально оценивать риски и брать ответственность за поступки.",
         "Харизматичный и проницательный лидер. Обладает врожденным чутьем на людей, тонко выстраивая союзнические отношения.",
         "Скрытный, наблюдательный и немногословный. Предпочитает действовать точно и без предупреждений, высоко ценит верность слову.",
-        "Несгибаемый реалист с железным внутренним стержнем. Ни при каких обстоятельствах не отступает от намеченных ориентиров."
+        "Несгибаемый реалист с железным внутренним стерженем. Ни при каких обстоятельствах не отступает от намеченных ориентиров."
       ],
 
       origins: [
@@ -2588,7 +2590,7 @@ ${present}`;
     });
 
     // ==========================================
-    // ЛОГИКА ВСПЛЫВАЮЩЕГО ИИ-ЧАТА (ROLEID AI ЧЕРЕЗ OPENROUTER)
+    // ЛОГИКА ВСПЛЫВАЮЩЕГО ИИ-ЧАТА (ROLEID AI ПОМОЩНИК)
     // ==========================================
     const btnToggleChat = document.getElementById('btn-toggle-ai-chat');
     const btnCloseChat = document.getElementById('btn-close-ai-chat');
@@ -2597,10 +2599,13 @@ ${present}`;
     const btnSendChat = document.getElementById('ai-chat-send');
     const chatMessages = document.getElementById('ai-chat-messages');
 
+    let gigaToken = null;
+    let gigaTokenExpires = 0;
+
     let chatHistory = [
       {
         role: "system",
-        content: "Ты официальный ИИ-ассистент проекта ROLEID (roleid.ru). Ты выступаешь исключительно от имени проекта ROLEID и его команды. Строго запрещено упоминать, что ты DeepSeek, OpenAI или сторонняя нейросеть. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай уверенно, емко, вежливо и профессионально на русском языке."
+        content: "Ты официальный ИИ-ассистент проекта ROLEID (roleid.ru). Ты выступаешь исключительно от лица команды ROLEID. Строго запрещено упоминать, что ты GigaChat, Сбер, DeepSeek, OpenAI или сторонняя нейросеть. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай уверенно, емко, вежливо и профессионально на русском языке."
       }
     ];
 
@@ -2621,6 +2626,71 @@ ${present}`;
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
+    // Получение токена GigaChat
+    async function getGigaChatToken() {
+      if (gigaToken && Date.now() < gigaTokenExpires) {
+        return gigaToken;
+      }
+      const rqUID = crypto.randomUUID();
+      const res = await fetch("https://ngw.devices.sberbank.ru:9443/api/v2/oauth", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Accept": "application/json",
+          "RqUID": rqUID,
+          "Authorization": "Basic " + GIGACHAT_AUTH
+        },
+        body: "scope=GIGACHAT_API_PERS"
+      });
+      if (!res.ok) throw new Error("GigaChat Auth Error");
+      const data = await res.json();
+      gigaToken = data.access_token;
+      gigaTokenExpires = data.expires_at || (Date.now() + 25 * 60 * 1000);
+      return gigaToken;
+    }
+
+    // Вызов GigaChat
+    async function requestGigaChat(messages) {
+      const token = await getGigaChatToken();
+      const res = await fetch("https://gigachat.devices.sberbank.ru/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({
+          model: "GigaChat",
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 600
+        })
+      });
+      if (!res.ok) throw new Error("GigaChat Completion Error");
+      const data = await res.json();
+      return data.choices[0].message.content;
+    }
+
+    // Резервный шлюз (если браузер блокирует CORS Сбера)
+    async function requestBackupRouter(messages) {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + BACKUP_ROUTER_KEY
+        },
+        body: JSON.stringify({
+          model: "openrouter/free",
+          messages: messages,
+          temperature: 0.7,
+          max_tokens: 600
+        })
+      });
+      if (!res.ok) throw new Error("Backup Engine Error");
+      const data = await res.json();
+      return data.choices[0].message.content;
+    }
+
     async function sendAiMessage() {
       const query = chatInput.value.trim();
       if (!query) return;
@@ -2635,31 +2705,28 @@ ${present}`;
       chatMessages.appendChild(loadingMsg);
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
+      let reply = null;
+
+      // 1. Пробуем прямой вызов GigaChat
       try {
-        const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-            "HTTP-Referer": "https://roleid.ru",
-            "X-Title": "ROLEID"
-          },
-          body: JSON.stringify({
-            model: "deepseek/deepseek-chat:free",
-            messages: chatHistory,
-            temperature: 0.7,
-            max_tokens: 600
-          })
-        });
+        reply = await requestGigaChat(chatHistory);
+      } catch (e) {
+        console.warn("GigaChat прямой вызов недоступен из браузера, переключаемся на резервный шлюз:", e);
+      }
 
-        if (!res.ok) throw new Error("Ошибка API OpenRouter");
+      // 2. Если браузер заблокировал CORS Сбера — бесшовно отвечает резервный шлюз
+      if (!reply) {
+        try {
+          reply = await requestBackupRouter(chatHistory);
+        } catch (err) {
+          console.error("Оба шлюза недоступны:", err);
+        }
+      }
 
-        const data = await res.json();
-        const reply = data.choices[0].message.content;
-
+      if (reply) {
         loadingMsg.innerText = reply;
         chatHistory.push({ role: "assistant", content: reply });
-      } catch (err) {
+      } else {
         loadingMsg.innerText = "Сервис ROLEID временно недоступен. Попробуйте отправить запрос еще раз.";
       }
     }
