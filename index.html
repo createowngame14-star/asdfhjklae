@@ -84,7 +84,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Динамичный и подвижный неоновый фон */
     .ambient-glow {
       position: fixed;
       inset: 0;
@@ -599,10 +598,9 @@
 
     .card-center { 
       padding: 0.1rem 0; 
-      overflow: hidden;
     }
 
-    /* Анимированный зум ника при наведении */
+    /* Мягкая анимация ника идентичная соцсетям */
     .nick-text {
       display: inline-block;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -611,12 +609,11 @@
       color: #ffffff;
       letter-spacing: -0.015em;
       transform-origin: left center;
-      will-change: transform;
-      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.18s ease;
+      transition: all 0.18s ease;
     }
 
     .modern-card:hover .nick-text {
-      transform: scale(1.045);
+      transform: translateY(-2px) scale(1.03);
       color: var(--accent-highlight);
     }
 
@@ -912,7 +909,6 @@
 </head>
 <body>
 
-  <!-- Динамичные неоновые сферы с широкой амплитудой -->
   <div class="ambient-glow">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
