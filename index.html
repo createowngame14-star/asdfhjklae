@@ -1376,36 +1376,151 @@
     document.getElementById('btn-copy-unique-bb')?.addEventListener('click', () => { if (genBio) { copyText(genBio); showToast('BB-код скопирован!'); } });
     document.getElementById('btn-copy-unique-plain')?.addEventListener('click', () => { if (genBio) { copyText(genBio.replace(/\[\/?b\]/g, '')); showToast('Текст скопирован!'); } });
 
-    // Рандомайзер
+    // Рандомайзер (Анимация)
+    let isRollingNumber = false;
     document.getElementById('btn-roll-number')?.addEventListener('click', () => {
+      if (isRollingNumber) return;
       const min = parseInt(document.getElementById('rand-min')?.value, 10) || 1;
       const max = parseInt(document.getElementById('rand-max')?.value, 10) || 100;
-      const res = Math.floor(Math.random() * (max - min + 1)) + min;
-      document.getElementById('rand-result-val').innerText = res;
-      document.getElementById('number-history-chips').innerHTML += `<div class="nick-chip"><span># ${res}</span></div>`;
+      
+      if (min >= max) {
+        showToast('ОТ должно быть меньше ДО!');
+        return;
+      }
+
+      isRollingNumber = true;
+      const btn = document.getElementById('btn-roll-number');
+      if (btn) btn.disabled = true;
+
+      const duration = 1500; // 1.5 секунды анимации
+      const intervalTime = 50;
+      const iterations = duration / intervalTime;
+      let currentIteration = 0;
+
+      const rollInterval = setInterval(() => {
+        const tempRes = Math.floor(Math.random() * (max - min + 1)) + min;
+        document.getElementById('rand-result-val').innerText = tempRes;
+        
+        currentIteration++;
+        if (currentIteration >= iterations) {
+          clearInterval(rollInterval);
+          const finalRes = Math.floor(Math.random() * (max - min + 1)) + min;
+          document.getElementById('rand-result-val').innerText = finalRes;
+          
+          const historyContainer = document.getElementById('number-history-chips');
+          if (historyContainer) {
+            const chip = document.createElement('div');
+            chip.className = 'nick-chip';
+            chip.innerHTML = `<span># ${finalRes}</span>`;
+            historyContainer.prepend(chip);
+            
+            // Оставляем только последние 8 результатов
+            while (historyContainer.children.length > 8) {
+              historyContainer.removeChild(historyContainer.lastChild);
+            }
+          }
+          
+          isRollingNumber = false;
+          if (btn) btn.disabled = false;
+          showToast(`Выпало число: ${finalRes}`);
+        }
+      }, intervalTime);
     });
 
-    // Рулетка
+    // Рулетка (Анимация)
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas?.getContext('2d');
     let wheelAngle = 0;
+    let isWheelSpinning = false;
+
     function drawWheel() {
       if (!ctx || !canvas) return;
       const segs = (document.getElementById('wheel-segments-input')?.value || '1,2,3,4').split(',').map(s => s.trim()).filter(Boolean);
       const arc = (2 * Math.PI) / segs.length, rad = canvas.width / 2;
+      
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
       segs.forEach((t, i) => {
         const a = wheelAngle + i * arc;
-        ctx.beginPath(); ctx.fillStyle = i % 2 === 0 ? '#6366f1' : '#181b26'; ctx.moveTo(rad, rad); ctx.arc(rad, rad, rad - 4, a, a + arc); ctx.lineTo(rad, rad); ctx.fill();
-        ctx.save(); ctx.translate(rad, rad); ctx.rotate(a + arc / 2); ctx.textAlign = 'right'; ctx.fillStyle = '#fff'; ctx.font = 'bold 13px monospace'; ctx.fillText(t.slice(0, 8), rad - 16, 4); ctx.restore();
+        ctx.beginPath(); 
+        ctx.fillStyle = i % 2 === 0 ? '#6366f1' : '#181b26'; 
+        ctx.moveTo(rad, rad); 
+        ctx.arc(rad, rad, rad - 4, a, a + arc); 
+        ctx.lineTo(rad, rad); 
+        ctx.fill();
+        
+        ctx.save(); 
+        ctx.translate(rad, rad); 
+        ctx.rotate(a + arc / 2); 
+        ctx.textAlign = 'right'; 
+        ctx.fillStyle = '#fff'; 
+        ctx.font = 'bold 13px monospace'; 
+        ctx.fillText(t.slice(0, 8), rad - 16, 4); 
+        ctx.restore();
       });
-      ctx.beginPath(); ctx.arc(rad, rad, 18, 0, 2 * Math.PI); ctx.fillStyle = '#0f1118'; ctx.fill();
+      
+      // Центральный круг
+      ctx.beginPath(); 
+      ctx.arc(rad, rad, 18, 0, 2 * Math.PI); 
+      ctx.fillStyle = '#0f1118'; 
+      ctx.fill();
     }
+
     document.getElementById('wheel-segments-input')?.addEventListener('input', drawWheel);
+
     document.getElementById('btn-spin-wheel')?.addEventListener('click', () => {
-      wheelAngle += 15 + Math.random() * 10;
-      drawWheel();
-      showToast('Колесо прокручено!');
+      if (isWheelSpinning) return;
+      
+      const segs = (document.getElementById('wheel-segments-input')?.value || '1,2,3,4').split(',').map(s => s.trim()).filter(Boolean);
+      if (segs.length < 2) {
+        showToast('Введите минимум 2 варианта!');
+        return;
+      }
+
+      isWheelSpinning = true;
+      const btn = document.getElementById('btn-spin-wheel');
+      if (btn) btn.disabled = true;
+      
+      const wheelWinner = document.getElementById('wheel-winner');
+      if (wheelWinner) wheelWinner.innerText = 'Рулетка крутится...';
+
+      const spinDuration = 4000; // 4 секунды
+      const startAngle = wheelAngle;
+      // 5-8 полных оборотов + случайный угол
+      const totalRotation = Math.PI * 2 * (5 + Math.random() * 3) + (Math.random() * Math.PI * 2);
+      const startTime = performance.now();
+
+      function animateWheel(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / spinDuration, 1);
+        
+        // Функция плавного замедления (easeOutCubic)
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        
+        wheelAngle = startAngle + totalRotation * easeOut;
+        drawWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateWheel);
+        } else {
+          isWheelSpinning = false;
+          if (btn) btn.disabled = false;
+          
+          // Вычисляем победителя
+          const arc = (2 * Math.PI) / segs.length;
+          const normalizedAngle = (wheelAngle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
+          
+          // Стрелка находится сверху (угол 3*PI/2 или -PI/2)
+          const pointerAngle = (3 * Math.PI / 2 - normalizedAngle + 2 * Math.PI) % (2 * Math.PI);
+          
+          // Находим индекс сектора
+          const winnerIndex = Math.floor(pointerAngle / arc) % segs.length;
+          
+          if (wheelWinner) wheelWinner.innerText = `Победитель: ${segs[winnerIndex]}`;
+          showToast(`Выпало: ${segs[winnerIndex]}`);
+        }
+      }
+      requestAnimationFrame(animateWheel);
     });
 
     // Утилиты
