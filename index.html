@@ -567,7 +567,7 @@
 
     .hub-card:hover .hub-card-footer { color: var(--accent-highlight); }
 
-    /* РАЗДЕЛ НОВОСТЕЙ */
+/* РАЗДЕЛ НОВОСТЕЙ (ROLEID) */
     .news-header-box {
       display: flex;
       justify-content: space-between;
@@ -578,102 +578,69 @@
     }
 
     .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
     .news-card {
       background: #12141c;
       border: 1px solid var(--card-border);
-      border-radius: 18px;
+      border-radius: 20px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
     }
 
     .news-card:hover {
-      transform: translateY(-3px);
       border-color: var(--card-hover-border);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+      transform: translateY(-2px);
     }
 
     .news-img {
       width: 100%;
-      height: 175px;
+      max-height: 440px;
       object-fit: cover;
       background: #181c27;
       display: block;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .news-content {
-      padding: 1.2rem;
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
-      flex: 1;
+      gap: 1rem;
     }
 
     .news-meta {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.76rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
     }
 
     .news-badge {
-      font-family: ui-monospace, monospace;
-      font-size: 0.72rem;
+      font-size: 0.76rem;
+      font-weight: 700;
       color: var(--accent-highlight);
       background: rgba(192, 132, 252, 0.1);
-      border: 1px solid rgba(192, 132, 252, 0.2);
-      padding: 0.15rem 0.5rem;
-      border-radius: 6px;
+      border: 1px solid rgba(192, 132, 252, 0.25);
+      padding: 0.25rem 0.65rem;
+      border-radius: 8px;
     }
 
     .news-text {
-      font-size: 0.88rem;
-      color: #e2e8f0;
-      line-height: 1.6;
+      font-size: 0.94rem;
+      color: #f1f5f9;
+      line-height: 1.7;
       white-space: pre-line;
       word-break: break-word;
-      max-height: 140px;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 5;
-      -webkit-box-orient: vertical;
-    }
-
-    .news-btn {
-      margin-top: auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      background: #181c27;
-      border: 1px solid var(--card-border);
-      color: #fff;
-      padding: 0.6rem 0.9rem;
-      border-radius: 10px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.15s ease;
-    }
-
-    .news-btn:hover {
-      background: rgba(56, 189, 248, 0.15);
-      border-color: rgba(56, 189, 248, 0.4);
-      color: #38bdf8;
-    }
-
-    .news-skeleton {
-      text-align: center;
-      padding: 3rem 1.5rem;
-      color: var(--text-dim);
-      font-size: 0.92rem;
     }
 
     /* ОБУЧЕНИЕ / ONBOARDING ТУР */
@@ -1602,7 +1569,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН НОВОСТЕЙ (ИЗ TELEGRAM @old_team_news) -->
+<!-- ЭКРАН НОВОСТЕЙ (ROLEID) -->
     <div class="tab-content" id="tab-news">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1611,23 +1578,20 @@
       <div class="glass-box">
         <div class="news-header-box">
           <div>
-            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">Новости и обновления проекта</h3>
+            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">Новости и обновления</h3>
             <p style="color: var(--text-muted); font-size: 0.88rem;">
-              Прямая трансляция последних публикаций из официального Telegram-канала <b>@old_team_news</b>
+              Свежие анонсы, события и изменения на проекте Radmir RP
             </p>
           </div>
-          <div style="display: flex; gap: 0.6rem; align-items: center;">
-            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 0.9rem; font-size: 0.8rem;">
-              🔄 Обновить
+          <div>
+            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 1rem; font-size: 0.82rem;">
+              🔄 Обновить ленту
             </button>
-            <a href="https://t.me/old_team_news" target="_blank" rel="noopener noreferrer" class="btn-generate" style="height: 38px; padding: 0 1rem; font-size: 0.82rem; text-decoration: none; width: auto;">
-              Открыть канал в TG &rarr;
-            </a>
           </div>
         </div>
 
         <div class="news-grid" id="news-grid">
-          <div class="news-skeleton">Загрузка последних постов из Telegram...</div>
+          <div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка новостей...</div>
         </div>
       </div>
     </div>
@@ -2195,43 +2159,55 @@
 
     async function loadTelegramNews() {
       if (!newsGrid) return;
-      newsGrid.innerHTML = `<div class="news-skeleton">Загрузка последних постов из @old_team_news...</div>`;
+      newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка последних обновлений...</div>`;
 
       try {
         const response = await fetch(TG_NEWS_WORKER_URL);
         const data = await response.json();
 
-        if (data && data.success && data.posts && data.posts.length > 0) {
+        if (data && data.posts && data.posts.length > 0) {
           renderNewsCards(data.posts);
         } else {
-          renderNewsCards(FALLBACK_NEWS);
+          showEmptyNews();
         }
       } catch (err) {
-        console.warn("Воркер новостей не ответил, используем локальный фид:", err);
-        renderNewsCards(FALLBACK_NEWS);
+        showEmptyNews();
       }
+    }
+
+    function showEmptyNews() {
+      if (!newsGrid) return;
+      newsGrid.innerHTML = `
+        <div class="news-card">
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-badge">ROLEID &bull; Radmir RP</span>
+              <span>Сегодня</span>
+            </div>
+            <div class="news-text">
+              Добро пожаловать в раздел обновлений! Здесь автоматически публикуются последние события проекта, изменения в экономике серверов Radmir RP и свежие данные таблиц Б/У авторынка.
+            </div>
+          </div>
+        </div>
+      `;
     }
 
     function renderNewsCards(posts) {
       if (!newsGrid) return;
       newsGrid.innerHTML = posts.map(post => `
         <div class="news-card">
-          ${post.photo ? `<img src="${post.photo}" class="news-img" alt="Новость">` : ''}
+          ${post.photo ? `<img src="${post.photo}" class="news-img" alt="Фото новости">` : ''}
           <div class="news-content">
             <div class="news-meta">
-              <span class="news-badge">@old_team_news</span>
+              <span class="news-badge">ROLEID Обновление</span>
               <span>${post.date}</span>
             </div>
             <div class="news-text">${post.text}</div>
-            <a href="${post.url}" target="_blank" rel="noopener noreferrer" class="news-btn">
-              <span>Открыть в Telegram</span>
-              <span>&rarr;</span>
-            </a>
           </div>
         </div>
       `).join('');
     }
-
+    
     if (btnRefreshNews) {
       btnRefreshNews.addEventListener('click', () => {
         loadTelegramNews();
