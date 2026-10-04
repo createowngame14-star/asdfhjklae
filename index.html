@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <title>ROLEID — RP Генератор ников и RP Биографий для CRMP, SAMP и GTA 5 RP</title>
+  <title>ROLEID — RP Генератор ников, Рандомайзер и RP Биографии</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и конструктор неповторимых RP биографий для CRMP, SAMP и GTA 5 RP проектов.">
+  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, колесо рулетки и конструктор RP биографий.">
 
   <style>
     :root {
@@ -145,7 +145,7 @@
       100% { transform: translate3d(-110px, 80px, 0) scale(1); }
     }
 
-    /* БОКОВОЕ ВЫДВИЖНОЕ МЕНЮ */
+    /* БОКОВОЕ МЕНЮ */
     .sidebar-backdrop {
       position: fixed;
       inset: 0;
@@ -168,7 +168,7 @@
       top: 0;
       bottom: 0;
       left: 0;
-      width: 290px;
+      width: 300px;
       background: #0b0d13;
       border-right: 1px solid var(--card-border);
       box-shadow: 15px 0 40px rgba(0, 0, 0, 0.7);
@@ -415,6 +415,58 @@
     }
 
     .tab-content.active {
+      display: block;
+    }
+
+    /* ПОДРАЗДЕЛЫ РАНДОМАЙЗЕРА */
+    .subtabs-nav {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+      background: #0d0f15;
+      padding: 0.35rem;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .subtab-btn {
+      flex: 1;
+      padding: 0.5rem 0.8rem;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      transition: all 0.18s ease;
+    }
+
+    .subtab-btn:hover {
+      color: #fff;
+    }
+
+    .subtab-btn.active {
+      background: #181c27;
+      color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .subtab-panel {
+      display: none;
+      animation: cardEntrance 0.25s ease both;
+    }
+
+    .subtab-panel.active {
       display: block;
     }
 
@@ -854,6 +906,52 @@
 
     .nick-chip .del-btn:hover { color: #f43f5e; }
 
+    /* РАНДОМАЙЗЕР ЧИСЕЛ */
+    .number-display-box {
+      background: #141720;
+      border: 2px dashed rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2.2rem 1rem;
+      text-align: center;
+      margin: 1.2rem 0;
+    }
+
+    .number-display-val {
+      font-size: 3.8rem;
+      font-weight: 800;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      background: var(--accent-flow);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+
+    /* РУЛЕТКА (КОЛЕСО) */
+    .wheel-wrapper {
+      position: relative;
+      display: inline-block;
+      margin: 1.2rem auto 0.8rem;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #ef4444;
+      font-size: 2rem;
+      z-index: 10;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
+    }
+
+    #roulette-canvas {
+      border-radius: 50%;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(99, 102, 241, 0.25);
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* RP БИОГРАФИИ */
     .bio-editor-grid {
       display: grid;
       grid-template-columns: 2fr 1fr 2fr;
@@ -1114,6 +1212,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         <span>Генератор ников</span>
       </button>
+      <button class="sidebar-nav-item" data-tab="tab-random">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
+        <span>Рандомайзер &amp; Рулетка</span>
+      </button>
       <button class="sidebar-nav-item" data-tab="tab-bio">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
         <span>RP Биографии</span>
@@ -1124,7 +1226,6 @@
   <div class="container">
     <div class="top-toolbar">
       <div class="toolbar-left">
-        <!-- КНОПКА ОТКРЫТИЯ БОКОВОГО МЕНЮ -->
         <button class="btn-top-util" id="btn-open-sidebar" title="Открыть боковое меню">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           Разделы
@@ -1160,7 +1261,7 @@
       <h1>
         <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
       </h1>
-      <p class="subtitle">Лучший генератор RP ников и биографий для CRMP, SAMP и GTA 5 RP</p>
+      <p class="subtitle">Лучший генератор RP ников, рандомайзер и биографии для CRMP, SAMP и GTA 5 RP</p>
     </header>
 
     <!-- ВКЛАДКА 1: ГЕНЕРАТОР НИКОВ -->
@@ -1239,7 +1340,79 @@
       </div>
     </div>
 
-    <!-- ВКЛАДКА 2: RP БИОГРАФИИ -->
+    <!-- ВКЛАДКА 2: РАНДОМАЙЗЕР & РУЛЕТКА С ПОДРАЗДЕЛАМИ -->
+    <div class="tab-content" id="tab-random">
+      <!-- Переключатель подразделов -->
+      <div class="subtabs-nav">
+        <button class="subtab-btn active" data-subtab="subtab-num">
+          <span>🎲 Числа</span>
+        </button>
+        <button class="subtab-btn" data-subtab="subtab-wheel">
+          <span>🎡 Колесо рулетки</span>
+        </button>
+      </div>
+
+      <!-- Подраздел: Числа -->
+      <div class="subtab-panel active" id="subtab-num">
+        <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
+          <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.35rem; text-align: center;">Рандомайзер чисел</h3>
+          <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.4rem; text-align: center;">
+            Быстрое определение победителя конкурса, строя или розыгрыша призов
+          </p>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+            <div class="pill-input-wrapper">
+              <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ОТ:</span>
+              <input type="number" id="rand-min" class="custom-fame-input" value="1">
+            </div>
+            <div class="pill-input-wrapper">
+              <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ДО:</span>
+              <input type="number" id="rand-max" class="custom-fame-input" value="100">
+            </div>
+          </div>
+
+          <div class="number-display-box">
+            <div class="number-display-val" id="rand-result-val">?</div>
+          </div>
+
+          <button class="btn-generate" id="btn-roll-number" style="margin-bottom: 1.2rem;">
+            Сгенерировать число
+          </button>
+
+          <div style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.4rem;">История последних выпадений:</div>
+          <div class="chips-wrap" id="number-history-chips"></div>
+        </div>
+      </div>
+
+      <!-- Подраздел: Колесо фортуны -->
+      <div class="subtab-panel" id="subtab-wheel">
+        <div class="glass-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
+          <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.35rem;">Колесо фортуны</h3>
+          <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.2rem;">
+            Введите ники, числа или призы через запятую и испытайте удачу
+          </p>
+
+          <div class="pill-input-wrapper" style="margin-bottom: 1rem;">
+            <input type="text" id="wheel-segments-input" class="custom-fame-input" value="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="Варианты через запятую">
+          </div>
+
+          <div class="wheel-wrapper">
+            <div class="wheel-pointer">▼</div>
+            <canvas id="roulette-canvas" width="280" height="280"></canvas>
+          </div>
+
+          <div id="wheel-winner" style="min-height: 28px; font-size: 1.2rem; font-weight: 800; color: var(--accent-highlight); margin: 0.8rem 0;">
+            Нажмите «Крутить колесо»
+          </div>
+
+          <button class="btn-generate" id="btn-spin-wheel">
+            Крутить колесо
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ВКЛАДКА 3: RP БИОГРАФИИ -->
     <div class="tab-content" id="tab-bio">
       <div class="glass-box">
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Генератор неповторимых RP-Биографий</h3>
@@ -1367,7 +1540,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v7';
+          const CACHE_NAME = 'roleid-cache-v8';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1396,7 +1569,6 @@
       btnPwaInstall.style.display = 'none';
     });
 
-    // Темы
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
 
@@ -1412,7 +1584,7 @@
     });
     setTheme(currentTheme);
 
-    // УПРАВЛЕНИЕ БОКОВЫМ МЕНЮ И ВКЛАДКАМИ
+    // УПРАВЛЕНИЕ БОКОВЫМ МЕНЮ
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -1443,7 +1615,30 @@
         const target = document.getElementById(item.dataset.tab);
         if (target) target.classList.add('active');
 
+        if (item.dataset.tab === 'tab-random') {
+          drawWheel();
+        }
+
         closeSidebar();
+      });
+    });
+
+    // УПРАВЛЕНИЕ ПОДРАЗДЕЛАМИ В РАНДОМАЙЗЕРЕ
+    const subtabBtns = document.querySelectorAll('.subtab-btn');
+    const subtabPanels = document.querySelectorAll('.subtab-panel');
+
+    subtabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        subtabBtns.forEach(b => b.classList.remove('active'));
+        subtabPanels.forEach(p => p.classList.remove('active'));
+
+        btn.classList.add('active');
+        const panel = document.getElementById(btn.dataset.subtab);
+        if (panel) panel.classList.add('active');
+
+        if (btn.dataset.subtab === 'subtab-wheel') {
+          drawWheel();
+        }
       });
     });
 
@@ -1951,6 +2146,152 @@
           if (svg) svg.setAttribute('fill', 'none');
         });
       }
+    });
+
+    // ==========================================
+    // ЛОГИКА РАНДОМАЙЗЕРА ЧИСЕЛ
+    // ==========================================
+    let numberRollHistory = [];
+    const randMinInput = document.getElementById('rand-min');
+    const randMaxInput = document.getElementById('rand-max');
+    const randResultVal = document.getElementById('rand-result-val');
+    const numberHistoryChips = document.getElementById('number-history-chips');
+
+    document.getElementById('btn-roll-number').addEventListener('click', () => {
+      const min = parseInt(randMinInput.value, 10) || 1;
+      const max = parseInt(randMaxInput.value, 10) || 100;
+      if (min >= max) {
+        showToast('Значение "ОТ" должно быть меньше "ДО"!');
+        return;
+      }
+
+      let step = 0;
+      const interval = setInterval(() => {
+        randResultVal.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
+        step++;
+        if (step > 10) {
+          clearInterval(interval);
+          const finalVal = Math.floor(Math.random() * (max - min + 1)) + min;
+          randResultVal.innerText = finalVal;
+          
+          numberRollHistory.unshift(finalVal);
+          if (numberRollHistory.length > 10) numberRollHistory.pop();
+          renderNumberHistory();
+        }
+      }, 35);
+    });
+
+    function renderNumberHistory() {
+      numberHistoryChips.innerHTML = numberRollHistory.map(num => `
+        <div class="nick-chip" data-copy="${num}">
+          <span># ${num}</span>
+        </div>
+      `).join('');
+    }
+
+    numberHistoryChips.addEventListener('click', (e) => {
+      const chip = e.target.closest('.nick-chip');
+      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+    });
+
+    // ==========================================
+    // ЛОГИКА КОЛЕСА ФОРТУНЫ (РУЛЕТКА)
+    // ==========================================
+    const canvas = document.getElementById('roulette-canvas');
+    const ctx = canvas.getContext('2d');
+    const wheelInput = document.getElementById('wheel-segments-input');
+    const wheelWinner = document.getElementById('wheel-winner');
+    const btnSpinWheel = document.getElementById('btn-spin-wheel');
+
+    let wheelAngle = 0;
+    let isWheelSpinning = false;
+    const wheelColors = ['#6366f1', '#181b26', '#8b5cf6', '#181b26', '#ec4899', '#181b26', '#3b82f6', '#181b26', '#10b981', '#181b26'];
+
+    function getSegments() {
+      const raw = wheelInput.value.split(',').map(s => s.trim()).filter(Boolean);
+      return raw.length >= 2 ? raw : ['1', '2', '3', '4', '5', '6'];
+    }
+
+    function drawWheel() {
+      const segments = getSegments();
+      const numSegments = segments.length;
+      const arcSize = (2 * Math.PI) / numSegments;
+      const radius = canvas.width / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      segments.forEach((text, i) => {
+        const angle = wheelAngle + i * arcSize;
+        ctx.beginPath();
+        ctx.fillStyle = wheelColors[i % wheelColors.length];
+        ctx.moveTo(radius, radius);
+        ctx.arc(radius, radius, radius - 4, angle, angle + arcSize);
+        ctx.lineTo(radius, radius);
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.stroke();
+
+        ctx.save();
+        ctx.translate(radius, radius);
+        ctx.rotate(angle + arcSize / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 13px ui-monospace, monospace';
+        const displayLabel = text.length > 10 ? text.slice(0, 9) + '..' : text;
+        ctx.fillText(displayLabel, radius - 16, 4);
+        ctx.restore();
+      });
+
+      ctx.beginPath();
+      ctx.arc(radius, radius, 18, 0, 2 * Math.PI);
+      ctx.fillStyle = '#0f1118';
+      ctx.fill();
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'var(--accent-highlight)';
+      ctx.stroke();
+    }
+
+    wheelInput.addEventListener('input', drawWheel);
+
+    btnSpinWheel.addEventListener('click', () => {
+      if (isWheelSpinning) return;
+      isWheelSpinning = true;
+      btnSpinWheel.disabled = true;
+      wheelWinner.innerText = 'Колесо крутится...';
+
+      const segments = getSegments();
+      const extraSpins = 5 + Math.random() * 4;
+      const randomStop = Math.random() * 2 * Math.PI;
+      const totalAngle = extraSpins * 2 * Math.PI + randomStop;
+      const duration = 3800;
+      const startAngle = wheelAngle;
+      const startTime = performance.now();
+
+      function animateWheel(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+
+        wheelAngle = startAngle + totalAngle * easeOut;
+        drawWheel();
+
+        if (progress < 1) {
+          requestAnimationFrame(animateWheel);
+        } else {
+          isWheelSpinning = false;
+          btnSpinWheel.disabled = false;
+
+          const numSegments = segments.length;
+          const arcSize = (2 * Math.PI) / numSegments;
+          const normalized = (2 * Math.PI - (wheelAngle % (2 * Math.PI)) + (3 * Math.PI / 2)) % (2 * Math.PI);
+          const winningIndex = Math.floor(normalized / arcSize) % numSegments;
+          
+          wheelWinner.innerText = `Победитель: ${segments[winningIndex]}`;
+          showToast(`Выпало: ${segments[winningIndex]}`);
+        }
+      }
+      requestAnimationFrame(animateWheel);
     });
 
     // ==========================================
