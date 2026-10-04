@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и генератор уникальных RP биографий для CRMP, SAMP и GTA 5 RP проектов.">
+  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и конструктор неповторимых RP биографий для CRMP, SAMP и GTA 5 RP проектов.">
 
   <style>
     :root {
@@ -145,6 +145,118 @@
       100% { transform: translate3d(-110px, 80px, 0) scale(1); }
     }
 
+    /* БОКОВОЕ ВЫДВИЖНОЕ МЕНЮ */
+    .sidebar-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      z-index: 1050;
+    }
+
+    .sidebar-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .sidebar-drawer {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 290px;
+      background: #0b0d13;
+      border-right: 1px solid var(--card-border);
+      box-shadow: 15px 0 40px rgba(0, 0, 0, 0.7);
+      padding: 1.6rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      transform: translateX(-100%);
+      transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1100;
+    }
+
+    .sidebar-drawer.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar-logo {
+      font-size: 1.35rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .btn-close-sidebar {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .btn-close-sidebar:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .sidebar-nav-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 1rem;
+      border-radius: 12px;
+      background: #12141c;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.92rem;
+      font-weight: 700;
+      font-family: inherit;
+      transition: all 0.18s ease;
+      text-align: left;
+    }
+
+    .sidebar-nav-item:hover {
+      background: #181c27;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateX(3px);
+    }
+
+    .sidebar-nav-item.active {
+      background: rgba(192, 132, 252, 0.12);
+      color: #fff;
+      border-color: var(--accent-highlight);
+      box-shadow: 0 4px 15px rgba(192, 132, 252, 0.15);
+    }
+
     .container {
       position: relative;
       z-index: 1;
@@ -162,6 +274,12 @@
       margin-bottom: 2rem;
       flex-wrap: wrap;
       gap: 0.75rem;
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
     }
 
     .theme-picker {
@@ -227,7 +345,7 @@
 
     header {
       text-align: center;
-      margin-bottom: 1.8rem;
+      margin-bottom: 2.2rem;
     }
 
     .top-badge {
@@ -289,43 +407,6 @@
       font-size: 0.98rem;
       max-width: 540px;
       margin: 0 auto;
-    }
-
-    .nav-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 0.65rem;
-      margin-bottom: 2rem;
-      flex-wrap: wrap;
-    }
-
-    .nav-tab {
-      background: #0d0f15;
-      border: 1px solid var(--card-border);
-      color: var(--text-muted);
-      padding: 0.6rem 1.4rem;
-      border-radius: 14px;
-      font-family: inherit;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: all 0.2s ease;
-    }
-
-    .nav-tab:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-1px);
-    }
-
-    .nav-tab.active {
-      background: rgba(192, 132, 252, 0.12);
-      border-color: var(--accent-highlight);
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(192, 132, 252, 0.15);
     }
 
     .tab-content {
@@ -1019,14 +1100,43 @@
     <div class="blob blob-3"></div>
   </div>
 
+  <!-- БОКОВОЕ МЕНЮ (DRAWER) -->
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+  <aside class="sidebar-drawer" id="sidebar-drawer">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
+      </div>
+      <button class="btn-close-sidebar" id="btn-close-sidebar" title="Скрыть меню">&times;</button>
+    </div>
+    <div class="sidebar-nav">
+      <button class="sidebar-nav-item active" data-tab="tab-names">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <span>Генератор ников</span>
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-bio">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+        <span>RP Биографии</span>
+      </button>
+    </div>
+  </aside>
+
   <div class="container">
     <div class="top-toolbar">
-      <div class="theme-picker" title="Выбор атмосферы">
-        <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: 700; margin-right: 0.2rem;">ТЕМА:</span>
-        <div class="theme-dot violet active" data-theme="violet" title="Violet Aurora"></div>
-        <div class="theme-dot crimson" data-theme="crimson" title="Crimson ОПГ"></div>
-        <div class="theme-dot emerald" data-theme="emerald" title="Emerald Гос"></div>
-        <div class="theme-dot ice" data-theme="ice" title="Ice Blue"></div>
+      <div class="toolbar-left">
+        <!-- КНОПКА ОТКРЫТИЯ БОКОВОГО МЕНЮ -->
+        <button class="btn-top-util" id="btn-open-sidebar" title="Открыть боковое меню">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          Разделы
+        </button>
+
+        <div class="theme-picker" title="Выбор атмосферы">
+          <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: 700; margin-right: 0.2rem;">ТЕМА:</span>
+          <div class="theme-dot violet active" data-theme="violet" title="Violet Aurora"></div>
+          <div class="theme-dot crimson" data-theme="crimson" title="Crimson ОПГ"></div>
+          <div class="theme-dot emerald" data-theme="emerald" title="Emerald Гос"></div>
+          <div class="theme-dot ice" data-theme="ice" title="Ice Blue"></div>
+        </div>
       </div>
 
       <div class="top-actions">
@@ -1053,23 +1163,12 @@
       <p class="subtitle">Лучший генератор RP ников и биографий для CRMP, SAMP и GTA 5 RP</p>
     </header>
 
-    <nav class="nav-tabs">
-      <button class="nav-tab active" data-tab="tab-names">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        Генератор ников
-      </button>
-      <button class="nav-tab" data-tab="tab-bio">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
-        RP Биографии
-      </button>
-    </nav>
-
     <!-- ВКЛАДКА 1: ГЕНЕРАТОР НИКОВ -->
     <div class="tab-content active" id="tab-names">
       <div class="command-bar">
         <div class="filters-cluster">
           <div class="pill-select-wrapper">
-            <svg class="pill-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <svg class="pill-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             <select id="filter-faction" class="pill-select">
               <option value="all">🌍 Все страны</option>
               <option value="russia">🇷🇺 Россия</option>
@@ -1268,7 +1367,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v6';
+          const CACHE_NAME = 'roleid-cache-v7';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1297,6 +1396,7 @@
       btnPwaInstall.style.display = 'none';
     });
 
+    // Темы
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
 
@@ -1312,20 +1412,42 @@
     });
     setTheme(currentTheme);
 
-    const navTabs = document.querySelectorAll('.nav-tab');
+    // УПРАВЛЕНИЕ БОКОВЫМ МЕНЮ И ВКЛАДКАМИ
+    const sidebarDrawer = document.getElementById('sidebar-drawer');
+    const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+    const btnOpenSidebar = document.getElementById('btn-open-sidebar');
+    const btnCloseSidebar = document.getElementById('btn-close-sidebar');
+    const sidebarNavItems = document.querySelectorAll('.sidebar-nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
 
-    navTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        navTabs.forEach(t => t.classList.remove('active'));
+    function openSidebar() {
+      sidebarDrawer.classList.add('open');
+      sidebarBackdrop.classList.add('open');
+    }
+
+    function closeSidebar() {
+      sidebarDrawer.classList.remove('open');
+      sidebarBackdrop.classList.remove('open');
+    }
+
+    btnOpenSidebar.addEventListener('click', openSidebar);
+    btnCloseSidebar.addEventListener('click', closeSidebar);
+    sidebarBackdrop.addEventListener('click', closeSidebar);
+
+    sidebarNavItems.forEach(item => {
+      item.addEventListener('click', () => {
+        sidebarNavItems.forEach(i => i.classList.remove('active'));
         tabContents.forEach(c => c.classList.remove('active'));
 
-        tab.classList.add('active');
-        const target = document.getElementById(tab.dataset.tab);
+        item.classList.add('active');
+        const target = document.getElementById(item.dataset.tab);
         if (target) target.classList.add('active');
+
+        closeSidebar();
       });
     });
 
+    // Индикатор цвета пола в фильтре
     const genderSelect = document.getElementById('filter-gender');
     const genderIcon = document.getElementById('gender-indicator-icon');
 
@@ -2050,6 +2172,7 @@ ${present}`;
 
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape') {
+        closeSidebar();
         closeQr();
         bioModal.classList.remove('open');
         return;
