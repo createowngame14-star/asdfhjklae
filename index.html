@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <title>ROLEID — Официальный RP помощник | Таблицы цен перекупа Radmir RP, Ники, RP Биографии</title>
+  <title>ROLEID — Официальный RP помощник | Новости, Таблицы перекупа Radmir RP, Ники, RP Биографии</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: актуальные таблицы цен перекупа (низкий, средний, высокий БУ), генератор никнеймов, конструктор RP биографий и ИИ-ассистент.">
+  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: последние новости проекта @old_team_news, таблицы цен перекупа (низкий, средний, высокий БУ), генератор никнеймов и RP биографии.">
 
   <style>
     :root {
@@ -158,16 +158,11 @@
       z-index: 1050;
     }
 
-    .sidebar-backdrop.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .sidebar-backdrop.open { opacity: 1; pointer-events: auto; }
 
     .sidebar-drawer {
       position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
+      top: 0; bottom: 0; left: 0;
       width: 300px;
       background: #0b0d13;
       border-right: 1px solid var(--card-border);
@@ -181,9 +176,7 @@
       z-index: 1100;
     }
 
-    .sidebar-drawer.open {
-      transform: translateX(0);
-    }
+    .sidebar-drawer.open { transform: translateX(0); }
 
     .sidebar-header {
       display: flex;
@@ -204,8 +197,7 @@
       border: 1px solid var(--card-border);
       color: var(--text-muted);
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       font-size: 1.2rem;
       cursor: pointer;
       display: flex;
@@ -214,15 +206,12 @@
       transition: color 0.15s, border-color 0.15s;
     }
 
-    .btn-close-sidebar:hover {
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
+    .btn-close-sidebar:hover { color: #fff; border-color: rgba(255, 255, 255, 0.2); }
 
     .sidebar-nav {
       display: flex;
       flex-direction: column;
-      gap: 0.6rem;
+      gap: 0.55rem;
     }
 
     .sidebar-nav-item {
@@ -230,13 +219,13 @@
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      padding: 0.8rem 1rem;
+      padding: 0.75rem 0.95rem;
       border-radius: 12px;
       background: #12141c;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
       cursor: pointer;
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
       font-family: inherit;
       transition: all 0.18s ease;
@@ -320,8 +309,7 @@
     }
 
     .theme-dot {
-      width: 14px;
-      height: 14px;
+      width: 14px; height: 14px;
       border-radius: 50%;
       cursor: pointer;
       border: 2px solid transparent;
@@ -393,8 +381,7 @@
     }
 
     .top-badge span.pulse-dot {
-      width: 7px;
-      height: 7px;
+      width: 7px; height: 7px;
       border-radius: 50%;
       background: #10b981;
       box-shadow: 0 0 10px #10b981;
@@ -441,9 +428,7 @@
       animation: cardEntrance 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content.active { display: block; }
 
     .back-to-hub-btn {
       display: inline-flex;
@@ -468,7 +453,7 @@
       transform: translateX(-2px);
     }
 
-    /* НАЧАЛЬНОЕ МЕНЮ (HUB МЕНЮ) */
+    /* НАЧАЛЬНОЕ МЕНЮ (HUB) */
     .hub-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -495,9 +480,7 @@
     .hub-card::before {
       content: "";
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 3px;
       background: var(--accent-flow);
       opacity: 0;
@@ -511,9 +494,7 @@
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(192, 132, 252, 0.12);
     }
 
-    .hub-card:hover::before {
-      opacity: 1;
-    }
+    .hub-card:hover::before { opacity: 1; }
 
     .hub-card-header {
       display: flex;
@@ -522,8 +503,7 @@
     }
 
     .hub-card-icon {
-      width: 48px;
-      height: 48px;
+      width: 48px; height: 48px;
       border-radius: 14px;
       background: #141720;
       border: 1px solid var(--card-border);
@@ -585,8 +565,115 @@
       transition: color 0.15s ease;
     }
 
-    .hub-card:hover .hub-card-footer {
+    .hub-card:hover .hub-card-footer { color: var(--accent-highlight); }
+
+    /* РАЗДЕЛ НОВОСТЕЙ */
+    .news-header-box {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .news-card {
+      background: #12141c;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .news-img {
+      width: 100%;
+      height: 175px;
+      object-fit: cover;
+      background: #181c27;
+      display: block;
+    }
+
+    .news-content {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .news-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.76rem;
+      color: var(--text-dim);
+    }
+
+    .news-badge {
+      font-family: ui-monospace, monospace;
+      font-size: 0.72rem;
       color: var(--accent-highlight);
+      background: rgba(192, 132, 252, 0.1);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      padding: 0.15rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    .news-text {
+      font-size: 0.88rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+      white-space: pre-line;
+      word-break: break-word;
+      max-height: 140px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
+
+    .news-btn {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      background: #181c27;
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 0.6rem 0.9rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .news-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.4);
+      color: #38bdf8;
+    }
+
+    .news-skeleton {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      color: var(--text-dim);
+      font-size: 0.92rem;
     }
 
     /* ОБУЧЕНИЕ / ONBOARDING ТУР */
@@ -606,10 +693,7 @@
       transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .tour-overlay.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    .tour-overlay.open { opacity: 1; pointer-events: auto; }
 
     .tour-modal {
       background: #0f1118;
@@ -621,12 +705,9 @@
       box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.2);
       transform: scale(0.92) translateY(15px);
       transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      position: relative;
     }
 
-    .tour-overlay.open .tour-modal {
-      transform: scale(1) translateY(0);
-    }
+    .tour-overlay.open .tour-modal { transform: scale(1) translateY(0); }
 
     .tour-progress-wrap {
       display: flex;
@@ -643,13 +724,10 @@
       transition: background 0.25s ease;
     }
 
-    .tour-dot.active {
-      background: var(--accent-flow);
-    }
+    .tour-dot.active { background: var(--accent-flow); }
 
     .tour-icon-badge {
-      width: 58px;
-      height: 58px;
+      width: 58px; height: 58px;
       border-radius: 18px;
       background: rgba(192, 132, 252, 0.12);
       border: 1px solid rgba(192, 132, 252, 0.3);
@@ -693,19 +771,11 @@
       cursor: pointer;
       padding: 0.6rem 0.9rem;
       border-radius: 10px;
-      transition: color 0.15s;
     }
 
-    .btn-tour-skip:hover {
-      color: #fff;
-    }
+    .btn-tour-skip:hover { color: #fff; }
 
-    .tour-next-group {
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    /* РАЗДЕЛ FAQ & ТАБЛИЦ ПЕРЕКУПА */
+    /* ТАБЛИЦЫ ПЕРЕКУПА RADMIR */
     .faq-subnav {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -721,7 +791,6 @@
       padding: 0.85rem 0.9rem;
       font-size: 0.88rem;
       font-weight: 700;
-      font-family: inherit;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -731,12 +800,7 @@
       text-align: center;
     }
 
-    .faq-subnav-btn:hover {
-      background: #181c27;
-      color: #fff;
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
+    .faq-subnav-btn:hover { background: #181c27; color: #fff; border-color: rgba(255, 255, 255, 0.2); }
     .faq-subnav-btn.active {
       background: rgba(192, 132, 252, 0.14);
       border-color: var(--accent-highlight);
@@ -753,10 +817,6 @@
       font-size: 0.85rem;
       line-height: 1.6;
       color: var(--text-muted);
-    }
-
-    .faq-notice-box b {
-      color: #fff;
     }
 
     .faq-rules-list {
@@ -785,10 +845,7 @@
       flex-wrap: wrap;
     }
 
-    .faq-search-wrapper {
-      flex: 1;
-      min-width: 250px;
-    }
+    .faq-search-wrapper { flex: 1; min-width: 250px; }
 
     .faq-count-badge {
       font-size: 0.82rem;
@@ -841,40 +898,16 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       color: #e2e8f0;
       font-weight: 500;
-      transition: background 0.12s;
     }
 
-    .faq-table tbody tr {
-      cursor: pointer;
-      transition: background-color 0.12s ease;
-    }
+    .faq-table tbody tr { cursor: pointer; transition: background-color 0.12s ease; }
+    .faq-table tbody tr:hover td { background: rgba(255, 255, 255, 0.04); }
 
-    .faq-table tbody tr:hover td {
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .faq-car-name {
-      font-weight: 700;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-    }
-
-    .faq-price-buy {
-      font-family: ui-monospace, SFMono-Regular, monospace;
-      font-weight: 600;
-      color: #94a3b8;
-    }
-
-    .faq-price-sell {
-      font-family: ui-monospace, SFMono-Regular, monospace;
-      font-weight: 700;
-      color: #38bdf8;
-    }
-
+    .faq-car-name { font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.55rem; }
+    .faq-price-buy { font-family: ui-monospace, monospace; font-weight: 600; color: #94a3b8; }
+    .faq-price-sell { font-family: ui-monospace, monospace; font-weight: 700; color: #38bdf8; }
     .faq-profit-badge {
-      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-family: ui-monospace, monospace;
       font-weight: 700;
       color: #34d399;
       background: rgba(16, 185, 129, 0.1);
@@ -885,14 +918,7 @@
       white-space: nowrap;
     }
 
-    .faq-no-results {
-      text-align: center;
-      padding: 2.8rem 1rem;
-      color: var(--text-dim);
-      font-size: 0.92rem;
-    }
-
-    /* ФОРМЫ, КНОПКИ И ГЕНЕРАТОРЫ */
+    /* ФОРМЫ И КНОПКИ */
     .command-bar {
       background: #0d0f15;
       border: 1px solid var(--card-border);
@@ -902,7 +928,6 @@
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
-      transition: border-color 0.2s ease;
     }
 
     .filters-cluster {
@@ -923,25 +948,13 @@
       padding: 0 0.85rem;
       height: 44px;
       width: 100%;
-      transition: border-color 0.15s ease, background-color 0.15s ease;
+      transition: border-color 0.15s ease;
     }
 
-    .pill-select-wrapper:hover,
-    .pill-input-wrapper:hover {
+    .pill-select-wrapper:hover, .pill-input-wrapper:hover {
       background: #181c27;
       border-color: rgba(255, 255, 255, 0.18);
     }
-
-    .pill-select-wrapper svg.pill-icon,
-    .pill-input-wrapper svg.pill-icon {
-      color: var(--text-dim);
-      margin-right: 0.5rem;
-      flex-shrink: 0;
-      transition: color 0.2s ease;
-    }
-
-    .pill-select-wrapper svg.pill-icon.gender-male { color: #38bdf8 !important; }
-    .pill-select-wrapper svg.pill-icon.gender-female { color: #f472b6 !important; }
 
     .pill-select {
       background: transparent;
@@ -953,27 +966,10 @@
       font-weight: 600;
       cursor: pointer;
       width: 100%;
-      padding-right: 1.2rem;
       appearance: none;
-      -webkit-appearance: none;
     }
 
-    .pill-select option {
-      background: #0f1118;
-      color: #fff;
-    }
-
-    .pill-select-wrapper::after {
-      content: "";
-      position: absolute;
-      right: 0.85rem;
-      pointer-events: none;
-      width: 7px;
-      height: 7px;
-      border-right: 2px solid var(--text-dim);
-      border-bottom: 2px solid var(--text-dim);
-      transform: translateY(-2px) rotate(45deg);
-    }
+    .pill-select option { background: #0f1118; color: #fff; }
 
     .custom-fame-input {
       background: transparent;
@@ -984,11 +980,6 @@
       font-size: 0.86rem;
       font-weight: 600;
       width: 100%;
-    }
-
-    .custom-fame-input::placeholder {
-      color: var(--text-dim);
-      font-weight: 500;
     }
 
     .actions-cluster {
@@ -1012,7 +1003,7 @@
       background: var(--accent-flow);
       background-size: 200% 200%;
       box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
-      transition: transform 0.12s ease, opacity 0.12s ease;
+      transition: transform 0.12s ease;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -1020,9 +1011,8 @@
       width: 100%;
     }
 
-    .btn-generate:hover { transform: translateY(-1px); opacity: 0.95; }
+    .btn-generate:hover { transform: translateY(-1px); }
     .btn-generate:active { transform: translateY(1px); }
-    .btn-generate:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .btn-icon-copy {
       height: 44px;
@@ -1040,24 +1030,16 @@
       justify-content: center;
       gap: 0.45rem;
       width: 100%;
-      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+      transition: background-color 0.15s;
     }
 
-    .btn-icon-copy:hover {
-      background: #181c27;
-      color: var(--text-main);
-      border-color: rgba(255, 255, 255, 0.18);
-    }
+    .btn-icon-copy:hover { background: #181c27; color: #fff; }
 
     .hotkey-hint {
       text-align: center;
       margin-top: 0.85rem;
       font-size: 0.78rem;
       color: var(--text-dim);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
     }
 
     .kbd-chip {
@@ -1065,8 +1047,7 @@
       border: 1px solid var(--card-border);
       padding: 0.12rem 0.45rem;
       border-radius: 6px;
-      font-size: 0.72rem;
-      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-family: ui-monospace, monospace;
       color: var(--text-muted);
     }
 
@@ -1089,70 +1070,34 @@
       border-radius: 16px;
       padding: 1.15rem 1.3rem;
       cursor: pointer;
-      user-select: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 0.9rem;
-      transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.15s ease;
+      transition: transform 0.15s ease, border-color 0.2s ease;
       animation: cardEntrance 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
-    .modern-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--card-hover-border);
-      background: #131620;
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
+    .modern-card:hover { transform: translateY(-2px); border-color: var(--card-hover-border); background: #131620; }
 
     .slot-viewport {
       height: 38px;
       overflow: hidden;
       position: relative;
       mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
     }
 
-    .slot-strip {
-      display: flex;
-      flex-direction: column;
-      will-change: transform;
-    }
-
+    .slot-strip { display: flex; flex-direction: column; will-change: transform; }
     .slot-strip.spinning { filter: blur(1.5px); }
 
     .slot-item {
       height: 38px;
       display: flex;
       align-items: center;
-      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-family: ui-monospace, monospace;
       font-size: 1.25rem;
       font-weight: 700;
       color: #ffffff;
-    }
-
-    .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      padding-top: 0.65rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .glass-box {
@@ -1163,12 +1108,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .chips-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 0.8rem;
-    }
+    .chips-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
 
     .nick-chip {
       background: #141720;
@@ -1184,7 +1124,7 @@
     }
 
     .nick-chip:hover { background: #181c27; border-color: rgba(255,255,255,0.2); }
-    .nick-chip .del-btn { color: var(--text-dim); cursor: pointer; }
+    .nick-chip .del-btn { color: var(--text-dim); }
     .nick-chip .del-btn:hover { color: #f43f5e; }
 
     /* РАНДОМАЙЗЕР & РУЛЕТКА */
@@ -1256,7 +1196,6 @@
       inset: 0;
       background: rgba(0, 0, 0, 0.75);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
       z-index: 1000;
       display: flex;
       align-items: center;
@@ -1286,14 +1225,12 @@
 
     .btn-close-modal {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
+      top: 1rem; right: 1rem;
       background: #141720;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
       border-radius: 50%;
-      width: 32px;
-      height: 32px;
+      width: 32px; height: 32px;
       font-size: 1.1rem;
       cursor: pointer;
       display: flex;
@@ -1303,10 +1240,8 @@
 
     .ai-chat-fab {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      width: 52px;
-      height: 52px;
+      bottom: 2rem; right: 2rem;
+      width: 52px; height: 52px;
       border-radius: 50%;
       background: var(--accent-flow);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -1324,8 +1259,7 @@
 
     .ai-chat-modal {
       position: fixed;
-      bottom: 5.8rem;
-      right: 2rem;
+      bottom: 5.8rem; right: 2rem;
       width: 360px;
       max-width: calc(100vw - 2.5rem);
       height: 480px;
@@ -1402,8 +1336,7 @@
 
     .toast {
       position: fixed;
-      bottom: 2rem;
-      left: 2rem;
+      bottom: 2rem; left: 2rem;
       background: #141720;
       border: 1px solid rgba(255, 255, 255, 0.12);
       color: #fff;
@@ -1482,6 +1415,10 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>Главное меню</span>
       </button>
+      <button class="sidebar-nav-item" data-tab="tab-news">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <span>Новости (@old_team_news)</span>
+      </button>
       <button class="sidebar-nav-item" data-tab="tab-faq">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span>FAQ Перекупа авто</span>
@@ -1505,7 +1442,7 @@
 
       <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 0.35rem 0;"></div>
 
-      <!-- КНОПКА ОБУЧЕНИЯ ПЕРЕНЕСЕНА В РАЗДЕЛЫ -->
+      <!-- КНОПКА ОБУЧЕНИЯ В РАЗДЕЛАХ -->
       <button class="sidebar-nav-item" id="btn-sidebar-tour" style="border-color: rgba(192, 132, 252, 0.25); background: rgba(192, 132, 252, 0.06); color: var(--accent-highlight);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         <span>Обучение (Курс дела)</span>
@@ -1561,13 +1498,29 @@
       <h1>
         <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
       </h1>
-      <p class="subtitle">Специализированная база цен перекупщика, генератор RP-ников, автобиографии и рандомайзер для серверов Radmir RP</p>
+      <p class="subtitle">Специализированная база цен перекупщика, генератор RP-ников, автобиографии и новости для серверов Radmir RP</p>
     </header>
 
-    <!-- ЭКРАН 0: НАЧАЛЬНОЕ МЕНЮ (HUB) С КРАСИВЫМИ ПЕРЕХОДАМИ -->
+    <!-- ЭКРАН 0: НАЧАЛЬНОЕ МЕНЮ (HUB) -->
     <div class="tab-content active" id="tab-hub">
       <div class="hub-grid">
-        <!-- Карточка 1: FAQ Перекупа -->
+        <!-- Карточка 1: Новости Telegram -->
+        <div class="hub-card" data-open-tab="tab-news">
+          <div class="hub-card-header">
+            <div class="hub-card-icon">📢</div>
+            <span class="hub-badge highlight">@old_team_news</span>
+          </div>
+          <div class="hub-card-body">
+            <h3>Новости и обновления</h3>
+            <p>Прямой фид свежих постов из официального канала Telegram: анонсы обновлений, конкурсы и новости команды проекта.</p>
+          </div>
+          <div class="hub-card-footer">
+            <span>Читать новости</span>
+            <span>&rarr;</span>
+          </div>
+        </div>
+
+        <!-- Карточка 2: FAQ Перекупа -->
         <div class="hub-card" data-open-tab="tab-faq">
           <div class="hub-card-header">
             <div class="hub-card-icon">🚗</div>
@@ -1583,7 +1536,7 @@
           </div>
         </div>
 
-        <!-- Карточка 2: Генератор ников -->
+        <!-- Карточка 3: Генератор ников -->
         <div class="hub-card" data-open-tab="tab-names">
           <div class="hub-card-header">
             <div class="hub-card-icon">🪪</div>
@@ -1599,7 +1552,7 @@
           </div>
         </div>
 
-        <!-- Карточка 3: RP Биографии -->
+        <!-- Карточка 4: RP Биографии -->
         <div class="hub-card" data-open-tab="tab-bio">
           <div class="hub-card-header">
             <div class="hub-card-icon">📜</div>
@@ -1615,7 +1568,7 @@
           </div>
         </div>
 
-        <!-- Карточка 4: Рандомайзер чисел -->
+        <!-- Карточка 5: Рандомайзер чисел -->
         <div class="hub-card" data-open-tab="tab-random">
           <div class="hub-card-header">
             <div class="hub-card-icon">🎲</div>
@@ -1627,22 +1580,6 @@
           </div>
           <div class="hub-card-footer">
             <span>Запустить рандом</span>
-            <span>&rarr;</span>
-          </div>
-        </div>
-
-        <!-- Карточка 5: Рулетка -->
-        <div class="hub-card" data-open-tab="tab-wheel">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">🎡</div>
-            <span class="hub-badge">Колесо</span>
-          </div>
-          <div class="hub-card-body">
-            <h3>Колесо Фортуны</h3>
-            <p>Анимированная рулетка: вводите список ников участников или призов для проведения прозрачных конкурсов на сервере.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Крутить колесо</span>
             <span>&rarr;</span>
           </div>
         </div>
@@ -1665,7 +1602,37 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 1: FAQ ТАБЛИЦЫ ПЕРЕКУПА RADMIR RP -->
+    <!-- ЭКРАН НОВОСТЕЙ (ИЗ TELEGRAM @old_team_news) -->
+    <div class="tab-content" id="tab-news">
+      <button class="back-to-hub-btn" data-back-to-hub>
+        &larr; Назад в меню
+      </button>
+
+      <div class="glass-box">
+        <div class="news-header-box">
+          <div>
+            <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">Новости и обновления проекта</h3>
+            <p style="color: var(--text-muted); font-size: 0.88rem;">
+              Прямая трансляция последних публикаций из официального Telegram-канала <b>@old_team_news</b>
+            </p>
+          </div>
+          <div style="display: flex; gap: 0.6rem; align-items: center;">
+            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 0.9rem; font-size: 0.8rem;">
+              🔄 Обновить
+            </button>
+            <a href="https://t.me/old_team_news" target="_blank" rel="noopener noreferrer" class="btn-generate" style="height: 38px; padding: 0 1rem; font-size: 0.82rem; text-decoration: none; width: auto;">
+              Открыть канал в TG &rarr;
+            </a>
+          </div>
+        </div>
+
+        <div class="news-grid" id="news-grid">
+          <div class="news-skeleton">Загрузка последних постов из Telegram...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ЭКРАН FAQ: ТАБЛИЦЫ ПЕРЕКУПА RADMIR RP -->
     <div class="tab-content" id="tab-faq">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1679,7 +1646,6 @@
           </p>
         </div>
 
-        <!-- Подпункты FAQ -->
         <div class="faq-subnav">
           <button class="faq-subnav-btn active" data-sub="low">
             <span>🚗 Низкий БУ (40)</span>
@@ -1692,7 +1658,6 @@
           </button>
         </div>
 
-        <!-- Инфо-блок правил перекупа -->
         <div class="faq-notice-box">
           <div id="faq-category-notice">
             <b>Низкий класс (СТОК авто БЕЗ стейджа):</b> Только ликвидные автомобили, на которые всегда есть стабильный спрос.
@@ -1710,7 +1675,6 @@
           </div>
         </div>
 
-        <!-- Поиск и счетчик -->
         <div class="faq-search-row">
           <div class="pill-input-wrapper faq-search-wrapper">
             <svg class="pill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1722,7 +1686,6 @@
           <div class="faq-count-badge" id="faq-count-badge">Авто в списке: 40</div>
         </div>
 
-        <!-- Таблица цен -->
         <div class="faq-table-container">
           <table class="faq-table">
             <thead>
@@ -1733,9 +1696,7 @@
                 <th style="width: 20%;">Чистый профит</th>
               </tr>
             </thead>
-            <tbody id="faq-table-body">
-              <!-- Генерация через JS -->
-            </tbody>
+            <tbody id="faq-table-body"></tbody>
           </table>
         </div>
 
@@ -1745,7 +1706,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 2: ГЕНЕРАТОР НИКОВ RADMIR RP -->
+    <!-- ЭКРАН 3: ГЕНЕРАТОР НИКОВ RADMIR RP -->
     <div class="tab-content" id="tab-names">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1813,17 +1774,9 @@
         </div>
         <div class="chips-wrap" id="history-chips"></div>
       </div>
-
-      <div class="glass-box">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 style="font-size: 1.05rem; font-weight: 700;">Сохраненные ники (<span id="fav-count">0</span>)</h3>
-          <button class="btn-icon-copy" id="btn-clear-fav" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem;">Очистить</button>
-        </div>
-        <div class="chips-wrap" id="fav-chips"></div>
-      </div>
     </div>
 
-    <!-- ЭКРАН 3: RP БИОГРАФИИ ДЛЯ ФОРУМА RADMIR -->
+    <!-- ЭКРАН 4: RP БИОГРАФИИ ДЛЯ ФОРУМА RADMIR -->
     <div class="tab-content" id="tab-bio">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1871,7 +1824,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 4: РАНДОМАЙЗЕР ЧИСЕЛ -->
+    <!-- ЭКРАН 5: РАНДОМАЙЗЕР ЧИСЕЛ -->
     <div class="tab-content" id="tab-random">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1907,7 +1860,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 5: РУЛЕТКА (КОЛЕСО) -->
+    <!-- ЭКРАН 6: РУЛЕТКА (КОЛЕСО) -->
     <div class="tab-content" id="tab-wheel">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -2048,9 +2001,16 @@
 
   <script>
     // ==========================================
-    // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА (ROLEID AI ASSISTANT)
+    // ССЫЛКИ НА CLOUDFLARE WORKERS
     // ==========================================
     const WORKER_URL = "https://crimson-wave-c3d6.wamq812.workers.dev";
+    
+    // ВСТАВЬ СЮДА ССЫЛКУ НА СВОЙ WORKER ДЛЯ ТЕЛЕГРАМА (из Части 1)
+    const TG_NEWS_WORKER_URL = "https://dark-flower-96f7.wamq812.workers.dev/";
+
+    // ==========================================
+    // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА
+    // ==========================================
     const FREE_MODELS = [
       "openrouter/free",
       "meta-llama/llama-3.3-70b-instruct:free",
@@ -2116,7 +2076,6 @@
       chatMessages.scrollTop = chatMessages.scrollHeight;
 
       let answerReceived = false;
-      let lastErrorText = "";
 
       for (const modelId of FREE_MODELS) {
         try {
@@ -2131,11 +2090,7 @@
             })
           });
 
-          if (!res.ok) {
-            const errData = await res.json().catch(() => ({}));
-            lastErrorText = errData.error?.message || `Ошибка ${res.status}`;
-            continue;
-          }
+          if (!res.ok) continue;
 
           const data = await res.json();
           if (data.choices && data.choices[0] && data.choices[0].message) {
@@ -2146,7 +2101,7 @@
             break;
           }
         } catch (e) {
-          console.warn(`Сбой запроса к ${modelId}:`, e);
+          console.warn(`Ошибка ${modelId}:`, e);
         }
       }
 
@@ -2163,7 +2118,7 @@
     }
 
     // ==========================================
-    // 2. НАВИГАЦИЯ МЕЖДУ РАЗДЕЛАМИ И HUB МЕНЮ
+    // 2. НАВИГАЦИЯ МЕЖДУ РАЗДЕЛАМИ
     // ==========================================
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
@@ -2198,6 +2153,7 @@
 
       if (tabId === 'tab-wheel') drawWheel();
       if (tabId === 'tab-faq') renderFaqTable();
+      if (tabId === 'tab-news') loadTelegramNews();
       closeSidebar();
     }
 
@@ -2205,24 +2161,97 @@
       item.addEventListener('click', () => switchTab(item.dataset.tab));
     });
 
-    // Переходы из начального Hub-меню
     document.querySelectorAll('.hub-card[data-open-tab]').forEach(card => {
       card.addEventListener('click', () => switchTab(card.dataset.openTab));
     });
 
-    // Кнопки "Назад в меню" на внутренних экранах
     document.querySelectorAll('[data-back-to-hub]').forEach(btn => {
       btn.addEventListener('click', () => switchTab('tab-hub'));
     });
 
     // ==========================================
-    // 3. ОБУЧАЮЩИЙ ТУР (КУРС ДЕЛА ДЛЯ НОВИЧКА)
+    // 3. ЗАГРУЗКА НОВОСТЕЙ ИЗ TELEGRAM (@old_team_news)
+    // ==========================================
+    const newsGrid = document.getElementById('news-grid');
+    const btnRefreshNews = document.getElementById('btn-refresh-news');
+
+    // Резервные посты на случай задержки подключения воркера
+    const FALLBACK_NEWS = [
+      {
+        id: 1,
+        date: "Сегодня",
+        text: "🔥 Последние обновления сервера и свежие новости перекупа уже доступны на ROLEID. Подписывайтесь на наш официальный Telegram-канал @old_team_news!",
+        photo: null,
+        url: "https://t.me/old_team_news"
+      },
+      {
+        id: 2,
+        date: "Вчера",
+        text: "🚗 База Б/У авторынка Radmir RP пополнена: добавлены новые расценки высокого класса и правила расчёта чистой прибыли со стейджем.",
+        photo: null,
+        url: "https://t.me/old_team_news"
+      }
+    ];
+
+    async function loadTelegramNews() {
+      if (!newsGrid) return;
+      newsGrid.innerHTML = `<div class="news-skeleton">Загрузка последних постов из @old_team_news...</div>`;
+
+      try {
+        const response = await fetch(TG_NEWS_WORKER_URL);
+        const data = await response.json();
+
+        if (data && data.success && data.posts && data.posts.length > 0) {
+          renderNewsCards(data.posts);
+        } else {
+          renderNewsCards(FALLBACK_NEWS);
+        }
+      } catch (err) {
+        console.warn("Воркер новостей не ответил, используем локальный фид:", err);
+        renderNewsCards(FALLBACK_NEWS);
+      }
+    }
+
+    function renderNewsCards(posts) {
+      if (!newsGrid) return;
+      newsGrid.innerHTML = posts.map(post => `
+        <div class="news-card">
+          ${post.photo ? `<img src="${post.photo}" class="news-img" alt="Новость">` : ''}
+          <div class="news-content">
+            <div class="news-meta">
+              <span class="news-badge">@old_team_news</span>
+              <span>${post.date}</span>
+            </div>
+            <div class="news-text">${post.text}</div>
+            <a href="${post.url}" target="_blank" rel="noopener noreferrer" class="news-btn">
+              <span>Открыть в Telegram</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    if (btnRefreshNews) {
+      btnRefreshNews.addEventListener('click', () => {
+        loadTelegramNews();
+        showToast('Лента обновляется...');
+      });
+    }
+
+    // ==========================================
+    // 4. ОБУЧАЮЩИЙ ТУР (КУРС ДЕЛА ДЛЯ НОВИЧКА)
     // ==========================================
     const TOUR_STEPS = [
       {
         icon: "👋",
         title: "Добро пожаловать в ROLEID!",
         desc: "Ваш специализированный карманный сервис, настроенный для игроков Radmir RP. Давайте проведем быстрый 30-секундный экскурс по ключевым возможностям."
+      },
+      {
+        icon: "📢",
+        title: "Новости проекта @old_team_news",
+        desc: "Прямая авто-трансляция всех обновлений, постов и анонсов из Telegram без необходимости выходить из браузера."
       },
       {
         icon: "🚗",
@@ -2233,11 +2262,6 @@
         icon: "🪪",
         title: "Генератор RP Ников и Биографий",
         desc: "Создание одобренных никнеймов под формат Radmir с привязкой к фамилии вашей фамы, а также автогенератор квентов для форума."
-      },
-      {
-        icon: "🤖",
-        title: "ИИ Помощник по Radmir RP",
-        desc: "Круглосуточный бот-консультант: знает все расценки, термины DM/DB/TK, команды отыгровок /me, /do и правила гос. структур."
       }
     ];
 
@@ -2292,7 +2316,6 @@
 
     if (btnTourSkip) btnTourSkip.addEventListener('click', closeTour);
 
-    // Кнопка в меню "Разделы"
     if (btnSidebarTour) {
       btnSidebarTour.addEventListener('click', () => {
         closeSidebar();
@@ -2300,7 +2323,6 @@
       });
     }
 
-    // Автозапуск тура только при ПЕРВОМ входе на сайт
     window.addEventListener('DOMContentLoaded', () => {
       const hasSeenTour = localStorage.getItem('radmir_tour_seen');
       if (!hasSeenTour) {
@@ -2309,7 +2331,7 @@
     });
 
     // ==========================================
-    // 4. ТЕМЫ ОФОРМЛЕНИЯ
+    // 5. ТЕМЫ ОФОРМЛЕНИЯ
     // ==========================================
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('radmir_theme') || 'violet';
@@ -2327,7 +2349,7 @@
     setTheme(currentTheme);
 
     // ==========================================
-    // 5. БАЗА ДАННЫХ И ЛОГИКА FAQ ТАБЛИЦ ПЕРЕКУПА
+    // 6. ТАБЛИЦЫ ПЕРЕКУПА RADMIR RP (203 АВТО)
     // ==========================================
     const FAQ_CARS_DATA = {
       low: [
@@ -2575,40 +2597,23 @@
       if (!faqTableBody) return;
       const list = FAQ_CARS_DATA[currentFaqCategory] || [];
       const query = (faqSearchInput ? faqSearchInput.value : '').trim().toLowerCase();
-
       const filtered = list.filter(([name]) => name.toLowerCase().includes(query));
 
-      if (faqCountBadge) {
-        faqCountBadge.innerText = `Авто в списке: ${filtered.length}`;
-      }
+      if (faqCountBadge) faqCountBadge.innerText = `Авто в списке: ${filtered.length}`;
 
       if (filtered.length === 0) {
-        faqTableBody.innerHTML = `
-          <tr>
-            <td colspan="4" class="faq-no-results">
-              Автомобиль «${query}» не найден в данном сегменте.
-            </td>
-          </tr>
-        `;
+        faqTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-dim)">Автомобиль не найден.</td></tr>`;
         return;
       }
 
-      faqTableBody.innerHTML = filtered.map(([name, buy, sell]) => {
-        const profit = calcProfit(buy, sell);
-        return `
-          <tr data-copy-car="${name}" data-buy="${buy}" data-sell="${sell}" title="Кликните, чтобы скопировать">
-            <td>
-              <div class="faq-car-name">
-                <span style="color: var(--accent-highlight);">•</span>
-                <span>${name}</span>
-              </div>
-            </td>
-            <td class="faq-price-buy">${buy}</td>
-            <td class="faq-price-sell">${sell}</td>
-            <td><span class="faq-profit-badge">${profit}</span></td>
-          </tr>
-        `;
-      }).join('');
+      faqTableBody.innerHTML = filtered.map(([name, buy, sell]) => `
+        <tr data-copy-car="${name}" data-buy="${buy}" data-sell="${sell}" title="Кликните, чтобы скопировать">
+          <td><div class="faq-car-name"><span style="color:var(--accent-highlight)">•</span><span>${name}</span></div></td>
+          <td class="faq-price-buy">${buy}</td>
+          <td class="faq-price-sell">${sell}</td>
+          <td><span class="faq-profit-badge">${calcProfit(buy, sell)}</span></td>
+        </tr>
+      `).join('');
     }
 
     faqSubnavBtns.forEach(btn => {
@@ -2616,7 +2621,6 @@
         faqSubnavBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFaqCategory = btn.dataset.sub;
-        
         if (faqCategoryNotice && FAQ_NOTICES[currentFaqCategory]) {
           faqCategoryNotice.innerHTML = `<b>${FAQ_NOTICES[currentFaqCategory].title}:</b> ${FAQ_NOTICES[currentFaqCategory].desc}`;
         }
@@ -2635,36 +2639,20 @@
     }
 
     // ==========================================
-    // 6. ГЕНЕРАТОР НИКОВ RADMIR RP
+    // 7. ГЕНЕРАТОР НИКОВ RADMIR RP
     // ==========================================
     const DB = {
-      russiaMaleNames: [
-        "Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", 
-        "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", 
-        "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", 
-        "Zakhar", "Stepan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", 
-        "Stanislav", "Ruslan", "Viktor", "Magomed", "Khamzat", "Said", "Timur"
-      ],
+      russiaMaleNames: ["Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", "Stanislav", "Ruslan", "Viktor", "Timur"],
       usMaleNames: ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Thomas", "Daniel", "Matthew"],
       italyMaleNames: ["Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico", "Antonio", "Enzo"],
       japanMaleNames: ["Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Takeshi", "Hayato"],
 
-      russiaFemaleNames: [
-        "Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", 
-        "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", 
-        "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta", "Kamila", "Amina"
-      ],
+      russiaFemaleNames: ["Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta"],
       usFemaleNames: ["Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia"],
       italyFemaleNames: ["Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina"],
       japanFemaleNames: ["Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori"],
 
-      russiaSurnames: [
-        "Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", 
-        "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", 
-        "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", 
-        "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", 
-        "Korshun", "Zverev", "Grozny", "Kabanov", "Reznov", "Severov", "Molot", "Voronin"
-      ],
+      russiaSurnames: ["Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", "Korshun", "Zverev", "Severov", "Molot", "Voronin"],
       usSurnames: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson"],
       italySurnames: ["Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino"],
       japanSurnames: ["Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"],
@@ -2715,7 +2703,6 @@
     }
 
     let currentList = [];
-    let savedFavs = JSON.parse(localStorage.getItem('radmir_fav_names') || '[]');
     let recentHistory = JSON.parse(localStorage.getItem('radmir_history_v1') || '[]');
     let isSpinning = false;
 
@@ -2791,24 +2778,20 @@
 
         html += `
           <div class="modern-card" id="card-${i}" data-nick="${item.nick}">
-            <div class="card-top">
-              <div class="card-meta">
-                <span>🇷🇺 Radmir RP</span>
-              </div>
-              <button class="btn-action-icon btn-bio-card" data-bio-idx="${i}" title="Открыть RP-биографию" style="background:transparent; border:none; color:var(--text-dim); cursor:pointer;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.8rem; font-weight:600; color:var(--text-muted)">🇷🇺 Radmir RP</span>
+              <button class="btn-bio-card" data-bio-idx="${i}" title="Открыть RP-биографию" style="background:transparent; border:none; color:var(--text-dim); cursor:pointer;">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
               </button>
             </div>
-            <div style="padding: 0.1rem 0; position: relative;">
-              <div class="slot-viewport">
-                <div class="slot-strip spinning" id="reel-${i}">
-                  ${decoysHtml}
-                  <div class="slot-item is-target">${item.nick}</div>
-                </div>
+            <div class="slot-viewport">
+              <div class="slot-strip spinning" id="reel-${i}">
+                ${decoysHtml}
+                <div class="slot-item is-target">${item.nick}</div>
               </div>
             </div>
-            <div class="card-footer">
-              <span style="display:flex; align-items:center; gap:0.35rem; font-weight:600;">Клик для копирования</span>
+            <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-dim); border-top:1px solid rgba(255,255,255,0.04); padding-top:0.6rem;">
+              <span>Клик для копирования</span>
               <span style="font-weight:600; color:${item.isFemale ? '#f472b6' : '#38bdf8'}">${item.gender}</span>
             </div>
           </div>
@@ -2857,7 +2840,7 @@
     }
 
     // ==========================================
-    // 7. МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА RADMIR RP
+    // 8. МОДАЛКА RP-БИОГРАФИИ
     // ==========================================
     const bioModal = document.getElementById('bio-modal');
     const btnCloseBio = document.getElementById('btn-close-bio');
@@ -2872,8 +2855,7 @@
         nick: item.nick,
         gender: item.gender,
         age: `${age} лет`,
-        server: "Radmir RP",
-        goal: "Служба в структуре, покупка элитного авто и авторитет"
+        server: "Radmir RP"
       };
 
       bioContentView.innerHTML = `
@@ -2889,26 +2871,12 @@
       btnCloseBio.addEventListener('click', () => bioModal.classList.remove('open'));
     }
 
-    // ==========================================
-    // 8. RP БИОГРАФИИ ДЛЯ ФОРУМА RADMIR
-    // ==========================================
+    // Генератор развернутой биографии
     const BIO_TEMPLATES = {
-      gos: [
-        "С ранних лет проявлял интерес к соблюдению дисциплины и закону. Окончив Нижегородскую академию МВД, поступил на службу, доказав верность присяге и готовность стоять на защите граждан.",
-        "После прохождения срочной службы в Армии Radmir RP, принял твердое решение связать судьбу с силовыми ведомствами. Отличается выдержкой, не поддается на коррупционные соблазны."
-      ],
-      opg: [
-        "Столкнувшись с несправедливостью улиц, быстро понял цену верному слову и силе. Сколотив круг надежных людей, завоевал авторитет среди бригад своим хладнокровием и тактикой.",
-        "Вырос в спальных районах Арзамаса. Рано научился отстаивать интересы дела, не терпит предательства и строго соблюдает понятия своего синдиката."
-      ],
-      biz: [
-        "Начав с перепродажи бюджетных машин на низком авторынке, сумел сколотить первый капитал. Сегодня инвестирует в коммерческую недвижимость и развивает собственное дело.",
-        "Прагматичный предприниматель, знающий каждую копейку. Благодаря тонкому чутью на выгодные сделки, уверенно удерживает лидерство на рынке."
-      ],
-      civil: [
-        "Честный и трудолюбивый гражданин Нижегородской области. Стремится к стабильной жизни, профессиональному росту и крепкой семье.",
-        "Освоив востребованное ремесло, уверенно строит будущее на просторах Radmir RP, заслужив искреннее уважение среди коллег."
-      ]
+      gos: ["С ранних лет проявлял интерес к закону. Окончив Нижегородскую академию МВД, поступил на службу, доказав верность присяге и готовность стоять на защите граждан."],
+      opg: ["Столкнувшись с несправедливостью улиц, быстро понял цену верному слову и силе. Сколотив круг надежных людей, завоевал авторитет среди бригад своим хладнокровием."],
+      biz: ["Начав с перепродажи бюджетных машин на низком авторынке, сумел сколотить первый капитал. Сегодня инвестирует в коммерческую недвижимость и развивает дело."],
+      civil: ["Честный и трудолюбивый гражданин Нижегородской области. Стремится к стабильной жизни, профессиональному росту и крепкой семье."]
     };
 
     let generatedBioText = '';
@@ -2946,7 +2914,7 @@ ${story}
       btnCopyUniqueBb.addEventListener('click', () => {
         if (!generatedBioText) return;
         copyText(generatedBioText);
-        showToast('BB-код скопирован для форума!');
+        showToast('BB-код скопирован!');
       });
     }
 
@@ -2993,7 +2961,7 @@ ${story}
       });
     }
 
-    // Колесо
+    // Рулетка (колесо)
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
     const wheelInput = document.getElementById('wheel-segments-input');
@@ -3013,32 +2981,32 @@ ${story}
     function drawWheel() {
       if (!ctx || !canvas) return;
       const segments = getSegments();
-      const numSegments = segments.length;
-      const arcSize = (2 * Math.PI) / numSegments;
-      const radius = canvas.width / 2;
+      const num = segments.length;
+      const arc = (2 * Math.PI) / num;
+      const rad = canvas.width / 2;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       segments.forEach((text, i) => {
-        const angle = wheelAngle + i * arcSize;
+        const angle = wheelAngle + i * arc;
         ctx.beginPath();
         ctx.fillStyle = wheelColors[i % wheelColors.length];
-        ctx.moveTo(radius, radius);
-        ctx.arc(radius, radius, radius - 4, angle, angle + arcSize);
-        ctx.lineTo(radius, radius);
+        ctx.moveTo(rad, rad);
+        ctx.arc(rad, rad, rad - 4, angle, angle + arc);
+        ctx.lineTo(rad, rad);
         ctx.fill();
 
         ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(angle + arcSize / 2);
+        ctx.translate(rad, rad);
+        ctx.rotate(angle + arc / 2);
         ctx.textAlign = 'right';
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 13px monospace';
-        ctx.fillText(text.length > 9 ? text.slice(0, 8) + '..' : text, radius - 16, 4);
+        ctx.fillText(text.length > 9 ? text.slice(0, 8) + '..' : text, rad - 16, 4);
         ctx.restore();
       });
 
       ctx.beginPath();
-      ctx.arc(radius, radius, 18, 0, 2 * Math.PI);
+      ctx.arc(rad, rad, 18, 0, 2 * Math.PI);
       ctx.fillStyle = '#0f1118';
       ctx.fill();
     }
@@ -3117,7 +3085,6 @@ ${story}
     }
     if (btnCloseQr && qrModal) btnCloseQr.addEventListener('click', () => qrModal.classList.remove('open'));
 
-    // Горячие клавиши
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape') {
         closeSidebar();
