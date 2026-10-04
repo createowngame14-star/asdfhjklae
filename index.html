@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <title>ROLEID — RP Генератор, Рулетка и Квенты для CRMP, SAMP и GTA 5 RP</title>
+  <title>ROLEID — RP Генератор ников и RP Биографий для CRMP, SAMP и GTA 5 RP</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP-комбайн для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, колесо фортуны, рандомайзер чисел и неповторимые RP-биографии.">
+  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и конструктор неповторимых RP биографий для CRMP, SAMP и GTA 5 RP проектов.">
 
   <style>
     :root {
@@ -291,7 +291,6 @@
       margin: 0 auto;
     }
 
-    /* ВКЛАДКИ / НАВИГАЦИЯ */
     .nav-tabs {
       display: flex;
       justify-content: center;
@@ -304,7 +303,7 @@
       background: #0d0f15;
       border: 1px solid var(--card-border);
       color: var(--text-muted);
-      padding: 0.6rem 1.25rem;
+      padding: 0.6rem 1.4rem;
       border-radius: 14px;
       font-family: inherit;
       font-size: 0.88rem;
@@ -331,14 +330,13 @@
 
     .tab-content {
       display: none;
-      animation: cardEntrance 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: cardEntrance 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     .tab-content.active {
       display: block;
     }
 
-    /* КОМАНДНАЯ ПАНЕЛЬ И ФИЛЬТРЫ */
     .command-bar {
       background: #0d0f15;
       border: 1px solid var(--card-border);
@@ -390,7 +388,6 @@
       transition: color 0.2s ease;
     }
 
-    /* Цвета человечков для пола */
     .pill-select-wrapper svg.pill-icon.gender-male {
       color: #38bdf8 !important;
     }
@@ -644,7 +641,6 @@
     .btn-fav-icon.active { color: #f43f5e; }
     .btn-bio-card:hover { color: var(--accent-highlight); }
 
-    /* КАЗИНО РУЛЕТКА / СЛОТ-МАШИНА */
     .card-center { 
       padding: 0.1rem 0; 
       position: relative;
@@ -777,63 +773,13 @@
 
     .nick-chip .del-btn:hover { color: #f43f5e; }
 
-    /* СТИЛИ РАНДОМАЙЗЕРА И РУЛЕТКИ */
-    .randomizer-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .number-display-box {
-      background: #141720;
-      border: 2px dashed rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 2.2rem 1rem;
-      text-align: center;
-      margin: 1.2rem 0;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-
-    .number-display-val {
-      font-size: 3.8rem;
-      font-weight: 800;
-      font-family: ui-monospace, SFMono-Regular, monospace;
-      background: var(--accent-flow);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1;
-    }
-
-    .wheel-wrapper {
-      position: relative;
-      display: inline-block;
-      margin: 1rem auto;
-    }
-
-    .wheel-pointer {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: #ef4444;
-      font-size: 2rem;
-      z-index: 10;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.8));
-    }
-
-    #roulette-canvas {
-      border-radius: 50%;
-      box-shadow: 0 0 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(99, 102, 241, 0.25);
-      display: block;
-      margin: 0 auto;
-    }
-
-    /* СТИЛИ RP БИОГРАФИЙ */
+    /* ФОРМА RP БИОГРАФИЙ БЕЗ ПУСТОТ */
     .bio-editor-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 2fr 1fr 2fr;
       gap: 0.75rem;
       margin-bottom: 1rem;
+      width: 100%;
     }
 
     .bio-result-card {
@@ -842,15 +788,14 @@
       border-radius: 16px;
       padding: 1.4rem;
       font-size: 0.92rem;
-      line-height: 1.65;
+      line-height: 1.7;
       color: #e2e8f0;
       white-space: pre-line;
-      max-height: 480px;
+      max-height: 520px;
       overflow-y: auto;
       margin: 1.2rem 0;
     }
 
-    /* МОДАЛЬНЫЕ ОКНА */
     .app-modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1059,7 +1004,6 @@
     @media (max-width: 820px) {
       .filters-cluster { grid-template-columns: repeat(2, 1fr); }
       .actions-cluster { grid-template-columns: 1fr; }
-      .randomizer-grid { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
     }
 
@@ -1107,22 +1051,17 @@
       <h1>
         <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
       </h1>
-      <p class="subtitle">Лучший генератор RP ников, рулетки и квенты для CRMP, SAMP и GTA 5 RP</p>
+      <p class="subtitle">Лучший генератор RP ников и биографий для CRMP, SAMP и GTA 5 RP</p>
     </header>
 
-    <!-- НАВИГАЦИОННЫЕ ВКЛАДКИ -->
     <nav class="nav-tabs">
       <button class="nav-tab active" data-tab="tab-names">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         Генератор ников
       </button>
-      <button class="nav-tab" data-tab="tab-random">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
-        Рандомайзер &amp; Рулетка
-      </button>
       <button class="nav-tab" data-tab="tab-bio">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
-        RP Биографии (Квента)
+        RP Биографии
       </button>
     </nav>
 
@@ -1202,71 +1141,12 @@
       </div>
     </div>
 
-    <!-- ВКЛАДКА 2: РАНДОМАЙЗЕР & РУЛЕТКА -->
-    <div class="tab-content" id="tab-random">
-      <div class="randomizer-grid">
-        <!-- Блок 1: Рандомайзер чисел -->
-        <div class="glass-box" style="display: flex; flex-direction: column; justify-content: space-between;">
-          <div>
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.35rem;">Рандомайзер чисел</h3>
-            <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1.2rem;">Для розыгрышей призов, строя и каптов</p>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
-              <div class="pill-input-wrapper">
-                <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ОТ:</span>
-                <input type="number" id="rand-min" class="custom-fame-input" value="1">
-              </div>
-              <div class="pill-input-wrapper">
-                <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ДО:</span>
-                <input type="number" id="rand-max" class="custom-fame-input" value="100">
-              </div>
-            </div>
-
-            <div class="number-display-box" id="rand-display-box">
-              <div class="number-display-val" id="rand-result-val">?</div>
-            </div>
-          </div>
-
-          <div>
-            <button class="btn-generate" id="btn-roll-number" style="margin-bottom: 0.8rem;">
-              Сгенерировать число
-            </button>
-            <div style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.4rem;">Последние выпадения:</div>
-            <div class="chips-wrap" id="number-history-chips" style="margin-top: 0.2rem;"></div>
-          </div>
-        </div>
-
-        <!-- Блок 2: Круглая рулетка (Колесо) -->
-        <div class="glass-box" style="text-align: center;">
-          <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 0.35rem;">Колесо Фортуны</h3>
-          <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 0.8rem;">Крути барабан для определения победителя</p>
-
-          <div class="pill-input-wrapper" style="margin-bottom: 0.85rem;" title="Сектора через запятую">
-            <input type="text" id="wheel-segments-input" class="custom-fame-input" value="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="Варианты через запятую">
-          </div>
-
-          <div class="wheel-wrapper">
-            <div class="wheel-pointer">▼</div>
-            <canvas id="roulette-canvas" width="280" height="280"></canvas>
-          </div>
-
-          <div id="wheel-winner" style="min-height: 28px; font-size: 1.15rem; font-weight: 800; color: var(--accent-highlight); margin: 0.6rem 0;">
-            Нажмите «Крутить»
-          </div>
-
-          <button class="btn-generate" id="btn-spin-wheel">
-            Крутить колесо
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ВКЛАДКА 3: RP БИОГРАФИИ (КВЕНТА) -->
+    <!-- ВКЛАДКА 2: RP БИОГРАФИИ -->
     <div class="tab-content" id="tab-bio">
       <div class="glass-box">
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Генератор неповторимых RP-Биографий</h3>
-        <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.4rem;">
-          Умный алгоритм собирает уникальную историю без повторений для форумов и заявок на лидерку
+        <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.35rem;">
+          Алгоритм составляет детальную историю без повторений для форумов и отчетов на старший состав
         </p>
 
         <div class="bio-editor-grid">
@@ -1274,32 +1154,24 @@
             <input type="text" id="bio-custom-name" class="custom-fame-input" placeholder="Имя и Фамилия персонажа">
           </div>
           <div class="pill-input-wrapper">
-            <input type="number" id="bio-custom-age" class="custom-fame-input" placeholder="Возраст (например 26)" value="26">
+            <input type="number" id="bio-custom-age" class="custom-fame-input" placeholder="Возраст" value="26">
           </div>
           <div class="pill-select-wrapper">
             <select id="bio-role-select" class="pill-select">
-              <option value="gos">Гос. структуры (МВД / ФСБ / Правительство)</option>
+              <option value="gos">Гос. структуры (МВД / ФСБ / Армия / Мэрия)</option>
               <option value="opg">Криминал / ОПГ / Мафия / Банды</option>
               <option value="biz">Предприниматель / Бизнесмен</option>
-              <option value="civil">Обычный житель штата / области</option>
-            </select>
-          </div>
-          <div class="pill-select-wrapper">
-            <select id="bio-city-select" class="pill-select">
-              <option value="Нижегородская область">Нижегородская область (CRMP)</option>
-              <option value="г. Лос-Сантос">г. Лос-Сантос (SAMP / GTA 5)</option>
-              <option value="г. Москва">г. Москва</option>
-              <option value="г. Палермо">г. Палермо, Сицилия</option>
+              <option value="civil">Обычный гражданин</option>
             </select>
           </div>
         </div>
 
         <button class="btn-generate" id="btn-build-unique-bio" style="margin-bottom: 1rem;">
-          Сгенерировать неповторимую квенту
+          Сгенерировать биографию
         </button>
 
         <div class="bio-result-card" id="unique-bio-view">
-          Нажмите кнопку выше, чтобы составить новую неповторимую историю персонажа...
+          Нажмите кнопку «Сгенерировать биографию», чтобы получить готовую развернутую историю персонажа...
         </div>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
@@ -1314,7 +1186,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА КВЕНТЫ ИЗ КАРТОЧЕК -->
+  <!-- МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА -->
   <div class="app-modal-backdrop" id="bio-modal">
     <div class="app-modal-card">
       <button class="btn-close-modal" id="btn-close-bio" title="Закрыть">&times;</button>
@@ -1394,11 +1266,10 @@
   </footer>
 
   <script>
-    // PWA Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v2';
+          const CACHE_NAME = 'roleid-cache-v3';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1427,7 +1298,6 @@
       btnPwaInstall.style.display = 'none';
     });
 
-    // Темы оформления
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
 
@@ -1455,10 +1325,6 @@
         tab.classList.add('active');
         const target = document.getElementById(tab.dataset.tab);
         if (target) target.classList.add('active');
-
-        if (tab.dataset.tab === 'tab-random') {
-          drawWheel();
-        }
       });
     });
 
@@ -1477,7 +1343,7 @@
     updateGenderFilterIcon();
     genderSelect.addEventListener('change', updateGenderFilterIcon);
 
-    // БАЗА ИМЕН И ФАМИЛИЙ
+    // БАЗА ДАННЫХ ИМЕН
     const DB = {
       russiaMaleNames: [
         "Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", 
@@ -1697,7 +1563,6 @@
     const namesGrid = document.getElementById('names-grid');
     const btnGenerate = document.getElementById('btn-generate');
 
-    // КАЗИНО ГЕНЕРАЦИЯ БЕЗ ЗВУКА
     function generate() {
       if (isSpinning) return;
 
@@ -1832,7 +1697,7 @@
       if (card && card.dataset.nick) copyText(card.dataset.nick);
     });
 
-    // МОДАЛЬНАЯ КВЕНТА ДЛЯ КАРТОЧЕК
+    // МОДАЛЬНАЯ КАРТОЧКА ИЗ ГРИДА НИКОВ
     const bioModal = document.getElementById('bio-modal');
     const btnCloseBio = document.getElementById('btn-close-bio');
     const bioContentView = document.getElementById('bio-content-view');
@@ -1846,15 +1711,6 @@
       "Харизматичный, внимательный к деталям, предан своим людям"
     ];
 
-    const BIO_PLACES = {
-      russia: "Нижегородская область / г. Москва",
-      us: "г. Лос-Сантос, штат Сан-Андреас",
-      italy: "г. Рим / г. Палермо, Сицилия",
-      spain: "г. Мадрид / г. Барселона",
-      france: "г. Марсель / г. Париж",
-      japan: "г. Токио / г. Киото"
-    };
-
     function generateBioData(item) {
       const age = Math.floor(Math.random() * (42 - 21 + 1)) + 21;
       return {
@@ -1863,7 +1719,6 @@
         gender: item.gender,
         age: `${age} лет`,
         nationality: `${item.flag} ${item.catName}`,
-        birthplace: BIO_PLACES[item.catKey] || "Нижегородская область",
         traits: rand(BIO_TRAITS),
         goal: "Карьерный рост, авторитет и развитие своего дела"
       };
@@ -1876,7 +1731,6 @@
         <div class="bio-row"><span class="bio-label">RP Никнейм:</span><span class="bio-val" style="font-family:ui-monospace,monospace">${currentBioData.nick}</span></div>
         <div class="bio-row"><span class="bio-label">Пол / Возраст:</span><span class="bio-val">${currentBioData.gender}, ${currentBioData.age}</span></div>
         <div class="bio-row"><span class="bio-label">Страна / Происхождение:</span><span class="bio-val">${currentBioData.nationality}</span></div>
-        <div class="bio-row"><span class="bio-label">Место рождения:</span><span class="bio-val">${currentBioData.birthplace}</span></div>
         <div class="bio-row"><span class="bio-label">Черты характера:</span><span class="bio-val">${currentBioData.traits}</span></div>
         <div class="bio-row"><span class="bio-label">Цель персонажа:</span><span class="bio-val">${currentBioData.goal}</span></div>
       `;
@@ -1894,9 +1748,8 @@
                  `[b]2. Никнейм на сервере:[/b] ${currentBioData.nick}\n` +
                  `[b]3. Пол / Возраст:[/b] ${currentBioData.gender}, ${currentBioData.age}\n` +
                  `[b]4. Страна / Происхождение:[/b] ${currentBioData.nationality}\n` +
-                 `[b]5. Место рождения:[/b] ${currentBioData.birthplace}\n` +
-                 `[b]6. Черты характера:[/b] ${currentBioData.traits}\n` +
-                 `[b]7. Цели персонажа:[/b] ${currentBioData.goal}`;
+                 `[b]5. Черты характера:[/b] ${currentBioData.traits}\n` +
+                 `[b]6. Цели персонажа:[/b] ${currentBioData.goal}`;
       copyText(bb);
       showToast('Анкета с BB-кодами скопирована!');
     });
@@ -1907,7 +1760,6 @@
                     `Ник: ${currentBioData.nick}\n` +
                     `Пол / Возраст: ${currentBioData.gender}, ${currentBioData.age}\n` +
                     `Страна / Происхождение: ${currentBioData.nationality}\n` +
-                    `Место рождения: ${currentBioData.birthplace}\n` +
                     `Характер: ${currentBioData.traits}\n` +
                     `Цель: ${currentBioData.goal}`;
       copyText(plain);
@@ -1986,198 +1838,95 @@
     });
 
     // ==========================================
-    // ЛОГИКА РАНДОМАЙЗЕРА ЧИСЕЛ
+    // УЛЬТРА-МАТРИЦА НЕПОВТОРИМЫХ RP БИОГРАФИЙ (1 000 000+ КОМБИНАЦИЙ)
     // ==========================================
-    let numberRollHistory = [];
-    const randMinInput = document.getElementById('rand-min');
-    const randMaxInput = document.getElementById('rand-max');
-    const randResultVal = document.getElementById('rand-result-val');
-    const numberHistoryChips = document.getElementById('number-history-chips');
-
-    document.getElementById('btn-roll-number').addEventListener('click', () => {
-      const min = parseInt(randMinInput.value, 10) || 1;
-      const max = parseInt(randMaxInput.value, 10) || 100;
-      if (min >= max) {
-        showToast('Значение "ОТ" должно быть меньше "ДО"!');
-        return;
-      }
-
-      // Быстрая анимация перебора чисел
-      let step = 0;
-      const interval = setInterval(() => {
-        randResultVal.innerText = Math.floor(Math.random() * (max - min + 1)) + min;
-        step++;
-        if (step > 10) {
-          clearInterval(interval);
-          const finalVal = Math.floor(Math.random() * (max - min + 1)) + min;
-          randResultVal.innerText = finalVal;
-          
-          numberRollHistory.unshift(finalVal);
-          if (numberRollHistory.length > 10) numberRollHistory.pop();
-          renderNumberHistory();
-        }
-      }, 35);
-    });
-
-    function renderNumberHistory() {
-      numberHistoryChips.innerHTML = numberRollHistory.map(num => `
-        <div class="nick-chip" data-copy="${num}">
-          <span># ${num}</span>
-        </div>
-      `).join('');
-    }
-
-    numberHistoryChips.addEventListener('click', (e) => {
-      const chip = e.target.closest('.nick-chip');
-      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
-    });
-
-    // ==========================================
-    // ЛОГИКА КОЛЕСА ФОРТУНЫ (РУЛЕТКА CANVAS)
-    // ==========================================
-    const canvas = document.getElementById('roulette-canvas');
-    const ctx = canvas.getContext('2d');
-    const wheelInput = document.getElementById('wheel-segments-input');
-    const wheelWinner = document.getElementById('wheel-winner');
-    const btnSpinWheel = document.getElementById('btn-spin-wheel');
-
-    let wheelAngle = 0;
-    let isWheelSpinning = false;
-    const wheelColors = ['#6366f1', '#181b26', '#8b5cf6', '#181b26', '#ec4899', '#181b26', '#3b82f6', '#181b26', '#10b981', '#181b26'];
-
-    function getSegments() {
-      const raw = wheelInput.value.split(',').map(s => s.trim()).filter(Boolean);
-      return raw.length >= 2 ? raw : ['1', '2', '3', '4', '5', '6'];
-    }
-
-    function drawWheel() {
-      const segments = getSegments();
-      const numSegments = segments.length;
-      const arcSize = (2 * Math.PI) / numSegments;
-      const radius = canvas.width / 2;
-
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      segments.forEach((text, i) => {
-        const angle = wheelAngle + i * arcSize;
-        ctx.beginPath();
-        ctx.fillStyle = wheelColors[i % wheelColors.length];
-        ctx.moveTo(radius, radius);
-        ctx.arc(radius, radius, radius - 4, angle, angle + arcSize);
-        ctx.lineTo(radius, radius);
-        ctx.fill();
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
-        ctx.stroke();
-
-        ctx.save();
-        ctx.translate(radius, radius);
-        ctx.rotate(angle + arcSize / 2);
-        ctx.textAlign = 'right';
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 13px ui-monospace, monospace';
-        const displayLabel = text.length > 10 ? text.slice(0, 9) + '..' : text;
-        ctx.fillText(displayLabel, radius - 16, 4);
-        ctx.restore();
-      });
-
-      // Центральная втулка
-      ctx.beginPath();
-      ctx.arc(radius, radius, 18, 0, 2 * Math.PI);
-      ctx.fillStyle = '#0f1118';
-      ctx.fill();
-      ctx.lineWidth = 3;
-      ctx.strokeStyle = 'var(--accent-highlight)';
-      ctx.stroke();
-    }
-
-    wheelInput.addEventListener('input', drawWheel);
-
-    btnSpinWheel.addEventListener('click', () => {
-      if (isWheelSpinning) return;
-      isWheelSpinning = true;
-      btnSpinWheel.disabled = true;
-      wheelWinner.innerText = 'Колесо крутится...';
-
-      const segments = getSegments();
-      const extraSpins = 5 + Math.random() * 4;
-      const randomStop = Math.random() * 2 * Math.PI;
-      const totalAngle = extraSpins * 2 * Math.PI + randomStop;
-      const duration = 3800;
-      const startAngle = wheelAngle;
-      const startTime = performance.now();
-
-      function animateWheel(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easeOut = 1 - Math.pow(1 - progress, 3);
-
-        wheelAngle = startAngle + totalAngle * easeOut;
-        drawWheel();
-
-        if (progress < 1) {
-          requestAnimationFrame(animateWheel);
-        } else {
-          isWheelSpinning = false;
-          btnSpinWheel.disabled = false;
-
-          const numSegments = segments.length;
-          const arcSize = (2 * Math.PI) / numSegments;
-          const normalized = (2 * Math.PI - (wheelAngle % (2 * Math.PI)) + (3 * Math.PI / 2)) % (2 * Math.PI);
-          const winningIndex = Math.floor(normalized / arcSize) % numSegments;
-          
-          wheelWinner.innerText = `Победитель: ${segments[winningIndex]}`;
-          showToast(`Выпало: ${segments[winningIndex]}`);
-        }
-      }
-      requestAnimationFrame(animateWheel);
-    });
-
-    // ==========================================
-    // ДВИЖОК НЕПОВТОРИМЫХ RP БИОГРАФИЙ (КОМБИНАТОРИКА)
-    // ==========================================
-    const BIO_MATRIX = {
-      family: [
-        "родился в семье инженера-конструктора и преподавателя лицея",
-        "вырос в строгой семье военного офицера, где распорядок дня был законом",
-        "провел детство в семье владельца небольшой автомастерской, помогая отцу с ранних лет",
-        "родился в семье юриста и медицинского работника, прививших уважение к закону",
-        "вырос в простой рабочей семье, где с детства ценился честный физический труд"
+    const BIO_ENGINE = {
+      temperaments: [
+        "Рассудительный и прагматичный. В конфликтных ситуациях опирается на холодную логику и факты, никогда не поддаваясь эмоциям.",
+        "Дисциплинированный, с развитым стратегическим мышлением. Умеет моментально оценивать риски и брать ответственность за последствия.",
+        "Харизматичный и проницательный лидер. Обладает врожденным чутьем на людей, тонко выстраивая союзнические отношения.",
+        "Скрытный, наблюдательный и немногословный. Предпочитает действовать точно и без предупреждений, высоко ценит верность слову.",
+        "Несгибаемый идеалист с железным внутренним стержнем. Ни при каких обстоятельствах не отступает от намеченного ориентира."
       ],
-      childhood: [
-        "С малых лет проявлял лидерские качества, объединяя дворовых ребят в спортивные секции.",
-        "Школьные годы посвятил углубленному изучению точных наук и рукопашному бою.",
-        "Уже в юности отличался обостренным чувством справедливости и хладнокровием в конфликтах.",
-        "Много читал исторической литературы, формируя внутренний моральный компас и стойкий характер.",
-        "Участвовал в спортивных турнирах, где научился побеждать и держать удар в любой ситуации."
+
+      origins: [
+        "родился в семье инженера-испытателя и учительницы литературы. В доме всегда поддерживался строгий порядок и культ самообразования.",
+        "вырос в династии кадровых офицеров, где понятие долга, чести и субординации прививалось буквально с первых шагов.",
+        "провел ранние годы в семье частного мастера-автомеханика, уже в детстве научившись зарабатывать личные деньги своим трудом.",
+        "воспитывался в интеллигентной семье медицинских работников, что развило хладнокровие и способность сохранять трезвость ума в критический момент.",
+        "вырос в небольшом промышленном районе, где уважение сверстников добывалось исключительно прямотой характера и силой воли.",
+        "родился в семье скромного коммерсанта, с юных лет вникая в логику ведения переговоров, цену договоренностей и рыночную конкуренцию.",
+        "воспитывался отцом-одиночкой, прошедшим горячие точки, который воспитал в сыне стойкость к невзгодам и предельную выносливость.",
+        "вырос в семье архитекторов, переняв привычку просчитывать любые жизненные шаги на несколько ходов вперед."
       ],
-      turningPoint: {
+
+      childhoodAndSchool: [
+        "В школьные годы активно занимался легкой атлетикой и спортивным самбо, неоднократно занимая призовые места на региональных турнирах.",
+        "Много времени проводил за чтением юридической и исторической литературы, параллельно тренируя выдержку в секции рукопашного боя.",
+        "С ранних лет демонстрировал задатки лидера: организовывал дворовые спортивные команды и часто выступал арбитром в чужих конфликтах.",
+        "Предпочитал держаться в стороне от шумных уличных компаний, сфокусировавшись на точных науках и физическом самосовершенствовании.",
+        "Школьную программу осваивал с легкостью, успевая совмещать учебу с подработками, чтобы не зависеть от карманных денег родителей.",
+        "Увлекался экстремальным спортом и радиотехникой, развивая быстроту реакции и способность оперативно устранять неполадки.",
+        "Уже в юности показал принципиальную позицию: никогда не терпел несправедливости и открыто заступался за тех, кто не мог постоять за себя."
+      ],
+
+      youth: [
+        "Окончив среднее образование с отличием, без колебаний поступил в профильный университет, параллельно осваивая смежные практические навыки.",
+        "Пройдя срочную службу в элитных подразделениях, получил бесценный опыт командного взаимодействия и психологической выдержки.",
+        "В студенческие годы был вынужден совмещать дневные лекции с ночными дежурствами, что закалило характер и научило ценить каждую минуту времени.",
+        "В 19 лет столкнулся с первыми серьезными вызовами взрослой жизни, но благодаря хладнокровию сумел выйти из трудностей победителем.",
+        "Активно занимался общественной деятельностью, налаживая прочные связи среди будущих специалистов своего профиля.",
+        "Рано покинул родительский дом, чтобы самостоятельно построить материальный фундамент и доказать право на независимость."
+      ],
+
+      turningPoints: {
         gos: [
-          "После срочной службы в элитных войсках твердо решил посвятить свою жизнь защите правопорядка и поступил на юридический факультет.",
-          "Случайное спасение человека в чрезвычайной ситуации укрепило решение связать карьеру с государственной службой.",
-          "Успешное окончание ведомственной академии позволило сразу зарекомендовать себя исполнительным и неподкупным сотрудником."
+          "Решающим толчком к выбору профессии стало столкновение с произволом в отношении семьи. Увидев безнаказанность, дал себе слово занять высокий пост в государственной системе и навести железный порядок законными методами.",
+          "В период армейской службы предотвратил серьезное ЧП на стратегическом объекте. Руководство части оценило мужество и рекомендовало на службу в ведомственные силовые структуры, где быстро начался стремительный взлет.",
+          "Работая рядовым помощником следователя, сумел в одиночку вскрыть коррупционную схему крупных чиновников, доказав свою принципиальность, неподкупность и абсолютную преданность государственным интересам.",
+          "Случайное участие в спасательной операции при экстремальных обстоятельствах расставило жизненные приоритеты: защищать права граждан и стоять на страже закона стало смыслом жизни."
         ],
         opg: [
-          "Предательство близких деловых партнеров заставило понять, что на улице уважают исключительно твердую руку и авторитет.",
-          "Серьезный финансовый кризис в семье вынудил искать быстрые пути заработка, что привело к тесным знакомствам с авторитетными людьми.",
-          "Уличные законы района научили главному правилу: свое слово нужно отстаивать до конца, независимо от обстоятельств."
+          "Предательство компаньонов в первом совместном деле обернулось крупными долгами. Не найдя защиты у официальных органов, был вынужден обратиться к авторитетным людям улицы. Быстро оценив обстановку, заслужил уважение старших своим умением держать слово.",
+          "Став свидетелем того, как влиятельные структуры разорили дело его семьи, осознал: уважают лишь тех, за кем стоит реальная сила. Шаг за шагом сформировал собственный ближний круг, где на первом месте стояла преданность и жесткая дисциплина.",
+          "Оказавшись в эпицентре криминального передела влияния, хладнокровно просчитал ходы соперников и предотвратил кровопролитие, заработав репутацию грамотного стратега, с чьим мнением обязаны считаться все стороны.",
+          "Жесткая уличная среда научила главному правилу: закон принадлежит сильным. Отказавшись подчиняться чужим условиям, создал собственное объединение единомышленников с четкой иерархией."
         ],
         biz: [
-          "Вложив свои первые сбережения в рискованный стартап, сумел окупить вложения втрое и осознал свое истинное призвание.",
-          "Окончив экономический университет, отказался от работы по найму и приступил к формированию личной бизнес-сети.",
-          "Сумев защитить семейное предприятие от рейдерского давления, закалил характер и открыл новые направления бизнеса."
+          "Вложив последние накопленные средства в рискованный логистический контракт, сумел закрыть сделку с пятикратной прибылью. Этот триумф показал истинное призвание: масштабные инвестиции и управление крупными потоками капитала.",
+          "Сумев защитить прибыльный семейный объект от недружественного рейдерского поглощения юридическим путем, приобрел славу несговорчивого переговорщика, с которым выгодно дружить и опасно враждовать.",
+          "Отказ от рутинной работы ради собственного стартапа стал поворотной точкой. За несколько лет упорной борьбы удалось выстроить устойчивый бизнес, сформировав команду высококлассных профессионалов.",
+          "Осознав, что деньги — это прежде всего влияние, переориентировал деятельность на стратегические контракты, открывая новые горизонты для масштабирования своего дела."
         ],
         civil: [
-          "Решение начать жизнь с чистого листа привело к переезду в новый регион в поисках профессиональной реализации.",
-          "Пройдя через череду жизненных трудностей, сумел сохранить искренность и преданность своим идеалам.",
-          "Освоив несколько востребованных профессий, нашел свое настоящее призвание и стремится к стабильности."
+          "Приняв взвешенное решение о смене обстановки, переехал на новое место для полной перезагрузки карьеры, рассчитывая исключительно на свои профессиональные навыки и репутацию.",
+          "Преодолев тяжелый период профессионального выгорания, нашел стабильную точку опоры и решил выстроить спокойную, обеспеченную и достойную жизнь с нуля.",
+          "Череда сложных жизненных уроков помогла отсеять фальшивых знакомых, оставив рядом только тех, на кого можно опереться в любую секунду.",
+          "Освоив востребованную специальность, доказал себе и окружающим, что честным трудом и упорством можно добиться абсолютного уважения коллег и стабильного дохода."
         ]
       },
-      present: {
-        gos: "На сегодняшний день ставит своей первоочередной задачей карьерный рост в ведомстве, пресечение беззакония и формирование надежного штаба соратников.",
-        opg: "В настоящее время координирует собственные интересы, пользуется заслуженным авторитетом среди проверенных людей и держит слово перед союзниками.",
-        biz: "Сейчас активно расширяет влияние на региональном рынке, инвестируя в недвижимость и стратегические проекты.",
-        civil: "Стремится к финансовому благополучию, надежной репутации в обществе и поддержанию порядка в своем окружении."
+
+      presentState: {
+        gos: [
+          "В настоящий момент уверенно поднимается по карьерной лестнице, заслужив репутацию принципиального руководителя, который никогда не бросает слов на ветер и требует железной дисциплины от подчиненных.",
+          "Сегодня ставит перед собой амбициозную цель занять ключевой руководящий пост в ведомстве, проводя кадровую реформу и повышая авторитет государственной власти среди граждан.",
+          "Пользуется абсолютным доверием старшего офицерского состава, успешно координирует оперативные задачи и пресекает любые проявления халатности."
+        ],
+        opg: [
+          "На сегодняшний день держит под личным контролем ключевые процессы, пользуясь непререкаемым авторитетом среди доверенных лиц и жестко пресекая любые попытки дестабилизации ситуации.",
+          "Продолжает планомерно укреплять позиции своего синдиката, грамотно балансируя между жесткими силовыми мерами и тонкой дипломатией на закрытых переговорах.",
+          "Собрал вокруг себя сплоченный круг соратников, для которых верность общему делу и личное указание являются высшим законом."
+        ],
+        biz: [
+          "В настоящее время активно диверсифицирует активы, инвестирует в перспективные коммерческие площади и расширяет сеть партнерских соглашений на региональном уровне.",
+          "Уверенно масштабирует личное дело, сохраняя безупречную репутацию в деловых кругах и формируя солидную подушку финансовой безопасности.",
+          "Находится на пороге заключения ключевого стратегического контракта, который позволит занять лидирующие позиции на рынке."
+        ],
+        civil: [
+          "Сегодня сосредоточен на личностном росте, стабильном заработке и создании крепкой ячейки общества, пользуясь искренним уважением своего окружения.",
+          "Уверенно смотрит в будущее, развивает любимое ремесло и поддерживает теплые взаимоотношения с надежными друзьями, проверенными годами.",
+          "Выстроил гармоничный баланс между работой и саморазвитием, не отступая от моральных ориентиров и принципов порядочности."
+        ]
       }
     };
 
@@ -2189,32 +1938,34 @@
         const tempNick = createNickname('all', false, '');
         name = tempNick.nick.replace('_', ' ');
       }
-      const age = parseInt(document.getElementById('bio-custom-age').value, 10) || 25;
+      const age = parseInt(document.getElementById('bio-custom-age').value, 10) || 26;
       const role = document.getElementById('bio-role-select').value;
-      const city = document.getElementById('bio-city-select').value;
 
-      const f = rand(BIO_MATRIX.family);
-      const c = rand(BIO_MATRIX.childhood);
-      const t = rand(BIO_MATRIX.turningPoint[role]);
-      const p = BIO_MATRIX.present[role];
+      const temperament = rand(BIO_ENGINE.temperaments);
+      const origin = rand(BIO_ENGINE.origins);
+      const childhood = rand(BIO_ENGINE.childhoodAndSchool);
+      const youth = rand(BIO_ENGINE.youth);
+      const turning = rand(BIO_ENGINE.turningPoints[role]);
+      const present = rand(BIO_ENGINE.presentState[role]);
 
       generatedBioText = 
 `[b]1. Основная информация:[/b]
 • Имя и Фамилия: ${name}
 • Возраст: ${age} лет
-• Место проживания: ${city}
+• Черты характера: ${temperament}
 
-[b]2. Детство и юношество:[/b]
-${name} ${f} в окрестностях ${city}. ${c} Родители воспитали в нем стремление доводить любое начатое дело до конца.
+[b]2. Происхождение и детские годы:[/b]
+${name} ${origin} ${childhood}
 
-[b]3. Переломный этап:[/b]
-${t} Этот жизненный урок полностью сформировал взгляды на мир и научил просчитывать каждый шаг наперед.
+[b]3. Юность и переломный момент:[/b]
+${youth}
+${turning}
 
 [b]4. Настоящее время:[/b]
-${p}`;
+${present}`;
 
       document.getElementById('unique-bio-view').innerText = generatedBioText.replace(/\[\/?b\]/g, '');
-      showToast('Уникальная биография успешно сгенерирована!');
+      showToast('Биография успешно сгенерирована!');
     });
 
     document.getElementById('btn-copy-unique-bb').addEventListener('click', () => {
@@ -2329,7 +2080,7 @@ ${p}`;
       if (e.key === 'Enter') generate();
     });
 
-    // Инициализация
+    // Стартовая инициализация
     renderHistory();
     renderFavs();
     generate();
