@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <title>ROLEID — RP Генератор ников, Рандомайзер и RP Биографии</title>
+  <title>ROLEID — RP Генератор ников, Рандомайзер, Рулетка и RP Биографии</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, колесо рулетки и конструктор RP биографий.">
+  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: казино-генератор никнеймов, числовой рандомайзер, рулетка и конструктор RP биографий.">
 
   <style>
     :root {
@@ -415,58 +415,6 @@
     }
 
     .tab-content.active {
-      display: block;
-    }
-
-    /* ПОДРАЗДЕЛЫ РАНДОМАЙЗЕРА */
-    .subtabs-nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      margin-bottom: 1.4rem;
-      background: #0d0f15;
-      padding: 0.35rem;
-      border-radius: 14px;
-      border: 1px solid var(--card-border);
-      max-width: 360px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .subtab-btn {
-      flex: 1;
-      padding: 0.5rem 0.8rem;
-      background: transparent;
-      border: none;
-      border-radius: 10px;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 0.84rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      transition: all 0.18s ease;
-    }
-
-    .subtab-btn:hover {
-      color: #fff;
-    }
-
-    .subtab-btn.active {
-      background: #181c27;
-      color: #fff;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
-    }
-
-    .subtab-panel {
-      display: none;
-      animation: cardEntrance 0.25s ease both;
-    }
-
-    .subtab-panel.active {
       display: block;
     }
 
@@ -1213,8 +1161,12 @@
         <span>Генератор ников</span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-random">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/></svg>
-        <span>Рандомайзер &amp; Рулетка</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
+        <span>Рандомайзер чисел</span>
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-wheel">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 14.14 14.14"/><path d="m14.14 4.93-9.21 9.21"/></svg>
+        <span>Рулетка</span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-bio">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
@@ -1261,10 +1213,10 @@
       <h1>
         <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
       </h1>
-      <p class="subtitle">Лучший генератор RP ников, рандомайзер и биографии для CRMP, SAMP и GTA 5 RP</p>
+      <p class="subtitle">Лучший генератор RP ников, рандомайзер, рулетка и биографии для CRMP, SAMP и GTA 5 RP</p>
     </header>
 
-    <!-- ВКЛАДКА 1: ГЕНЕРАТОР НИКОВ -->
+    <!-- РАЗДЕЛ 1: ГЕНЕРАТОР НИКОВ -->
     <div class="tab-content active" id="tab-names">
       <div class="command-bar">
         <div class="filters-cluster">
@@ -1340,79 +1292,66 @@
       </div>
     </div>
 
-    <!-- ВКЛАДКА 2: РАНДОМАЙЗЕР & РУЛЕТКА С ПОДРАЗДЕЛАМИ -->
+    <!-- РАЗДЕЛ 2: РАНДОМАЙЗЕР ЧИСЕЛ -->
     <div class="tab-content" id="tab-random">
-      <!-- Переключатель подразделов -->
-      <div class="subtabs-nav">
-        <button class="subtab-btn active" data-subtab="subtab-num">
-          <span>🎲 Числа</span>
-        </button>
-        <button class="subtab-btn" data-subtab="subtab-wheel">
-          <span>🎡 Колесо рулетки</span>
-        </button>
-      </div>
+      <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem; text-align: center;">Рандомайзер чисел</h3>
+        <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.4rem; text-align: center;">
+          Быстрое определение победителя конкурса, построения или розыгрыша призов
+        </p>
 
-      <!-- Подраздел: Числа -->
-      <div class="subtab-panel active" id="subtab-num">
-        <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
-          <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.35rem; text-align: center;">Рандомайзер чисел</h3>
-          <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.4rem; text-align: center;">
-            Быстрое определение победителя конкурса, строя или розыгрыша призов
-          </p>
-
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
-            <div class="pill-input-wrapper">
-              <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ОТ:</span>
-              <input type="number" id="rand-min" class="custom-fame-input" value="1">
-            </div>
-            <div class="pill-input-wrapper">
-              <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ДО:</span>
-              <input type="number" id="rand-max" class="custom-fame-input" value="100">
-            </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1rem;">
+          <div class="pill-input-wrapper">
+            <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ОТ:</span>
+            <input type="number" id="rand-min" class="custom-fame-input" value="1">
           </div>
-
-          <div class="number-display-box">
-            <div class="number-display-val" id="rand-result-val">?</div>
+          <div class="pill-input-wrapper">
+            <span style="font-size: 0.8rem; color: var(--text-dim); margin-right: 0.5rem; font-weight: 700;">ДО:</span>
+            <input type="number" id="rand-max" class="custom-fame-input" value="100">
           </div>
-
-          <button class="btn-generate" id="btn-roll-number" style="margin-bottom: 1.2rem;">
-            Сгенерировать число
-          </button>
-
-          <div style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.4rem;">История последних выпадений:</div>
-          <div class="chips-wrap" id="number-history-chips"></div>
         </div>
-      </div>
 
-      <!-- Подраздел: Колесо фортуны -->
-      <div class="subtab-panel" id="subtab-wheel">
-        <div class="glass-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
-          <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 0.35rem;">Колесо фортуны</h3>
-          <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.2rem;">
-            Введите ники, числа или призы через запятую и испытайте удачу
-          </p>
-
-          <div class="pill-input-wrapper" style="margin-bottom: 1rem;">
-            <input type="text" id="wheel-segments-input" class="custom-fame-input" value="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="Варианты через запятую">
-          </div>
-
-          <div class="wheel-wrapper">
-            <div class="wheel-pointer">▼</div>
-            <canvas id="roulette-canvas" width="280" height="280"></canvas>
-          </div>
-
-          <div id="wheel-winner" style="min-height: 28px; font-size: 1.2rem; font-weight: 800; color: var(--accent-highlight); margin: 0.8rem 0;">
-            Нажмите «Крутить колесо»
-          </div>
-
-          <button class="btn-generate" id="btn-spin-wheel">
-            Крутить колесо
-          </button>
+        <div class="number-display-box">
+          <div class="number-display-val" id="rand-result-val">?</div>
         </div>
+
+        <button class="btn-generate" id="btn-roll-number" style="margin-bottom: 1.2rem;">
+          Сгенерировать число
+        </button>
+
+        <div style="font-size: 0.78rem; color: var(--text-dim); margin-bottom: 0.4rem;">История последних выпадений:</div>
+        <div class="chips-wrap" id="number-history-chips"></div>
       </div>
     </div>
 
-    <!-- ВКЛАДКА 3: RP БИОГРАФИИ -->
+    <!-- РАЗДЕЛ 3: РУЛЕТКА (КОЛЕСО) -->
+    <div class="tab-content" id="tab-wheel">
+      <div class="glass-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Рулетка</h3>
+        <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.2rem;">
+          Введите никнеймы, числа или призы через запятую и испытайте удачу
+        </p>
+
+        <div class="pill-input-wrapper" style="margin-bottom: 1rem;">
+          <input type="text" id="wheel-segments-input" class="custom-fame-input" value="1, 2, 3, 4, 5, 6, 7, 8, 9, 10" placeholder="Варианты через запятую">
+        </div>
+
+        <div class="wheel-wrapper">
+          <div class="wheel-pointer">▼</div>
+          <canvas id="roulette-canvas" width="280" height="280"></canvas>
+        </div>
+
+        <div id="wheel-winner" style="min-height: 28px; font-size: 1.2rem; font-weight: 800; color: var(--accent-highlight); margin: 0.8rem 0;">
+          Нажмите «Крутить рулетку»
+        </div>
+
+        <button class="btn-generate" id="btn-spin-wheel">
+          Крутить рулетку
+        </button>
+      </div>
+    </div>
+
+    <!-- РАЗДЕЛ 4: RP БИОГРАФИИ -->
     <div class="tab-content" id="tab-bio">
       <div class="glass-box">
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Генератор неповторимых RP-Биографий</h3>
@@ -1540,7 +1479,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v8';
+          const CACHE_NAME = 'roleid-cache-v9';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1615,30 +1554,11 @@
         const target = document.getElementById(item.dataset.tab);
         if (target) target.classList.add('active');
 
-        if (item.dataset.tab === 'tab-random') {
+        if (item.dataset.tab === 'tab-wheel') {
           drawWheel();
         }
 
         closeSidebar();
-      });
-    });
-
-    // УПРАВЛЕНИЕ ПОДРАЗДЕЛАМИ В РАНДОМАЙЗЕРЕ
-    const subtabBtns = document.querySelectorAll('.subtab-btn');
-    const subtabPanels = document.querySelectorAll('.subtab-panel');
-
-    subtabBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        subtabBtns.forEach(b => b.classList.remove('active'));
-        subtabPanels.forEach(p => p.classList.remove('active'));
-
-        btn.classList.add('active');
-        const panel = document.getElementById(btn.dataset.subtab);
-        if (panel) panel.classList.add('active');
-
-        if (btn.dataset.subtab === 'subtab-wheel') {
-          drawWheel();
-        }
       });
     });
 
@@ -2195,7 +2115,7 @@
     });
 
     // ==========================================
-    // ЛОГИКА КОЛЕСА ФОРТУНЫ (РУЛЕТКА)
+    // ЛОГИКА РУЛЕТКИ (КОЛЕСО)
     // ==========================================
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas.getContext('2d');
@@ -2258,7 +2178,7 @@
       if (isWheelSpinning) return;
       isWheelSpinning = true;
       btnSpinWheel.disabled = true;
-      wheelWinner.innerText = 'Колесо крутится...';
+      wheelWinner.innerText = 'Рулетка крутится...';
 
       const segments = getSegments();
       const extraSpins = 5 + Math.random() * 4;
