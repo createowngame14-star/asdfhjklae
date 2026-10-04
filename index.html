@@ -1710,13 +1710,13 @@
     // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА (ROLEID AI PROXY)
     // ==========================================
     const WORKER_URL = "https://crimson-wave-c3d6.wamq812.workers.dev";
-    
- // Актуальные бесплатные модели OpenRouter без заглушек
+
+    // Авто-роутер OpenRouter + надежные бесплатные слоты
     const FREE_MODELS = [
+      "openrouter/free",
+      "meta-llama/llama-3.3-70b-instruct:free",
       "google/gemini-2.0-flash-exp:free",
-      "meta-llama/llama-3.2-3b-instruct:free",
-      "qwen/qwen-2.5-7b-instruct:free",
-      "mistralai/mistral-7b-instruct:free"
+      "qwen/qwen-2.5-72b-instruct:free"
     ];
 
     let chatHistory = [
@@ -1824,7 +1824,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v16';
+          const CACHE_NAME = 'roleid-cache-v17';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
