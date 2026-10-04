@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#07080c">
 
-  <title>ROLEID — RP Генератор ников, Рандомайзер, Рулетка и RP Биографии</title>
+  <title>ROLEID — RP Генератор ников, FAQ Перекупа, Рандомайзер, Рулетка и RP Биографии</title>
 
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и официальный ИИ-помощник ROLEID.">
+  <meta name="description" content="Универсальный RP сервис для CRMP, SAMP и GTA 5 RP: таблицы цен перекупа авто, генератор никнеймов, числовой рандомайзер, рулетка, конструктор RP биографий и официальный ИИ-помощник ROLEID.">
 
   <style>
     :root {
@@ -949,6 +949,193 @@
       margin: 1.2rem 0;
     }
 
+    /* СТИЛИ ДЛЯ РАЗДЕЛА FAQ & ТАБЛИЦ ПЕРЕКУПА */
+    .faq-subnav {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.65rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .faq-subnav-btn {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-muted);
+      padding: 0.85rem 0.9rem;
+      font-size: 0.88rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.18s ease;
+      text-align: center;
+    }
+
+    .faq-subnav-btn:hover {
+      background: #181c27;
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .faq-subnav-btn.active {
+      background: rgba(192, 132, 252, 0.14);
+      border-color: var(--accent-highlight);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(192, 132, 252, 0.18);
+    }
+
+    .faq-notice-box {
+      background: rgba(192, 132, 252, 0.05);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      border-radius: 14px;
+      padding: 1.05rem 1.25rem;
+      margin-bottom: 1.2rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    .faq-notice-box b {
+      color: #fff;
+    }
+
+    .faq-rules-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+      margin-top: 0.85rem;
+    }
+
+    .faq-rule-item {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 0.6rem 0.8rem;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+    }
+
+    .faq-search-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .faq-search-wrapper {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .faq-count-badge {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      background: #141720;
+      border: 1px solid var(--card-border);
+      padding: 0.65rem 0.95rem;
+      border-radius: 12px;
+      white-space: nowrap;
+    }
+
+    .faq-table-container {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--card-border);
+      background: #0f1118;
+      max-height: 580px;
+      overflow-y: auto;
+    }
+
+    .faq-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+      min-width: 580px;
+    }
+
+    .faq-table thead {
+      position: sticky;
+      top: 0;
+      background: #141720;
+      z-index: 5;
+    }
+
+    .faq-table th {
+      padding: 0.85rem 1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .faq-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: #e2e8f0;
+      font-weight: 500;
+      transition: background 0.12s;
+    }
+
+    .faq-table tbody tr {
+      cursor: pointer;
+      transition: background-color 0.12s ease;
+    }
+
+    .faq-table tbody tr:hover td {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .faq-car-name {
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .faq-price-buy {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 600;
+      color: #94a3b8;
+    }
+
+    .faq-price-sell {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .faq-profit-badge {
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-weight: 700;
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-radius: 8px;
+      padding: 0.2rem 0.5rem;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .faq-no-results {
+      text-align: center;
+      padding: 2.8rem 1rem;
+      color: var(--text-dim);
+      font-size: 0.92rem;
+    }
+
     /* МОДАЛЬНЫЕ ОКНА */
     .app-modal-backdrop {
       position: fixed;
@@ -1317,6 +1504,8 @@
       .filters-cluster { grid-template-columns: repeat(2, 1fr); }
       .actions-cluster { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
+      .faq-subnav { grid-template-columns: 1fr; }
+      .faq-rules-list { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 500px) {
@@ -1348,6 +1537,10 @@
       <button class="sidebar-nav-item active" data-tab="tab-names">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
         <span>Генератор ников</span>
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-faq">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>FAQ Перекупа</span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-random">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="8" y1="12" x2="16" y2="12"></line><line x1="12" y1="8" x2="12" y2="16"></line></svg>
@@ -1412,7 +1605,7 @@
       <h1>
         <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
       </h1>
-      <p class="subtitle">Лучший генератор RP ников, рандомайзер, рулетка и биографии для CRMP, SAMP и GTA 5 RP</p>
+      <p class="subtitle">Лучший генератор RP ников, таблицы перекупа авто, рандомайзер, рулетка и биографии для CRMP, SAMP и GTA 5 RP</p>
     </header>
 
     <!-- РАЗДЕЛ 1: ГЕНЕРАТОР НИКОВ -->
@@ -1488,6 +1681,82 @@
           <button class="btn-icon-copy" id="btn-clear-fav" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem;">Очистить</button>
         </div>
         <div class="chips-wrap" id="fav-chips"></div>
+      </div>
+    </div>
+
+    <!-- РАЗДЕЛ FAQ: ТАБЛИЦЫ ПЕРЕКУПА -->
+    <div class="tab-content" id="tab-faq">
+      <div class="glass-box">
+        <div style="margin-bottom: 1.2rem;">
+          <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">FAQ Перекупщика — Таблицы цен Б/У авто</h3>
+          <p style="color: var(--text-muted); font-size: 0.88rem;">
+            Официальный справочник цен скупки и перепродажи для авторынков. Выбирайте класс Б/У или ищите конкретную модель.
+          </p>
+        </div>
+
+        <!-- Подпункты FAQ -->
+        <div class="faq-subnav">
+          <button class="faq-subnav-btn active" data-sub="low">
+            <span>🚗 Таблица перекупа: Низкий БУ (40)</span>
+          </button>
+          <button class="faq-subnav-btn" data-sub="med">
+            <span>🚙 Таблица перекупа: Средний БУ (55)</span>
+          </button>
+          <button class="faq-subnav-btn" data-sub="high">
+            <span>🏎️ Таблица перекупа: Высокий БУ (108)</span>
+          </button>
+        </div>
+
+        <!-- Инфо-блок правил перекупа -->
+        <div class="faq-notice-box">
+          <div id="faq-category-notice">
+            <b>Низкий класс (СТОК авто БЕЗ стейджа):</b> Только ликвидные авто, которые почти всегда есть в продаже.
+          </div>
+          
+          <div class="faq-rules-list">
+            <div class="faq-rule-item">
+              <span style="font-size: 1rem;">⚙️</span>
+              <div><b>Стейдж авто:</b> Добавляйте +50% от стоимости стейджа к цене (например: Stage 1 стоит 700k → к цене авто добавляется +350 000 ₽).</div>
+            </div>
+            <div class="faq-rule-item">
+              <span style="font-size: 1rem;">💡</span>
+              <div><b>Правило гибкости:</b> Можно брать чуть дороже или отдавать чуть дешевле указанной цены — это мало повлияет на прибыль.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Поиск и счетчик -->
+        <div class="faq-search-row">
+          <div class="pill-input-wrapper faq-search-wrapper">
+            <svg class="pill-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="faq-search-input" class="custom-fame-input" placeholder="Поиск по названию (например: BMW, Lada, Supra)..." autocomplete="off">
+          </div>
+          <div class="faq-count-badge" id="faq-count-badge">Авто в списке: 40</div>
+        </div>
+
+        <!-- Таблица цен -->
+        <div class="faq-table-container">
+          <table class="faq-table">
+            <thead>
+              <tr>
+                <th style="width: 38%;">Название авто</th>
+                <th style="width: 21%;">Цена покупки</th>
+                <th style="width: 21%;">Цена продажи</th>
+                <th style="width: 20%;">Профит</th>
+              </tr>
+            </thead>
+            <tbody id="faq-table-body">
+              <!-- Генерация через JavaScript -->
+            </tbody>
+          </table>
+        </div>
+
+        <div style="margin-top: 0.9rem; font-size: 0.78rem; color: var(--text-dim); text-align: center;">
+          💡 Кликните по любой строчке автомобиля, чтобы быстро скопировать модель и цены для чата или объявления.
+        </div>
       </div>
     </div>
 
@@ -1711,7 +1980,6 @@
     // ==========================================
     const WORKER_URL = "https://crimson-wave-c3d6.wamq812.workers.dev";
 
-    // Авто-роутер OpenRouter + надежные бесплатные слоты
     const FREE_MODELS = [
       "openrouter/free",
       "meta-llama/llama-3.3-70b-instruct:free",
@@ -1722,7 +1990,7 @@
     let chatHistory = [
       {
         role: "system",
-        content: "Ты официальный ИИ-помощник проекта ROLEID (roleid.ru). Ты выступаешь строго от лица команды ROLEID. Ни в коем случае не упоминай Cloudflare, OpenRouter, Llama, DeepSeek или Google. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии и отыгровки команд /me, /do, /todo. Отвечай кратко, емко, дружелюбно и на русском языке."
+        content: "Ты официальный ИИ-помощник проекта ROLEID (roleid.ru). Ты выступаешь строго от лица команды ROLEID. Ни в коем случае не упоминай Cloudflare, OpenRouter, Llama, DeepSeek или Google. Твоя специализация: CRMP, SAMP, GTA 5 RP, правила никнеймов, фракции, квенты, RP-биографии, отыгровки команд /me, /do, /todo и цены авто на Б/У рынке. Отвечай кратко, емко, дружелюбно и на русском языке."
       }
     ];
 
@@ -1824,7 +2092,7 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const swScript = `
-          const CACHE_NAME = 'roleid-cache-v17';
+          const CACHE_NAME = 'roleid-cache-v18';
           self.addEventListener('install', (e) => self.skipWaiting());
           self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
           self.addEventListener('fetch', (e) => {
@@ -1908,6 +2176,8 @@
 
         if (item.dataset.tab === 'tab-wheel') {
           drawWheel();
+        } else if (item.dataset.tab === 'tab-faq') {
+          renderFaqTable();
         }
 
         closeSidebar();
@@ -2305,7 +2575,322 @@
     }
 
     // ==========================================
-    // 7. МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА
+    // 7. БАЗА ДАННЫХ И ЛОГИКА FAQ (ТАБЛИЦЫ ПЕРЕКУПА)
+    // ==========================================
+    const FAQ_CARS_DATA = {
+      low: [
+        ["Ig 2712", "12 000 ₽", "20 000 ₽"],
+        ["Volvo 850R", "70 000 ₽", "90 000 ₽"],
+        ["Lada 2101", "30 000 ₽", "40 000 ₽"],
+        ["Lada 2107", "50 000 ₽", "70 000 ₽"],
+        ["Ig 27151", "15 000 ₽", "20 000 ₽"],
+        ["Lada 2109", "70 000 ₽", "85 000 ₽"],
+        ["Honda CRX", "70 000 ₽", "90 000 ₽"],
+        ["Volkswagen Golf 2", "75 000 ₽", "90 000 ₽"],
+        ["Audi 80 Avant", "100 000 ₽", "130 000 ₽"],
+        ["Lada 2115", "90 000 ₽", "100 000 ₽"],
+        ["Lada 2108", "65 000 ₽", "80 000 ₽"],
+        ["Daewoo Lanos", "90 000 ₽", "110 000 ₽"],
+        ["Lada 2106", "60 000 ₽", "70 000 ₽"],
+        ["Lada 2114", "100 000 ₽", "130 000 ₽"],
+        ["Lada 2110", "60 000 ₽", "80 000 ₽"],
+        ["Lada 21045", "30 000 ₽", "35 000 ₽"],
+        ["Lada 2105", "50 000 ₽", "65 000 ₽"],
+        ["Alfa Romeo 155", "85 000 ₽", "95 000 ₽"],
+        ["Lada 21099", "80 000 ₽", "90 000 ₽"],
+        ["LADA 21123 купе", "110 000 ₽", "130 000 ₽"],
+        ["LADA 2112", "80 000 ₽", "90 000 ₽"],
+        ["KIA Rio", "210 000 ₽", "250 000 ₽"],
+        ["Skoda Octavia A4 VRS", "110 000 ₽", "140 000 ₽"],
+        ["Audi A4 B5", "140 000 ₽", "180 000 ₽"],
+        ["Renault Logan", "110 000 ₽", "140 000 ₽"],
+        ["Honda Civic Si", "180 000 ₽", "220 000 ₽"],
+        ["BMW 323i E30", "200 000 ₽", "250 000 ₽"],
+        ["Lada Priora", "150 000 ₽", "180 000 ₽"],
+        ["Lada Vesta", "240 000 ₽", "280 000 ₽"],
+        ["BMW M5 E28", "90 000 ₽", "120 000 ₽"],
+        ["Saab 9.3 Turbo", "250 000 ₽", "300 000 ₽"],
+        ["Daewoo Matiz", "100 000 ₽", "130 000 ₽"],
+        ["ZAZ 1102 Tavria", "35 000 ₽", "40 000 ₽"],
+        ["GAZ 24 Волга", "140 000 ₽", "157 000 ₽"],
+        ["Honda Ami", "100 000 ₽", "112 000 ₽"],
+        ["Lada 2103", "60 000 ₽", "67 000 ₽"],
+        ["Lada 2113", "76 000 ₽", "85 000 ₽"],
+        ["Audi A4 B6 Avant", "200 000 ₽", "224 000 ₽"],
+        ["Lada 2102", "40 000 ₽", "49 000 ₽"],
+        ["Volkswagen Passat B3", "80 000 ₽", "110 000 ₽"]
+      ],
+      med: [
+        ["BMW X5 E53", "850 000 ₽", "920 000 ₽"],
+        ["Mazda RX-7 Spirit R", "1 040 000 ₽", "1 133 600 ₽"],
+        ["Ford Raptor F150", "1 820 000 ₽", "1 983 800 ₽"],
+        ["BMW 540i E34", "585 000 ₽", "637 650 ₽"],
+        ["Mercedes E420 W210", "507 000 ₽", "552 630 ₽"],
+        ["BMW 540i E39", "845 000 ₽", "920 050 ₽"],
+        ["Toyota Supra A80", "1 000 000 ₽", "1 150 000 ₽"],
+        ["Subaru WRX STI", "1 170 000 ₽", "1 275 300 ₽"],
+        ["Nissan Skyline ER34", "780 000 ₽", "850 200 ₽"],
+        ["Mercedes S600 W140", "900 000 ₽", "1 000 000 ₽"],
+        ["Volkswagen Golf R", "1 300 000 ₽", "1 400 000 ₽"],
+        ["BMW M5 E60", "1 950 000 ₽", "2 200 000 ₽"],
+        ["BMW X6M E71", "1 690 000 ₽", "1 842 100 ₽"],
+        ["BMW X5M E70", "1 625 000 ₽", "1 771 250 ₽"],
+        ["Toyota Chaser", "715 000 ₽", "779 350 ₽"],
+        ["BMW 750i E38", "910 000 ₽", "991 900 ₽"],
+        ["Toyota Mark II 90", "682 500 ₽", "743 925 ₽"],
+        ["Toyota Camry V55", "975 000 ₽", "1 062 750 ₽"],
+        ["Mazda 3 MPS", "487 500 ₽", "531 375 ₽"],
+        ["Mazda MX-5", "663 000 ₽", "722 670 ₽"],
+        ["Nissan Silvia S15", "1 040 000 ₽", "1 133 600 ₽"],
+        ["Jeep Grand Cherokee", "400 000 ₽", "500 000 ₽"],
+        ["Toyota Camry V40", "552 500 ₽", "602 225 ₽"],
+        ["Subaru Impreza WRX STI", "975 000 ₽", "1 062 750 ₽"],
+        ["Audi S3 8V", "1 365 000 ₽", "1 487 850 ₽"],
+        ["Audi RS6 C5", "975 000 ₽", "1 062 750 ₽"],
+        ["Mercedes E55 AMG W211", "2 080 000 ₽", "2 267 200 ₽"],
+        ["Mercedes ML63 AMG W164", "1 100 000 ₽", "1 250 000 ₽"],
+        ["BMW 740 F02", "1 885 000 ₽", "2 055 650 ₽"],
+        ["Volvo XC90", "2 047 500 ₽", "2 231 775 ₽"],
+        ["Mercedes C63 W204", "2 080 000 ₽", "2 267 200 ₽"],
+        ["Toyota Mark II 100", "780 000 ₽", "850 200 ₽"],
+        ["Honda Civic TypeR FK8", "1 300 000 ₽", "1 417 000 ₽"],
+        ["BMW M3 E46", "845 000 ₽", "920 050 ₽"],
+        ["BMW 1M E82", "1 235 000 ₽", "1 346 150 ₽"],
+        ["Honda Civic TypeR FN2", "585 000 ₽", "637 650 ₽"],
+        ["Skoda Octavia VRS", "1 000 000 ₽", "1 200 000 ₽"],
+        ["Nissan 370Z", "1 170 000 ₽", "1 275 300 ₽"],
+        ["BMW M3 E92", "1 625 000 ₽", "1 771 250 ₽"],
+        ["Toyota LC 100", "1 040 000 ₽", "1 133 600 ₽"],
+        ["Land Rover Defender", "3 120 000 ₽", "3 400 800 ₽"],
+        ["Chevrolet Suburban", "780 000 ₽", "850 200 ₽"],
+        ["Mercedes E320 CDI W210", "455 000 ₽", "495 950 ₽"],
+        ["Mercedes GL63 AMG X166", "2 470 000 ₽", "2 692 300 ₽"],
+        ["Subaru Impreza WRX STI", "780 000 ₽", "850 200 ₽"],
+        ["Volkswagen Touareg II", "1 235 000 ₽", "1 346 150 ₽"],
+        ["Lexus RC-F", "2 600 000 ₽", "2 834 000 ₽"],
+        ["Hyundai Santa Fe", "455 000 ₽", "495 950 ₽"],
+        ["KIA K5", "1 950 000 ₽", "2 125 500 ₽"],
+        ["BMW 330D G20", "2 600 000 ₽", "2 834 000 ₽"],
+        ["Chevrolet Corvette C6", "2 925 000 ₽", "3 188 250 ₽"],
+        ["Volkswagen Passat B8", "975 000 ₽", "1 062 750 ₽"],
+        ["Toyota LC 200 II", "2 600 000 ₽", "2 834 000 ₽"],
+        ["Mercedes E63 AMG W211", "2 470 000 ₽", "2 692 300 ₽"],
+        ["Nissan 180SX", "780 000 ₽", "850 200 ₽"]
+      ],
+      high: [
+        ["Porsche Cayenne", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Mercedes E63s AMG W212", "3 000 000 ₽", "3 240 000 ₽"],
+        ["Audi RS-6 C7 Avant", "3 600 000 ₽", "3 888 000 ₽"],
+        ["Rolls-Royce Phantom VII", "9 900 000 ₽", "10 692 000 ₽"],
+        ["Mercedes C63s AMG C205", "3 600 000 ₽", "3 888 000 ₽"],
+        ["Lamborghini Aventador SV", "17 400 000 ₽", "18 792 000 ₽"],
+        ["Maybach X222", "7 800 000 ₽", "8 424 000 ₽"],
+        ["Ferrari 488", "12 000 000 ₽", "12 960 000 ₽"],
+        ["BMW G30 540i LCI", "3 600 000 ₽", "3 888 000 ₽"],
+        ["Toyota LC 200 III", "4 200 000 ₽", "4 536 000 ₽"],
+        ["Land Rover SVA", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Dodge Challenger SRT", "3 360 000 ₽", "3 628 800 ₽"],
+        ["Rolls-Royce Wraith", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Nissan GT-R 35", "4 080 000 ₽", "4 406 400 ₽"],
+        ["Bentley Bentayga", "9 000 000 ₽", "9 720 000 ₽"],
+        ["Porsche 911 / 991", "7 440 000 ₽", "8 035 200 ₽"],
+        ["Ferrari Portofino", "7 200 000 ₽", "7 776 000 ₽"],
+        ["Tesla Model S", "3 600 000 ₽", "3 888 000 ₽"],
+        ["BMW M4 F82 LCI", "2 700 000 ₽", "2 916 000 ₽"],
+        ["Mercedes G63 EXE", "10 800 000 ₽", "11 664 000 ₽"],
+        ["Mercedes G63 W463 TT", "4 200 000 ₽", "4 536 000 ₽"],
+        ["Porsche Panamera", "5 040 000 ₽", "5 443 200 ₽"],
+        ["Lamborghini Huracan", "13 200 000 ₽", "14 256 000 ₽"],
+        ["BMW M2 F87", "3 780 000 ₽", "4 082 400 ₽"],
+        ["Mercedes G63 AMG 6x6", "21 000 000 ₽", "22 680 000 ₽"],
+        ["Mercedes G63 AMG W463 III", "11 400 000 ₽", "12 312 000 ₽"],
+        ["Ford Mustang GT", "3 300 000 ₽", "3 564 000 ₽"],
+        ["BMW X5M F85", "4 200 000 ₽", "4 536 000 ₽"],
+        ["Maybach S650 Pullman", "15 000 000 ₽", "16 200 000 ₽"],
+        ["Lamborghini Urus", "15 000 000 ₽", "16 200 000 ₽"],
+        ["Lexus LX570", "4 800 000 ₽", "5 184 000 ₽"],
+        ["Jeep GC Trackhawk", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Cadillac Escalade", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Mercedes 560 Sec C126", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Audi RS-7 C7", "3 180 000 ₽", "3 434 400 ₽"],
+        ["BMW X6M F86", "4 200 000 ₽", "4 536 000 ₽"],
+        ["BMW M5 F90 CS", "13 200 000 ₽", "14 256 000 ₽"],
+        ["BMW M5 E39", "6 000 000 ₽", "7 000 000 ₽"],
+        ["Maserati Levante", "3 600 000 ₽", "3 888 000 ₽"],
+        ["BMW i8 Roadster", "6 900 000 ₽", "7 452 000 ₽"],
+        ["Chevrolet Corvette C7", "4 800 000 ₽", "5 184 000 ₽"],
+        ["Mercedes GT63s AMG S", "8 640 000 ₽", "9 331 200 ₽"],
+        ["McLaren P1", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Mercedes e63s AMG W213", "7 380 000 ₽", "7 970 400 ₽"],
+        ["Range Rover Velar", "3 600 000 ₽", "3 888 000 ₽"],
+        ["BMW X7 G07", "7 200 000 ₽", "7 776 000 ₽"],
+        ["BMW M5 F90 LCI", "13 500 000 ₽", "14 720 000 ₽"],
+        ["Acura NSX", "9 000 000 ₽", "9 720 000 ₽"],
+        ["BMW M8 F92", "8 700 000 ₽", "9 396 000 ₽"],
+        ["BMW M4 G82", "6 600 000 ₽", "7 128 000 ₽"],
+        ["Mercedes S63 AMG V222", "6 600 000 ₽", "7 128 000 ₽"],
+        ["Mercedes S500 W222", "3 600 000 ₽", "3 888 000 ₽"],
+        ["Chevrolet Corvette C8", "8 100 000 ₽", "8 748 000 ₽"],
+        ["Ferrari F40", "24 000 000 ₽", "25 920 000 ₽"],
+        ["Lexus LFA", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Porsche 911 Turbo S", "15 000 000 ₽", "16 200 000 ₽"],
+        ["Mercedes SL65 AMG", "6 000 000 ₽", "6 480 000 ₽"],
+        ["Ferrari F430", "9 000 000 ₽", "9 720 000 ₽"],
+        ["BMW X6M F96", "9 000 000 ₽", "9 720 000 ₽"],
+        ["Porsche Taycan Turbo S", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Lamborghini Countach", "15 000 000 ₽", "16 200 000 ₽"],
+        ["Porsche 911 Turbo 930", "8 400 000 ₽", "9 072 000 ₽"],
+        ["BMW M6 F13", "2 400 000 ₽", "2 592 000 ₽"],
+        ["Chevrolet Camaro ZL1", "3 000 000 ₽", "3 240 000 ₽"],
+        ["BMW M635CSI E24", "9 600 000 ₽", "10 368 000 ₽"],
+        ["BMW Z8 E52", "18 000 000 ₽", "19 440 000 ₽"],
+        ["Lamborghini Aventador SVJ", "30 000 000 ₽", "32 400 000 ₽"],
+        ["BMW M5 F10", "2 400 000 ₽", "2 592 000 ₽"],
+        ["Mercedes AMG GT R", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Dodge Charger SRT", "3 000 000 ₽", "3 240 000 ₽"],
+        ["Koenigsegg Jesko", "72 000 000 ₽", "77 760 000 ₽"],
+        ["Austin Seven 24", "90 000 000 ₽", "97 200 000 ₽"],
+        ["McLaren Senna", "60 000 000 ₽", "64 800 000 ₽"],
+        ["Ford VelociRaptor", "10 800 000 ₽", "11 664 000 ₽"],
+        ["Audi RS7 C8", "6 600 000 ₽", "7 128 000 ₽"],
+        ["Audi RS4 B9 Avant", "4 200 000 ₽", "4 536 000 ₽"],
+        ["Audi RS5 F5", "3 300 000 ₽", "3 564 000 ₽"],
+        ["Audi RSQ8", "9 000 000 ₽", "9 720 000 ₽"],
+        ["BMW X7 G07 LCI", "9 000 000 ₽", "9 720 000 ₽"],
+        ["Mercedes C63 C204 BS", "4 800 000 ₽", "5 184 000 ₽"],
+        ["Mercedes S63 AMG V223", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Mercedes S500 W223", "7 200 000 ₽", "7 776 000 ₽"],
+        ["Audi TTRS", "3 000 000 ₽", "3 564 000 ₽"],
+        ["Mercedes GLS 63 AMG", "10 800 000 ₽", "11 664 000 ₽"],
+        ["Dodge RAM TRX", "9 000 000 ₽", "9 720 000 ₽"],
+        ["Audi Etron GT", "7 800 000 ₽", "8 424 000 ₽"],
+        ["BMW X5M F95", "9 000 000 ₽", "9 720 000 ₽"],
+        ["Ferrari 512 TR", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Porshe 959", "8 400 000 ₽", "9 072 000 ₽"],
+        ["BMW M3 F80 CS", "5 400 000 ₽", "5 832 000 ₽"],
+        ["Porsche Cayenne Coupe", "9 600 000 ₽", "10 368 000 ₽"],
+        ["Mercedes V Class", "8 000 000 ₽", "9 000 000 ₽"],
+        ["Audi RS6 C8 Avant", "6 700 000 ₽", "7 400 000 ₽"],
+        ["Bentley Flying Spur", "21 000 000 ₽", "22 680 000 ₽"],
+        ["BMW M3 G81", "7 800 000 ₽", "8 424 000 ₽"],
+        ["BMW 760i G70", "12 000 000 ₽", "12 960 000 ₽"],
+        ["Mercedes E63s A.W213 Estate", "9 000 000 ₽", "9 720 000 ₽"],
+        ["BMW XM", "15 000 000 ₽", "16 200 000 ₽"],
+        ["BMW M8 GC", "10 200 000 ₽", "11 016 000 ₽"],
+        ["Ferrari 812", "21 000 000 ₽", "22 680 000 ₽"],
+        ["Maybach GLS 600 X167", "17 400 000 ₽", "18 792 000 ₽"],
+        ["RollsRoyce Cullinan II", "37 200 000 ₽", "40 176 000 ₽"],
+        ["Koenigsegg Gemera", "75 000 000 ₽", "81 000 000 ₽"],
+        ["Audi S8 D4", "3 600 000 ₽", "3 888 000 ₽"],
+        ["Mercedes GLE63S W166", "3 300 000 ₽", "3 564 000 ₽"],
+        ["Mercedes GLE63s C292", "3 300 000 ₽", "3 564 000 ₽"],
+        ["Mercedes GLE63s W167", "7 500 000 ₽", "8 100 000 ₽"],
+        ["Lamborghini Urus FL", "16 500 000 ₽", "17 820 000 ₽"]
+      ]
+    };
+
+    let currentFaqCategory = 'low';
+    const faqSubnavBtns = document.querySelectorAll('.faq-subnav-btn');
+    const faqTableBody = document.getElementById('faq-table-body');
+    const faqSearchInput = document.getElementById('faq-search-input');
+    const faqCountBadge = document.getElementById('faq-count-badge');
+    const faqCategoryNotice = document.getElementById('faq-category-notice');
+
+    const FAQ_NOTICES = {
+      low: {
+        title: "Низкий класс (СТОК авто БЕЗ стейджа)",
+        desc: "Только ликвидные авто, которые почти всегда есть в продаже на низком авторынке."
+      },
+      med: {
+        title: "Средний класс (Полу ФТ / ФВ авто БЕЗ стейджа)",
+        desc: "Только ликвидные авто среднего ценового сегмента со стабильным спросом."
+      },
+      high: {
+        title: "Высокий класс (ФТ авто БЕЗ стейджа)",
+        desc: "Полная база элитных спорткаров, внедорожников и эксклюзивов (все 2 блока, 108 автомобилей)."
+      }
+    };
+
+    function calcProfit(buyStr, sellStr) {
+      const b = parseInt(buyStr.replace(/\D/g, ''), 10) || 0;
+      const s = parseInt(sellStr.replace(/\D/g, ''), 10) || 0;
+      const diff = s - b;
+      const sign = diff >= 0 ? '+' : '-';
+      return `${sign}${Math.abs(diff).toLocaleString('ru-RU')} ₽`;
+    }
+
+    function renderFaqTable() {
+      if (!faqTableBody) return;
+      const list = FAQ_CARS_DATA[currentFaqCategory] || [];
+      const query = (faqSearchInput ? faqSearchInput.value : '').trim().toLowerCase();
+
+      const filtered = list.filter(([name]) => name.toLowerCase().includes(query));
+
+      if (faqCountBadge) {
+        faqCountBadge.innerText = `Авто в списке: ${filtered.length}`;
+      }
+
+      if (filtered.length === 0) {
+        faqTableBody.innerHTML = `
+          <tr>
+            <td colspan="4" class="faq-no-results">
+              Автомобиль по запросу «${query}» не найден в данном классе.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      faqTableBody.innerHTML = filtered.map(([name, buy, sell]) => {
+        const profit = calcProfit(buy, sell);
+        return `
+          <tr data-copy-car="${name}" data-buy="${buy}" data-sell="${sell}" title="Кликните, чтобы скопировать информацию">
+            <td>
+              <div class="faq-car-name">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-highlight); flex-shrink: 0;"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.5 2.8C2.1 11 2 11.5 2 12v4c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+                <span>${name}</span>
+              </div>
+            </td>
+            <td class="faq-price-buy">${buy}</td>
+            <td class="faq-price-sell">${sell}</td>
+            <td><span class="faq-profit-badge">${profit}</span></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    faqSubnavBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        faqSubnavBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFaqCategory = btn.dataset.sub;
+        
+        if (faqCategoryNotice && FAQ_NOTICES[currentFaqCategory]) {
+          faqCategoryNotice.innerHTML = `<b>${FAQ_NOTICES[currentFaqCategory].title}:</b> ${FAQ_NOTICES[currentFaqCategory].desc}`;
+        }
+        
+        renderFaqTable();
+      });
+    });
+
+    if (faqSearchInput) {
+      faqSearchInput.addEventListener('input', renderFaqTable);
+    }
+
+    if (faqTableBody) {
+      faqTableBody.addEventListener('click', (e) => {
+        const row = e.target.closest('tr[data-copy-car]');
+        if (!row) return;
+        const name = row.dataset.copyCar;
+        const buy = row.dataset.buy;
+        const sell = row.dataset.sell;
+        const copyTextStr = `${name} | Покупка: ${buy} | Продажа: ${sell}`;
+        copyText(copyTextStr);
+      });
+    }
+
+    // ==========================================
+    // 8. МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА
     // ==========================================
     const bioModal = document.getElementById('bio-modal');
     const btnCloseBio = document.getElementById('btn-close-bio');
@@ -2385,7 +2970,7 @@
     }
 
     // ==========================================
-    // 8. ИЗБРАННОЕ
+    // 9. ИЗБРАННОЕ
     // ==========================================
     function toggleFav(nick) {
       const idx = savedFavs.indexOf(nick);
@@ -2466,7 +3051,7 @@
     }
 
     // ==========================================
-    // 9. РАНДОМАЙЗЕР ЧИСЕЛ
+    // 10. РАНДОМАЙЗЕР ЧИСЕЛ
     // ==========================================
     let numberRollHistory = [];
     const randMinInput = document.getElementById('rand-min');
@@ -2518,7 +3103,7 @@
     }
 
     // ==========================================
-    // 10. РУЛЕТКА (КОЛЕСО)
+    // 11. РУЛЕТКА (КОЛЕСО)
     // ==========================================
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas ? canvas.getContext('2d') : null;
@@ -2622,7 +3207,7 @@
     }
 
     // ==========================================
-    // 11. ГЕНЕРАТОР НЕПОВТОРИМЫХ БИОГРАФИЙ
+    // 12. ГЕНЕРАТОР НЕПОВТОРИМЫХ БИОГРАФИЙ
     // ==========================================
     const BIO_ENGINE = {
       temperaments: [
@@ -2775,7 +3360,7 @@ ${present}`;
     }
 
     // ==========================================
-    // 12. УТИЛИТЫ КОПИРОВАНИЯ И ТОСТЫ
+    // 13. УТИЛИТЫ КОПИРОВАНИЯ И ТОСТЫ
     // ==========================================
     const toast = document.getElementById('toast');
     const toastMsg = document.getElementById('toast-msg');
@@ -2807,7 +3392,7 @@ ${present}`;
     }
 
     // ==========================================
-    // 13. QR-МОДАЛКА
+    // 14. QR-МОДАЛКА
     // ==========================================
     const qrModal = document.getElementById('qr-modal');
     const btnOpenQr = document.getElementById('btn-open-qr');
@@ -2867,7 +3452,7 @@ ${present}`;
     }
 
     // ==========================================
-    // 14. ГОРЯЧИЕ КЛАВИШИ И СТАРТОВАЯ ИНИЦИАЛИЗАЦИЯ
+    // 15. ГОРЯЧИЕ КЛАВИШИ И СТАРТОВАЯ ИНИЦИАЛИЗАЦИЯ
     // ==========================================
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Escape') {
@@ -2905,6 +3490,7 @@ ${present}`;
 
     renderHistory();
     renderFavs();
+    renderFaqTable();
     generate();
   </script>
 </body>
