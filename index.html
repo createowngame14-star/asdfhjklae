@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07080c">
+  <meta name="theme-color" content="#050508">
 
   <title>ROLEID — Официальный RP помощник | Онлайн серверов, Таблицы перекупа Radmir RP, Ники, RP Биографии</title>
 
@@ -17,7 +17,7 @@
 
   <style>
     :root {
-      --bg-dark: #07080c;
+      --bg-dark: #050508;
       --card-bg: #0f1117;
       --card-border: rgba(255, 255, 255, 0.08);
       --card-hover-border: rgba(192, 132, 252, 0.4);
@@ -25,38 +25,36 @@
       --text-muted: #94a3b8;
       --text-dim: #64748b;
 
-      --blob-1: radial-gradient(circle, #6366f1, #3b82f6);
-      --blob-2: radial-gradient(circle, #ec4899, #8b5cf6);
-      --blob-3: radial-gradient(circle, #06b6d4, #6366f1);
       --accent-flow: linear-gradient(135deg, #6366f1, #d946ef, #06b6d4);
       --accent-highlight: #c084fc;
+
+      --bg-grid-color: rgba(255, 255, 255, 0.03);
+      --bg-glow-1: rgba(99, 102, 241, 0.15);
+      --bg-glow-2: rgba(217, 70, 239, 0.05);
     }
 
     body.theme-crimson {
-      --blob-1: radial-gradient(circle, #dc2626, #991b1b);
-      --blob-2: radial-gradient(circle, #f59e0b, #b45309);
-      --blob-3: radial-gradient(circle, #7f1d1d, #450a0a);
       --accent-flow: linear-gradient(135deg, #ef4444, #f59e0b, #b91c1c);
       --accent-highlight: #f87171;
       --card-hover-border: rgba(248, 113, 113, 0.4);
+      --bg-glow-1: rgba(239, 68, 68, 0.15);
+      --bg-glow-2: rgba(245, 158, 11, 0.05);
     }
 
     body.theme-emerald {
-      --blob-1: radial-gradient(circle, #10b981, #047857);
-      --blob-2: radial-gradient(circle, #06b6d4, #0891b2);
-      --blob-3: radial-gradient(circle, #3b82f6, #1d4ed8);
       --accent-flow: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6);
       --accent-highlight: #34d399;
       --card-hover-border: rgba(52, 211, 153, 0.4);
+      --bg-glow-1: rgba(16, 185, 129, 0.15);
+      --bg-glow-2: rgba(6, 182, 212, 0.05);
     }
 
     body.theme-ice {
-      --blob-1: radial-gradient(circle, #0284c7, #1e40af);
-      --blob-2: radial-gradient(circle, #38bdf8, #0369a1);
-      --blob-3: radial-gradient(circle, #6366f1, #4338ca);
       --accent-flow: linear-gradient(135deg, #38bdf8, #6366f1, #0284c7);
       --accent-highlight: #38bdf8;
       --card-hover-border: rgba(56, 189, 248, 0.4);
+      --bg-glow-1: rgba(56, 189, 248, 0.15);
+      --bg-glow-2: rgba(99, 102, 241, 0.05);
     }
 
     * {
@@ -78,49 +76,39 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .ambient-glow {
+    /* НОВЫЙ ФОН: КИБЕРПАНК СЕТКА + СВЕЧЕНИЕ */
+    .bg-grid {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      overflow: hidden;
-      transform: translate3d(0, 0, 0);
+      background-image:
+        linear-gradient(var(--bg-grid-color) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bg-grid-color) 1px, transparent 1px);
+      background-size: 50px 50px;
+      mask-image: radial-gradient(circle at center, black 10%, transparent 80%);
+      -webkit-mask-image: radial-gradient(circle at center, black 10%, transparent 80%);
     }
 
-    .blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(85px);
-      opacity: 0.32;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
+    .bg-glow {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      background: radial-gradient(circle at 50% 50%, var(--bg-glow-1) 0%, var(--bg-glow-2) 40%, transparent 70%);
+      z-index: 0;
+      pointer-events: none;
+      animation: pulseGlow 12s ease-in-out infinite alternate;
     }
 
-    .blob-1 { width: 640px; height: 640px; background: var(--blob-1); top: -10%; left: -6%; animation: orbitMotion1 12s infinite alternate ease-in-out; }
-    .blob-2 { width: 680px; height: 680px; background: var(--blob-2); bottom: -15%; right: -8%; animation: orbitMotion2 14s infinite alternate ease-in-out; }
-    .blob-3 { width: 500px; height: 500px; background: var(--blob-3); top: 30%; left: 25%; opacity: 0.22; animation: orbitMotion3 10s infinite alternate ease-in-out; }
-
-    @keyframes orbitMotion1 {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      33% { transform: translate3d(120px, 80px, 0) scale(1.12); }
-      66% { transform: translate3d(-70px, 140px, 0) scale(0.92); }
-      100% { transform: translate3d(90px, 50px, 0) scale(1.06); }
+    @keyframes pulseGlow {
+      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+      100% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
     }
 
-    @keyframes orbitMotion2 {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      33% { transform: translate3d(-130px, -70px, 0) scale(1.15); }
-      66% { transform: translate3d(80px, -110px, 0) scale(0.9); }
-      100% { transform: translate3d(-100px, 70px, 0) scale(1.08); }
-    }
-
-    @keyframes orbitMotion3 {
-      0% { transform: translate3d(0, 0, 0) scale(0.94); }
-      50% { transform: translate3d(100px, -90px, 0) scale(1.18); }
-      100% { transform: translate3d(-110px, 80px, 0) scale(1); }
-    }
-
-    /* БОКОВОЕ МЕНЮ (РАЗДЕЛЫ) */
+    /* БОКОВОЕ МЕНЮ */
     .sidebar-backdrop {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(5px);
       opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 1050;
@@ -231,7 +219,7 @@
     .welcome-stat-val { font-size: 1.4rem; font-weight: 800; color: #fff; font-family: ui-monospace, monospace; }
     .welcome-stat-lbl { font-size: 0.74rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; margin-top: 0.2rem; }
 
-    /* ОНЛАЙН СЕРВЕРОВ (ТАБЛИЦА С СОРТИРОВКОЙ) */
+    /* ОНЛАЙН СЕРВЕРОВ */
     .servers-header-box { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem; }
     .servers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
     
@@ -250,7 +238,7 @@
     
     .server-card-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: var(--text-muted); }
 
-    /* РАЗДЕЛ НОВОСТЕЙ */
+    /* НОВОСТИ */
     .news-header-box { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem; }
     .news-feed-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 780px; margin: 0 auto; }
     .news-card { background: #12141c; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4); }
@@ -260,7 +248,7 @@
     .news-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-highlight); background: rgba(192, 132, 252, 0.1); border: 1px solid rgba(192, 132, 252, 0.25); padding: 0.25rem 0.65rem; border-radius: 8px; }
     .news-text { font-size: 0.95rem; color: #f1f5f9; line-height: 1.7; white-space: pre-line; word-break: break-word; }
 
-    /* ОБУЧЕНИЕ / ONBOARDING ТУР */
+    /* ТУР */
     .tour-overlay {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.82); backdrop-filter: blur(12px);
       z-index: 1200; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
@@ -287,7 +275,7 @@
     .btn-tour-skip { background: transparent; border: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 600; cursor: pointer; padding: 0.6rem 0.9rem; }
     .btn-tour-skip:hover { color: #fff; }
 
-    /* ТАБЛИЦЫ ПЕРЕКУПА RADMIR */
+    /* FAQ */
     .faq-subnav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1.2rem; }
     .faq-subnav-btn {
       background: #141720; border: 1px solid var(--card-border); border-radius: 12px; color: var(--text-muted);
@@ -318,7 +306,7 @@
     .faq-price-sell { font-family: ui-monospace, monospace; font-weight: 700; color: #38bdf8; }
     .faq-profit-badge { font-family: ui-monospace, monospace; font-weight: 700; color: #34d399; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 8px; padding: 0.2rem 0.5rem; display: inline-block; white-space: nowrap; }
 
-    /* ФОРМЫ И КНОПКИ */
+    /* ФОРМЫ */
     .command-bar { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 20px; padding: 1.15rem 1.25rem; box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4); display: flex; flex-direction: column; gap: 0.85rem; }
     .filters-cluster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; width: 100%; }
     .pill-select-wrapper, .pill-input-wrapper {
@@ -371,8 +359,6 @@
       font-size: 0.82rem; font-family: ui-monospace, monospace; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;
     }
     .nick-chip:hover { background: #181c27; border-color: rgba(255,255,255,0.2); }
-    .nick-chip .del-btn { color: var(--text-dim); }
-    .nick-chip .del-btn:hover { color: #f43f5e; }
 
     /* РАНДОМАЙЗЕР & РУЛЕТКА */
     .number-display-box { background: #141720; border: 2px dashed rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2.2rem 1rem; text-align: center; margin: 1.2rem 0; }
@@ -431,7 +417,7 @@
     .toast.active { transform: translateY(0); opacity: 1; }
 
     footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.06); background: rgba(7, 8, 12, 0.6); padding: 2.2rem 1.5rem 2.8rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06); background: rgba(5, 5, 8, 0.6); padding: 2.2rem 1.5rem 2.8rem;
       display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
     }
     .creator-box { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); }
@@ -459,11 +445,9 @@
 </head>
 <body>
 
-  <div class="ambient-glow">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
+  <!-- НОВЫЙ ФОН -->
+  <div class="bg-glow"></div>
+  <div class="bg-grid"></div>
 
   <!-- БОКОВОЕ МЕНЮ (РАЗДЕЛЫ) -->
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
@@ -564,7 +548,7 @@
       <p class="subtitle">Специализированная экосистема инструментов, таблиц и аналитики для игроков серверов Radmir RP</p>
     </header>
 
-    <!-- ЭКРАН 0: ГЛАВНАЯ ВИТРИНА (WELCOME-ЭКРАН) -->
+    <!-- ЭКРАН 0: ГЛАВНАЯ ВИТРИНА -->
     <div class="tab-content active" id="tab-hub">
       <div class="welcome-banner">
         <div>
@@ -583,7 +567,7 @@
             <div class="welcome-stat-lbl">Авто в базах</div>
           </div>
           <div class="welcome-stat-box">
-            <div class="welcome-stat-val">5 мин</div>
+            <div class="welcome-stat-val">2 мин</div>
             <div class="welcome-stat-lbl">Обновление</div>
           </div>
         </div>
@@ -610,18 +594,15 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 1: ОНЛАЙН СЕРВЕРОВ (СОРТИРОВКА ОТ МЕНЬШЕГО К БОЛЬШЕМУ) -->
+    <!-- ЭКРАН 1: ОНЛАЙН СЕРВЕРОВ -->
     <div class="tab-content" id="tab-servers">
-      <button class="back-to-hub-btn" data-back-to-hub>
-        &larr; Назад в меню
-      </button>
-
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
       <div class="glass-box">
         <div class="servers-header-box">
           <div>
             <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">Онлайн серверов Radmir RP</h3>
             <p style="color: var(--text-muted); font-size: 0.88rem;" id="servers-subtitle">
-              Загрузка текущего онлайна... (Автообновление каждые 2 минут)
+              Загрузка текущего онлайна... (Автообновление каждые 2 минуты)
             </p>
           </div>
           <div style="display: flex; gap: 0.6rem; align-items: center;">
@@ -637,12 +618,9 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 2: НОВОСТИ ПРОЕКТА -->
+    <!-- ЭКРАН 2: НОВОСТИ -->
     <div class="tab-content" id="tab-news">
-      <button class="back-to-hub-btn" data-back-to-hub>
-        &larr; Назад в меню
-      </button>
-
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
       <div class="glass-box">
         <div class="news-header-box">
           <div>
@@ -664,12 +642,9 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 3: FAQ ТАБЛИЦЫ ПЕРЕКУПА RADMIR RP -->
+    <!-- ЭКРАН 3: FAQ ТАБЛИЦЫ -->
     <div class="tab-content" id="tab-faq">
-      <button class="back-to-hub-btn" data-back-to-hub>
-        &larr; Назад в меню
-      </button>
-
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
       <div class="glass-box">
         <div style="margin-bottom: 1.2rem;">
           <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">FAQ Перекупщика Radmir RP — База цен авторынка</h3>
@@ -679,15 +654,9 @@
         </div>
 
         <div class="faq-subnav">
-          <button class="faq-subnav-btn active" data-sub="low">
-            <span>🚗 Низкий БУ (40)</span>
-          </button>
-          <button class="faq-subnav-btn" data-sub="med">
-            <span>🚙 Средний БУ (55)</span>
-          </button>
-          <button class="faq-subnav-btn" data-sub="high">
-            <span>🏎️ Высокий БУ (108)</span>
-          </button>
+          <button class="faq-subnav-btn active" data-sub="low"><span>🚗 Низкий БУ (40)</span></button>
+          <button class="faq-subnav-btn" data-sub="med"><span>🚙 Средний БУ (55)</span></button>
+          <button class="faq-subnav-btn" data-sub="high"><span>🏎️ Высокий БУ (108)</span></button>
         </div>
 
         <div class="faq-notice-box">
@@ -738,11 +707,9 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 4: ГЕНЕРАТОР НИКОВ RADMIR RP -->
+    <!-- ЭКРАН 4: ГЕНЕРАТОР НИКОВ -->
     <div class="tab-content" id="tab-names">
-      <button class="back-to-hub-btn" data-back-to-hub>
-        &larr; Назад в меню
-      </button>
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
 
       <div class="command-bar">
         <div class="filters-cluster">
@@ -795,12 +762,9 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 5: RP БИОГРАФИИ ДЛЯ ФОРУМА RADMIR -->
+    <!-- ЭКРАН 5: RP БИОГРАФИИ -->
     <div class="tab-content" id="tab-bio">
-      <button class="back-to-hub-btn" data-back-to-hub>
-        &larr; Назад в меню
-      </button>
-
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
       <div class="glass-box">
         <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Генератор RP-Биографий для форума Radmir RP</h3>
         <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.35rem;">Готовая подробная история без повторений для подачи заявки на лидерку или старший состав.</p>
@@ -828,7 +792,7 @@
       </div>
     </div>
 
-    <!-- ЭКРАН 6: РАНДОМАЙЗЕР ЧИСЕЛ -->
+    <!-- ЭКРАН 6: РАНДОМАЙЗЕР -->
     <div class="tab-content" id="tab-random">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; Назад в меню</button>
       <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
@@ -859,7 +823,7 @@
     </div>
   </div>
 
-  <!-- КУРС ДЕЛА ДЛЯ НОВИЧКА (ONBOARDING TOUR) -->
+  <!-- КУРС ДЕЛА -->
   <div class="tour-overlay" id="tour-overlay">
     <div class="tour-modal">
       <div class="tour-progress-wrap" id="tour-dots">
@@ -875,7 +839,7 @@
     </div>
   </div>
 
-  <!-- ВИДЖЕТ ИИ-ЧАТА -->
+  <!-- ИИ-ЧАТ -->
   <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
   <div class="ai-chat-modal" id="ai-chat-modal">
     <div class="ai-chat-header">
@@ -894,7 +858,7 @@
     </div>
   </div>
 
-  <!-- МОДАЛКИ БИО И QR -->
+  <!-- МОДАЛКИ -->
   <div class="app-modal-backdrop" id="bio-modal">
     <div class="app-modal-card">
       <button class="btn-close-modal" id="btn-close-bio">&times;</button>
@@ -1012,7 +976,7 @@
     sidebarNavItems.forEach(item => item.addEventListener('click', () => switchTab(item.dataset.tab)));
     document.querySelectorAll('[data-back-to-hub]').forEach(btn => btn.addEventListener('click', () => switchTab('tab-hub')));
 
-    // Мониторинг онлайна серверов (автообновление каждые 5 минут)
+    // Мониторинг онлайна серверов
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     const btnRefreshServers = document.getElementById('btn-refresh-servers');
@@ -1041,7 +1005,6 @@
 
     function renderServers(servers) {
       if (!serversGrid) return;
-      // Сортировка строго от наименьшего к наибольшему
       servers.sort((a, b) => a.online - b.online);
 
       serversGrid.innerHTML = servers.map(s => `
@@ -1063,7 +1026,7 @@
 
     if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Данные онлайна обновлены!'); });
 
-    // Автообновление раз в 5 минут (300000 мс)
+    // Автообновление раз в 2 минуты (120000 мс)
     if (!serversTimer) {
       serversTimer = setInterval(loadServersOnline, 120000);
     }
@@ -1102,7 +1065,7 @@
     // Обучающий тур
     const TOUR_STEPS = [
       { icon: "👋", title: "Добро пожаловать в ROLEID!", desc: "Ваш карманный помощник для комфортной игры на Radmir RP." },
-      { icon: "📊", title: "Мониторинг серверов", desc: "Следите за онлайном всех серверов в реальном времени с автообновлением раз в 5 минут." },
+      { icon: "📊", title: "Мониторинг серверов", desc: "Следите за онлайном всех серверов в реальном времени с автообновлением раз в 2 минуты." },
       { icon: "🚗", title: "Таблицы цен авторынка", desc: "Полная база 203 авто низкого, среднего и высокого Б/У с расчетом профита." },
       { icon: "🪪", title: "Ники и Биографии", desc: "Создание одобренных никнеймов и квентов для успешной игры на проекте." }
     ];
@@ -1148,7 +1111,7 @@
     themeDots.forEach(d => d.addEventListener('click', () => setTheme(d.dataset.theme)));
     setTheme(currentTheme);
 
-    // FAQ Таблицы перекупа (203 авто)
+    // FAQ Таблицы перекупа
     const FAQ_CARS_DATA = {
       low: [
         ["Ig 2712", "12 000 ₽", "20 000 ₽"], ["Volvo 850R", "70 000 ₽", "90 000 ₽"], ["Lada 2101", "30 000 ₽", "40 000 ₽"], ["Lada 2107", "50 000 ₽", "70 000 ₽"], ["Ig 27151", "15 000 ₽", "20 000 ₽"], ["Lada 2109", "70 000 ₽", "85 000 ₽"], ["Honda CRX", "70 000 ₽", "90 000 ₽"], ["Volkswagen Golf 2", "75 000 ₽", "90 000 ₽"], ["Audi 80 Avant", "100 000 ₽", "130 000 ₽"], ["Lada 2115", "90 000 ₽", "100 000 ₽"], ["Lada 2108", "65 000 ₽", "80 000 ₽"], ["Daewoo Lanos", "90 000 ₽", "110 000 ₽"], ["Lada 2106", "60 000 ₽", "70 000 ₽"], ["Lada 2114", "100 000 ₽", "130 000 ₽"], ["Lada 2110", "60 000 ₽", "80 000 ₽"], ["Lada 21045", "30 000 ₽", "35 000 ₽"], ["Lada 2105", "50 000 ₽", "65 000 ₽"], ["Alfa Romeo 155", "85 000 ₽", "95 000 ₽"], ["Lada 21099", "80 000 ₽", "90 000 ₽"], ["LADA 21123 купе", "110 000 ₽", "130 000 ₽"], ["LADA 2112", "80 000 ₽", "90 000 ₽"], ["KIA Rio", "210 000 ₽", "250 000 ₽"], ["Skoda Octavia A4 VRS", "110 000 ₽", "140 000 ₽"], ["Audi A4 B5", "140 000 ₽", "180 000 ₽"], ["Renault Logan", "110 000 ₽", "140 000 ₽"], ["Honda Civic Si", "180 000 ₽", "220 000 ₽"], ["BMW 323i E30", "200 000 ₽", "250 000 ₽"], ["Lada Priora", "150 000 ₽", "180 000 ₽"], ["Lada Vesta", "240 000 ₽", "280 000 ₽"], ["BMW M5 E28", "90 000 ₽", "120 000 ₽"], ["Saab 9.3 Turbo", "250 000 ₽", "300 000 ₽"], ["Daewoo Matiz", "100 000 ₽", "130 000 ₽"], ["ZAZ 1102 Tavria", "35 000 ₽", "40 000 ₽"], ["GAZ 24 Волга", "140 000 ₽", "157 000 ₽"], ["Honda Ami", "100 000 ₽", "112 000 ₽"], ["Lada 2103", "60 000 ₽", "67 000 ₽"], ["Lada 2113", "76 000 ₽", "85 000 ₽"], ["Audi A4 B6 Avant", "200 000 ₽", "224 000 ₽"], ["Lada 2102", "40 000 ₽", "49 000 ₽"], ["Volkswagen Passat B3", "80 000 ₽", "110 000 ₽"]
@@ -1225,7 +1188,7 @@
       });
     }
 
-    // Никнеймы
+    // Никнеймы (расширенная база)
     const DB = {
       russiaMaleNames: ["Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", "Stanislav", "Ruslan", "Viktor", "Timur", "Alexey", "Nikolay", "Stepan", "Yuri", "Konstantin", "Mark", "Lev", "Semyon", "Arseniy", "Georgiy", "Vyacheslav", "Valentin", "Petr", "Vasiliy", "Eduard", "Anatoliy", "Boris", "German", "Kliment", "Saveliy", "Fedor", "Arkadiy", "Trofim", "Elisey", "Vsevolod", "Rodion", "Iosif", "Emil", "Kamil", "Rinat", "Damir", "Marat", "Alan", "Artur", "Robert", "David", "Makar", "Yegor", "Arsen", "Matvey", "Miroslav", "Savva"],
       usMaleNames: ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Thomas", "Daniel", "Matthew"],
@@ -1376,7 +1339,7 @@
     document.getElementById('btn-copy-unique-bb')?.addEventListener('click', () => { if (genBio) { copyText(genBio); showToast('BB-код скопирован!'); } });
     document.getElementById('btn-copy-unique-plain')?.addEventListener('click', () => { if (genBio) { copyText(genBio.replace(/\[\/?b\]/g, '')); showToast('Текст скопирован!'); } });
 
-    // Рандомайзер (Анимация)
+    // Рандомайзер (с анимацией)
     let isRollingNumber = false;
     document.getElementById('btn-roll-number')?.addEventListener('click', () => {
       if (isRollingNumber) return;
@@ -1392,7 +1355,7 @@
       const btn = document.getElementById('btn-roll-number');
       if (btn) btn.disabled = true;
 
-      const duration = 1500; // 1.5 секунды анимации
+      const duration = 1500;
       const intervalTime = 50;
       const iterations = duration / intervalTime;
       let currentIteration = 0;
@@ -1414,7 +1377,6 @@
             chip.innerHTML = `<span># ${finalRes}</span>`;
             historyContainer.prepend(chip);
             
-            // Оставляем только последние 8 результатов
             while (historyContainer.children.length > 8) {
               historyContainer.removeChild(historyContainer.lastChild);
             }
@@ -1427,7 +1389,7 @@
       }, intervalTime);
     });
 
-    // Рулетка (Анимация)
+    // Рулетка (с анимацией)
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas?.getContext('2d');
     let wheelAngle = 0;
@@ -1459,7 +1421,6 @@
         ctx.restore();
       });
       
-      // Центральный круг
       ctx.beginPath(); 
       ctx.arc(rad, rad, 18, 0, 2 * Math.PI); 
       ctx.fillStyle = '#0f1118'; 
@@ -1484,17 +1445,14 @@
       const wheelWinner = document.getElementById('wheel-winner');
       if (wheelWinner) wheelWinner.innerText = 'Рулетка крутится...';
 
-      const spinDuration = 4000; // 4 секунды
+      const spinDuration = 4000;
       const startAngle = wheelAngle;
-      // 5-8 полных оборотов + случайный угол
       const totalRotation = Math.PI * 2 * (5 + Math.random() * 3) + (Math.random() * Math.PI * 2);
       const startTime = performance.now();
 
       function animateWheel(time) {
         const elapsed = time - startTime;
         const progress = Math.min(elapsed / spinDuration, 1);
-        
-        // Функция плавного замедления (easeOutCubic)
         const easeOut = 1 - Math.pow(1 - progress, 3);
         
         wheelAngle = startAngle + totalRotation * easeOut;
@@ -1506,14 +1464,9 @@
           isWheelSpinning = false;
           if (btn) btn.disabled = false;
           
-          // Вычисляем победителя
           const arc = (2 * Math.PI) / segs.length;
           const normalizedAngle = (wheelAngle % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI);
-          
-          // Стрелка находится сверху (угол 3*PI/2 или -PI/2)
           const pointerAngle = (3 * Math.PI / 2 - normalizedAngle + 2 * Math.PI) % (2 * Math.PI);
-          
-          // Находим индекс сектора
           const winnerIndex = Math.floor(pointerAngle / arc) % segs.length;
           
           if (wheelWinner) wheelWinner.innerText = `Победитель: ${segs[winnerIndex]}`;
