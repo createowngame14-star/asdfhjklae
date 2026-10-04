@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и генератор неповторимых RP биографий через ИИ для CRMP, SAMP и GTA 5 RP проектов.">
+  <meta name="description" content="Универсальный RP генератор никнеймов с анимацией рулетки и генератор уникальных RP биографий для CRMP, SAMP и GTA 5 RP проектов.">
 
   <style>
     :root {
@@ -35,6 +35,2048 @@
     body.theme-crimson {
       --blob-1: radial-gradient(circle, #dc2626, #991b1b);
       --blob-2: radial-gradient(circle, #f59e0b, #b45309);
+      --blob-3: radial-gradient(circle, #7f1d1d, #450a0a);
+      --accent-flow: linear-gradient(135deg, #ef4444, #f59e0b, #b91c1c);
+      --accent-highlight: #f87171;
+      --card-hover-border: rgba(248, 113, 113, 0.4);
+    }
+
+    body.theme-emerald {
+      --blob-1: radial-gradient(circle, #10b981, #047857);
+      --blob-2: radial-gradient(circle, #06b6d4, #0891b2);
+      --blob-3: radial-gradient(circle, #3b82f6, #1d4ed8);
+      --accent-flow: linear-gradient(135deg, #10b981, #06b6d4, #3b82f6);
+      --accent-highlight: #34d399;
+      --card-hover-border: rgba(52, 211, 153, 0.4);
+    }
+
+    body.theme-ice {
+      --blob-1: radial-gradient(circle, #0284c7, #1e40af);
+      --blob-2: radial-gradient(circle, #38bdf8, #0369a1);
+      --blob-3: radial-gradient(circle, #6366f1, #4338ca);
+      --accent-flow: linear-gradient(135deg, #38bdf8, #6366f1, #0284c7);
+      --accent-highlight: #38bdf8;
+      --card-hover-border: rgba(56, 189, 248, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(85px);
+      -webkit-filter: blur(85px);
+      opacity: 0.32;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .blob-1 {
+      width: 640px;
+      height: 640px;
+      background: var(--blob-1);
+      top: -10%;
+      left: -6%;
+      animation: orbitMotion1 12s infinite alternate ease-in-out;
+    }
+
+    .blob-2 {
+      width: 680px;
+      height: 680px;
+      background: var(--blob-2);
+      bottom: -15%;
+      right: -8%;
+      animation: orbitMotion2 14s infinite alternate ease-in-out;
+    }
+
+    .blob-3 {
+      width: 500px;
+      height: 500px;
+      background: var(--blob-3);
+      top: 30%;
+      left: 25%;
+      opacity: 0.22;
+      animation: orbitMotion3 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes orbitMotion1 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(120px, 80px, 0) scale(1.12); }
+      66% { transform: translate3d(-70px, 140px, 0) scale(0.92); }
+      100% { transform: translate3d(90px, 50px, 0) scale(1.06); }
+    }
+
+    @keyframes orbitMotion2 {
+      0% { transform: translate3d(0, 0, 0) scale(1); }
+      33% { transform: translate3d(-130px, -70px, 0) scale(1.15); }
+      66% { transform: translate3d(80px, -110px, 0) scale(0.9); }
+      100% { transform: translate3d(-100px, 70px, 0) scale(1.08); }
+    }
+
+    @keyframes orbitMotion3 {
+      0% { transform: translate3d(0, 0, 0) scale(0.94); }
+      50% { transform: translate3d(100px, -90px, 0) scale(1.18); }
+      100% { transform: translate3d(-110px, 80px, 0) scale(1); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2.2rem 1.5rem 1.5rem;
+      flex: 1;
+    }
+
+    .top-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .theme-picker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0f1118;
+      border: 1px solid var(--card-border);
+      padding: 0.35rem 0.65rem;
+      border-radius: 9999px;
+    }
+
+    .theme-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: #fff; transform: scale(1.15); }
+    .theme-dot.violet { background: linear-gradient(135deg, #6366f1, #ec4899); }
+    .theme-dot.crimson { background: linear-gradient(135deg, #ef4444, #f59e0b); }
+    .theme-dot.emerald { background: linear-gradient(135deg, #10b981, #06b6d4); }
+    .theme-dot.ice { background: linear-gradient(135deg, #38bdf8, #1e40af); }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-top-util {
+      background: #0f1118;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 9999px;
+      padding: 0.4rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      transition: color 0.15s, border-color 0.15s, transform 0.15s;
+    }
+
+    .btn-top-util:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .btn-install {
+      background: rgba(192, 132, 252, 0.1);
+      border-color: rgba(192, 132, 252, 0.3);
+      color: var(--accent-highlight);
+      display: none;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 1.8rem;
+    }
+
+    .top-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1.1rem;
+      background: #0f1118;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.07em;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .top-badge span.pulse-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 10px #10b981;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .gradient-text-pure {
+      background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .gradient-text-flow {
+      background: var(--accent-flow);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShine 7s ease infinite;
+    }
+
+    @keyframes gradientShine {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-tab {
+      background: #0d0f15;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 0.6rem 1.4rem;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+    }
+
+    .nav-tab:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-1px);
+    }
+
+    .nav-tab.active {
+      background: rgba(192, 132, 252, 0.12);
+      border-color: var(--accent-highlight);
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(192, 132, 252, 0.15);
+    }
+
+    .tab-content {
+      display: none;
+      animation: cardEntrance 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .command-bar {
+      background: #0d0f15;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 1.15rem 1.25rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .command-bar:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .filters-cluster {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.65rem;
+      width: 100%;
+    }
+
+    .pill-select-wrapper,
+    .pill-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0 0.85rem;
+      height: 44px;
+      width: 100%;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+
+    .pill-select-wrapper:hover,
+    .pill-input-wrapper:hover {
+      background: #181c27;
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .pill-select-wrapper svg.pill-icon,
+    .pill-input-wrapper svg.pill-icon {
+      color: var(--text-dim);
+      margin-right: 0.5rem;
+      flex-shrink: 0;
+      transition: color 0.2s ease;
+    }
+
+    .pill-select-wrapper svg.pill-icon.gender-male {
+      color: #38bdf8 !important;
+    }
+
+    .pill-select-wrapper svg.pill-icon.gender-female {
+      color: #f472b6 !important;
+    }
+
+    .pill-select-wrapper:hover svg.pill-icon:not(.gender-male):not(.gender-female),
+    .pill-input-wrapper:hover svg.pill-icon {
+      color: var(--accent-highlight);
+    }
+
+    .pill-select {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      padding-right: 1.2rem;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .pill-select option {
+      background: #0f1118;
+      color: #fff;
+    }
+
+    .pill-select-wrapper::after {
+      content: "";
+      position: absolute;
+      right: 0.85rem;
+      pointer-events: none;
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid var(--text-dim);
+      border-bottom: 2px solid var(--text-dim);
+      transform: translateY(-2px) rotate(45deg);
+    }
+
+    .custom-fame-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      width: 100%;
+    }
+
+    .custom-fame-input::placeholder {
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .actions-cluster {
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 0.65rem;
+      width: 100%;
+    }
+
+    .btn-generate {
+      border: none;
+      outline: none;
+      height: 44px;
+      padding: 0 1.4rem;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #fff;
+      cursor: pointer;
+      background: var(--accent-flow);
+      background-size: 200% 200%;
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+      transition: transform 0.12s ease, opacity 0.12s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .btn-generate:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .btn-generate:active {
+      transform: translateY(1px);
+    }
+
+    .btn-generate:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-icon-copy {
+      height: 44px;
+      padding: 0 1rem;
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      width: 100%;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .btn-icon-copy:hover {
+      background: #181c27;
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .hotkey-hint {
+      text-align: center;
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .kbd-chip {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      padding: 0.12rem 0.45rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      color: var(--text-muted);
+    }
+
+    @keyframes cardEntrance {
+      0% { opacity: 0; transform: translateY(14px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .names-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1rem;
+      margin: 2.2rem 0;
+      width: 100%;
+    }
+
+    .names-grid.is-single {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .names-grid.is-single .modern-card {
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .modern-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.15rem 1.3rem;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 0.9rem;
+      transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.15s ease, box-shadow 0.2s ease;
+      contain: content;
+      animation: cardEntrance 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .modern-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--card-hover-border);
+      background: #131620;
+    }
+
+    .modern-card.just-locked {
+      border-color: var(--accent-highlight);
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.3);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .flag-icon {
+      font-size: 1.05rem;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .card-actions-mini {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .btn-action-icon {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      padding: 0.3rem;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-action-icon:hover {
+      transform: scale(1.15);
+      color: #fff;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .btn-fav-icon:hover { color: #f43f5e; }
+    .btn-fav-icon.active { color: #f43f5e; }
+    .btn-bio-card:hover { color: var(--accent-highlight); }
+
+    .card-center { 
+      padding: 0.1rem 0; 
+      position: relative;
+    }
+
+    .slot-viewport {
+      height: 38px;
+      overflow: hidden;
+      position: relative;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+    }
+
+    .slot-strip {
+      display: flex;
+      flex-direction: column;
+      will-change: transform, filter;
+      transform: translateY(0);
+    }
+
+    .slot-strip.spinning {
+      filter: blur(1.5px);
+    }
+
+    .slot-item {
+      height: 38px;
+      display: flex;
+      align-items: center;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.015em;
+      white-space: nowrap;
+      transition: color 0.18s ease, transform 0.18s ease;
+    }
+
+    .modern-card:hover .slot-item.is-target {
+      color: var(--accent-highlight);
+      transform: translateY(-2px) scale(1.02);
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .copy-hint {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 0.76rem;
+    }
+
+    .modern-card:hover .copy-hint { color: var(--accent-highlight); }
+
+    .gender-label-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
+    .gender-label-wrap.gender-male { color: #38bdf8; }
+    .gender-label-wrap.gender-female { color: #f472b6; }
+
+    .gender-mini-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .gender-male .gender-mini-dot {
+      background: #38bdf8;
+      box-shadow: 0 0 6px rgba(56, 189, 248, 0.7);
+    }
+
+    .gender-female .gender-mini-dot {
+      background: #f472b6;
+      box-shadow: 0 0 6px rgba(244, 114, 182, 0.7);
+    }
+
+    .glass-box {
+      background: #0d0f15;
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .chips-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+    }
+
+    .nick-chip {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.82rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: background-color 0.15s, border-color 0.15s;
+    }
+
+    .nick-chip:hover {
+      background: #181c27;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .nick-chip .del-btn {
+      color: var(--text-dim);
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .nick-chip .del-btn:hover { color: #f43f5e; }
+
+    .bio-editor-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    .bio-result-card {
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.4rem;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: #e2e8f0;
+      white-space: pre-line;
+      max-height: 520px;
+      overflow-y: auto;
+      margin: 1.2rem 0;
+    }
+
+    .app-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .app-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .app-modal-card {
+      background: #0f1118;
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      transform: scale(0.95);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+
+    .app-modal-backdrop.open .app-modal-card {
+      transform: scale(1);
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #141720;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+    }
+
+    .btn-close-modal:hover {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .bio-container {
+      margin: 1.2rem 0;
+      background: #141720;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.55;
+    }
+
+    .bio-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .bio-row:last-child {
+      border-bottom: none;
+    }
+
+    .bio-label {
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    .bio-val {
+      color: #fff;
+      font-weight: 600;
+      text-align: right;
+      max-width: 60%;
+    }
+
+    .qr-img-wrapper {
+      background: #fff;
+      padding: 0.85rem;
+      border-radius: 16px;
+      display: inline-block;
+      margin: 1.2rem 0;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+
+    .qr-img-wrapper img {
+      display: block;
+      width: 190px;
+      height: 190px;
+      border-radius: 6px;
+    }
+
+    .qr-url-badge {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.76rem;
+      color: var(--accent-highlight);
+      background: rgba(192, 132, 252, 0.08);
+      border: 1px solid rgba(192, 132, 252, 0.2);
+      padding: 0.3rem 0.6rem;
+      border-radius: 8px;
+      margin-bottom: 1.2rem;
+      word-break: break-all;
+    }
+
+    .modal-actions-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      width: 100%;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #141720;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #fff;
+      padding: 0.8rem 1.4rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toast.active { transform: translateY(0); opacity: 1; }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      background: rgba(7, 8, 12, 0.6);
+      padding: 2.2rem 1.5rem 2.8rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .creator-box {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .creator-name { color: #fff; font-weight: 700; letter-spacing: 0.02em; }
+
+    .social-links {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .social-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #12151e;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.45rem 0.95rem;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: all 0.18s ease;
+    }
+
+    .social-btn:hover { transform: translateY(-2px); color: #fff; }
+    .social-btn.tg:hover { border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.08); color: #38bdf8; }
+    .social-btn.yt:hover { border-color: rgba(239, 68, 68, 0.5); background: rgba(239, 68, 68, 0.08); color: #f87171; }
+    .social-btn.tiktok:hover { border-color: rgba(6, 182, 212, 0.5); background: rgba(6, 182, 212, 0.08); color: #38bdf8; }
+    .social-btn.twitch:hover { border-color: rgba(168, 85, 247, 0.5); background: rgba(168, 85, 247, 0.08); color: #c084fc; }
+
+    .footer-copy { color: var(--text-dim); font-size: 0.75rem; letter-spacing: 0.02em; }
+
+    @media (max-width: 820px) {
+      .filters-cluster { grid-template-columns: repeat(2, 1fr); }
+      .actions-cluster { grid-template-columns: 1fr; }
+      .bio-editor-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 500px) {
+      .filters-cluster { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-glow">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+  </div>
+
+  <div class="container">
+    <div class="top-toolbar">
+      <div class="theme-picker" title="Выбор атмосферы">
+        <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: 700; margin-right: 0.2rem;">ТЕМА:</span>
+        <div class="theme-dot violet active" data-theme="violet" title="Violet Aurora"></div>
+        <div class="theme-dot crimson" data-theme="crimson" title="Crimson ОПГ"></div>
+        <div class="theme-dot emerald" data-theme="emerald" title="Emerald Гос"></div>
+        <div class="theme-dot ice" data-theme="ice" title="Ice Blue"></div>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn-top-util btn-install" id="btn-pwa-install" title="Установить приложение на телефон или ПК">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Установить
+        </button>
+
+        <button class="btn-top-util" id="btn-open-qr" title="QR-code">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          QR-code
+        </button>
+      </div>
+    </div>
+
+    <header>
+      <div class="top-badge">
+        <span class="pulse-dot"></span>
+        ROLEID &bull; ОФИЦИАЛЬНЫЙ RP СЕРВИС
+      </div>
+      <h1>
+        <span class="gradient-text-pure">ROLE</span><span class="gradient-text-flow">ID</span>
+      </h1>
+      <p class="subtitle">Лучший генератор RP ников и биографий для CRMP, SAMP и GTA 5 RP</p>
+    </header>
+
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tab-names">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Генератор ников
+      </button>
+      <button class="nav-tab" data-tab="tab-bio">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"/><path d="M6 6h10M6 10h10"/></svg>
+        RP Биографии
+      </button>
+    </nav>
+
+    <!-- ВКЛАДКА 1: ГЕНЕРАТОР НИКОВ -->
+    <div class="tab-content active" id="tab-names">
+      <div class="command-bar">
+        <div class="filters-cluster">
+          <div class="pill-select-wrapper">
+            <svg class="pill-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            <select id="filter-faction" class="pill-select">
+              <option value="all">🌍 Все страны</option>
+              <option value="russia">🇷🇺 Россия</option>
+              <option value="us">🇺🇸 США</option>
+              <option value="italy">🇮🇹 Италия</option>
+              <option value="spain">🇪🇸 Испания</option>
+              <option value="france">🇫🇷 Франция</option>
+              <option value="japan">🇯🇵 Япония</option>
+            </select>
+          </div>
+
+          <div class="pill-input-wrapper" title="Закрепить свою фамилию/фаму">
+            <svg class="pill-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <input type="text" id="custom-surname" class="custom-fame-input" placeholder="Своя фамилия" autocomplete="off">
+          </div>
+
+          <div class="pill-select-wrapper">
+            <svg class="pill-icon gender-male" id="gender-indicator-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/></svg>
+            <select id="filter-gender" class="pill-select">
+              <option value="male" selected>Мужской</option>
+              <option value="female">Женский</option>
+              <option value="random">Любой пол</option>
+            </select>
+          </div>
+
+          <div class="pill-select-wrapper">
+            <svg class="pill-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <select id="filter-count" class="pill-select">
+              <option value="1">1 шт</option>
+              <option value="3" selected>3 шт</option>
+              <option value="6">6 шт</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="actions-cluster">
+          <button class="btn-generate" id="btn-generate">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+            Сгенерировать
+          </button>
+          <button class="btn-icon-copy" id="btn-copy-all" title="Скопировать все">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            Скопировать все
+          </button>
+        </div>
+      </div>
+
+      <div class="hotkey-hint">
+        Нажми <span class="kbd-chip">Пробел</span> для быстрой генерации
+      </div>
+
+      <div class="names-grid" id="names-grid"></div>
+
+      <div class="glass-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 1.05rem; font-weight: 700;">История генераций (<span id="history-count">0</span>)</h3>
+          <button class="btn-icon-copy" id="btn-clear-history" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem;">Очистить историю</button>
+        </div>
+        <div class="chips-wrap" id="history-chips"></div>
+      </div>
+
+      <div class="glass-box">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 style="font-size: 1.05rem; font-weight: 700;">Сохраненные ники (<span id="fav-count">0</span>)</h3>
+          <button class="btn-icon-copy" id="btn-clear-fav" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem;">Очистить</button>
+        </div>
+        <div class="chips-wrap" id="fav-chips"></div>
+      </div>
+    </div>
+
+    <!-- ВКЛАДКА 2: RP БИОГРАФИИ -->
+    <div class="tab-content" id="tab-bio">
+      <div class="glass-box">
+        <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.35rem;">Генератор неповторимых RP-Биографий</h3>
+        <p style="color: var(--text-muted); font-size: 0.84rem; margin-bottom: 1.35rem;">
+          Умный алгоритм составляет детальную историю без повторений для форумов и отчетов на старший состав
+        </p>
+
+        <div class="bio-editor-grid">
+          <div class="pill-input-wrapper">
+            <input type="text" id="bio-custom-name" class="custom-fame-input" placeholder="Имя и Фамилия персонажа">
+          </div>
+          <div class="pill-input-wrapper">
+            <input type="number" id="bio-custom-age" class="custom-fame-input" placeholder="Возраст" value="26">
+          </div>
+          <div class="pill-select-wrapper">
+            <select id="bio-role-select" class="pill-select">
+              <option value="gos">Гос. структуры (МВД / ФСБ / Армия / Правительство)</option>
+              <option value="opg">Криминал (ОПГ / Мафия / Уличные банды)</option>
+              <option value="biz">Бизнесмен / Предприниматель</option>
+              <option value="civil">Обычный гражданин / Рабочий класс</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-generate" id="btn-build-unique-bio" style="margin-bottom: 1rem;">
+          Сгенерировать биографию
+        </button>
+
+        <div class="bio-result-card" id="unique-bio-view">
+          Нажмите кнопку «Сгенерировать биографию», чтобы получить готовую развернутую историю персонажа...
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;">
+          <button class="btn-generate" id="btn-copy-unique-bb" style="font-size: 0.85rem;">
+            Скопировать для форума (BB-код)
+          </button>
+          <button class="btn-icon-copy" id="btn-copy-unique-plain" style="font-size: 0.85rem;">
+            Скопировать простым текстом
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА КАРТОЧКИ ПЕРСОНАЖА -->
+  <div class="app-modal-backdrop" id="bio-modal">
+    <div class="app-modal-card">
+      <button class="btn-close-modal" id="btn-close-bio" title="Закрыть">&times;</button>
+      <h3 style="font-size: 1.25rem; font-weight: 800; color: #fff; margin-bottom: 0.25rem;">RP-Биография</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem;">Карточка персонажа для отчетов</p>
+
+      <div class="bio-container" id="bio-content-view"></div>
+
+      <div class="modal-actions-col">
+        <button class="btn-generate" id="btn-copy-bio-bb" style="width: 100%; justify-content: center; height: 40px; font-size: 0.86rem;">
+          Скопировать (BB-код)
+        </button>
+        <button class="btn-icon-copy" id="btn-copy-bio-plain" style="width: 100%; justify-content: center; height: 38px; font-size: 0.84rem;">
+          Скопировать текстом
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА QR КОДА -->
+  <div class="app-modal-backdrop" id="qr-modal">
+    <div class="app-modal-card" style="text-align: center;">
+      <button class="btn-close-modal" id="btn-close-qr" title="Закрыть">&times;</button>
+      <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff; margin-bottom: 0.35rem;">QR-code</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem;">Наведите камеру смартфона для быстрого входа на сайт</p>
+      
+      <div class="qr-img-wrapper">
+        <img id="qr-image" src="" alt="QR Code">
+      </div>
+
+      <div class="qr-url-badge" id="qr-url-display">ROLEID.RU</div>
+
+      <div class="modal-actions-col">
+        <button class="btn-generate" id="btn-download-qr" style="width: 100%; justify-content: center; height: 38px; font-size: 0.85rem;">
+          Скачать QR-код
+        </button>
+        <button class="btn-icon-copy" id="btn-copy-link" style="width: 100%; justify-content: center; height: 38px; font-size: 0.85rem;">
+          Скопировать ссылку
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span style="color: #34d399;">✓</span>
+    <span id="toast-msg">Скопировано в буфер</span>
+  </div>
+
+  <footer>
+    <div class="creator-box">
+      <span>Создатель проекта:</span>
+      <span class="creator-name">dcartier</span>
+    </div>
+
+    <div class="social-links">
+      <a href="https://t.me/dcartier15" target="_blank" rel="noopener noreferrer" class="social-btn tg" title="Telegram">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
+        Telegram
+      </a>
+      <a href="https://youtube.com/@dcartier15?si=UNTOibU7RU9TVIek" target="_blank" rel="noopener noreferrer" class="social-btn yt" title="YouTube">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        YouTube
+      </a>
+      <a href="https://www.tiktok.com/@donaldcartier15?_r=1&_t=ZS-99wiXiDjYgv" target="_blank" rel="noopener noreferrer" class="social-btn tiktok" title="TikTok">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-.88-.06A6.34 6.34 0 0 0 3.14 15.7a6.34 6.34 0 0 0 10.74 4.54 6.27 6.27 0 0 0 1.94-4.54V8.58a8.28 8.28 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.01z"/></svg>
+        TikTok
+      </a>
+      <a href="https://www.twitch.tv/dcartier15" target="_blank" rel="noopener noreferrer" class="social-btn twitch" title="Twitch">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M2.149 0l-1.612 4.119v16.8h5.9v3.081h3.095l3.076-3.081h4.614l6.241-6.241v-14.678h-21.314zm19.261 13.626l-3.585 3.584h-4.614l-3.076 3.081v-3.081h-4.359v-15.158h15.634v11.574zm-4.103-6.417h-2.052v6.155h2.052v-6.155zm-5.13 0h-2.052v6.155h2.052v-6.155z"/></svg>
+        Twitch
+      </a>
+    </div>
+
+    <div class="footer-copy">
+      ROLEID &bull; CRMP, SAMP &amp; GTA 5 RP Engine &bull; 2026
+    </div>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        const swScript = `
+          const CACHE_NAME = 'roleid-cache-v5';
+          self.addEventListener('install', (e) => self.skipWaiting());
+          self.addEventListener('activate', (e) => e.waitUntil(clients.claim()));
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+          });
+        `;
+        const blob = new Blob([swScript], { type: 'application/javascript' });
+        navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+      });
+    }
+
+    let deferredPrompt;
+    const btnPwaInstall = document.getElementById('btn-pwa-install');
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      btnPwaInstall.style.display = 'inline-flex';
+    });
+
+    btnPwaInstall.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') showToast('Приложение успешно установлено!');
+      deferredPrompt = null;
+      btnPwaInstall.style.display = 'none';
+    });
+
+    const themeDots = document.querySelectorAll('.theme-dot');
+    let currentTheme = localStorage.getItem('crmp_theme') || 'violet';
+
+    function setTheme(theme) {
+      document.body.className = '';
+      if (theme !== 'violet') document.body.classList.add(`theme-${theme}`);
+      themeDots.forEach(dot => dot.classList.toggle('active', dot.dataset.theme === theme));
+      localStorage.setItem('crmp_theme', theme);
+    }
+
+    themeDots.forEach(dot => {
+      dot.addEventListener('click', () => setTheme(dot.dataset.theme));
+    });
+    setTheme(currentTheme);
+
+    const navTabs = document.querySelectorAll('.nav-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    navTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        navTabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        const target = document.getElementById(tab.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+
+    const genderSelect = document.getElementById('filter-gender');
+    const genderIcon = document.getElementById('gender-indicator-icon');
+
+    function updateGenderFilterIcon() {
+      genderIcon.classList.remove('gender-male', 'gender-female');
+      if (genderSelect.value === 'male') {
+        genderIcon.classList.add('gender-male');
+      } else if (genderSelect.value === 'female') {
+        genderIcon.classList.add('gender-female');
+      }
+    }
+    updateGenderFilterIcon();
+    genderSelect.addEventListener('change', updateGenderFilterIcon);
+
+    const DB = {
+      russiaMaleNames: [
+        "Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", 
+        "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", 
+        "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", 
+        "Zakhar", "Stepan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", 
+        "Stanislav", "Ruslan", "Viktor", "Magomed", "Khamzat", "Said", "Timur", 
+        "Rustam", "Arthur", "Arsen", "Aslan", "Shamil", "Islam", "Zelimkhan", 
+        "Adam", "Mansur", "Alikhan", "Murad", "Rasul", "Tamerlan", "Eldar"
+      ],
+      usMaleNames: [
+        "James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph",
+        "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark",
+        "Donald", "Steven", "Paul", "Andrew", "Joshua", "Kevin", "Brian", "George",
+        "Edward", "Ronald", "Timothy", "Jason", "Jeffrey", "Ryan", "Jacob", "Gary", "Nicholas"
+      ],
+      italyMaleNames: [
+        "Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico",
+        "Francesco", "Antonio", "Enzo", "Salvatore", "Vincenzo", "Santino", "Gianni", "Luigi",
+        "Pietro", "Angelo", "Domenico", "Massimo", "Carmine", "Giuseppe", "Fabio", "Stefano"
+      ],
+      spainMaleNames: [
+        "Alejandro", "Carlos", "Mateo", "Diego", "Javier", "Manuel", "Lucas", "Santiago",
+        "Daniel", "Alvaro", "Adrian", "Gabriel", "Hugo", "Pablo", "Rodrigo", "Fernando",
+        "Gonzalo", "Marcos", "Miguel", "Rafael", "Andres", "Emilio", "Sergio", "Ruben",
+        "Raul", "Hector", "Ivan", "Jorge", "Sebastian", "Joaquin", "Ignacio", "Salvador"
+      ],
+      franceMaleNames: [
+        "Louis", "Gabriel", "Leo", "Raphael", "Arthur", "Jules", "Lucas", "Adam",
+        "Hugo", "Liam", "Paul", "Alexandre", "Antoine", "Julien", "Maxime", "Pierre",
+        "Thomas", "Nicolas", "Clement", "Baptiste", "Valentin", "Theo", "Romain", "Benjamin"
+      ],
+      japanMaleNames: [
+        "Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Sora",
+        "Kaito", "Takeshi", "Yuto", "Makoto", "Tetsuo", "Hayato", "Haruto"
+      ],
+
+      russiaFemaleNames: [
+        "Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", 
+        "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", 
+        "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta", "Kamila", "Evelina",
+        "Amina", "Madina", "Fatima", "Maryam", "Zarema", "Leyla", "Aida", "Samira", "Kheda"
+      ],
+      usFemaleNames: [
+        "Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia",
+        "Samantha", "Brittany", "Rachel", "Lauren", "Amber", "Danielle", "Kayla", "Stephanie"
+      ],
+      italyFemaleNames: [
+        "Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina", "Giorgia",
+        "Beatrice", "Federica", "Vittoria", "Camilla", "Silvia", "Sara", "Roberta", "Elisa"
+      ],
+      spainFemaleNames: [
+        "Lucia", "Sofia", "Martina", "Maria", "Paula", "Valeria", "Emma", "Daniela",
+        "Carla", "Alba", "Sara", "Elena", "Carmen", "Claudia", "Vega", "Noa", "Irene", "Laura"
+      ],
+      franceFemaleNames: [
+        "Emma", "Jade", "Louise", "Alice", "Chloe", "Lina", "Lea", "Rose",
+        "Anna", "Mila", "Camille", "Manon", "Juliette", "Charlotte", "Ines", "Sarah"
+      ],
+      japanFemaleNames: [
+        "Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori", "Akane"
+      ],
+
+      russiaSurnames: [
+        "Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", 
+        "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", 
+        "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", 
+        "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", 
+        "Korshun", "Zverev", "Grozny", "Kabanov", "Reznov", "Severov", "Molot", "Voronin",
+        "Aliev", "Musaev", "Khasaev", "Borz", "Gasparyan", "Mirzoyan", 
+        "Dzhabrailov", "Tsakaev", "Dudaev", "Umarov", "Kadyrov", "Chimaev", "Nurmagomedov"
+      ],
+      usSurnames: [
+        "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis",
+        "Wilson", "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin", "Lee", "White", "Harris", "Clark"
+      ],
+      italySurnames: [
+        "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino",
+        "Greco", "Conti", "DeLuca", "Mancini", "Costa", "Giordano", "Lombardi", "Rizzo", "Barbieri"
+      ],
+      spainSurnames: [
+        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez",
+        "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez", "Romero", "Torres"
+      ],
+      franceSurnames: [
+        "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand",
+        "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David", "Fontaine"
+      ],
+      japanSurnames: [
+        "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto",
+        "Nakamura", "Kobayashi", "Kato", "Yoshida", "Yamada", "Sasaki", "Matsumoto"
+      ],
+      fixedSurnames: [
+        "Borz", "Gasparyan", "Mirzoyan", "Korshun", "Molot",
+        "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson",
+        "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "DeLuca", "Rizzo",
+        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez", "Perez", "Gomez", "Ruiz",
+        "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Fontaine",
+        "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"
+      ]
+    };
+
+    function declineFemaleSurname(en) {
+      if (DB.fixedSurnames.includes(en)) return en;
+      if (en.endsWith("ov") || en.endsWith("ev") || en.endsWith("in") || en.endsWith("yn")) return en + "a";
+      if (en.endsWith("skiy")) return en.slice(0, -4) + "skaya";
+      if (en.endsWith("sky")) return en.slice(0, -3) + "skaya";
+      if (en.endsWith("yy")) return en.slice(0, -2) + "aya";
+      return en;
+    }
+
+    const rand = arr => arr[(Math.random() * arr.length) | 0];
+
+    const COUNTRY_DATA = {
+      russia: { name: 'Россия', flag: '🇷🇺' },
+      us:     { name: 'США', flag: '🇺🇸' },
+      italy:  { name: 'Италия', flag: '🇮🇹' },
+      spain:  { name: 'Испания', flag: '🇪🇸' },
+      france: { name: 'Франция', flag: '🇫🇷' },
+      japan:  { name: 'Япония', flag: '🇯🇵' }
+    };
+
+    function createNickname(countryCode, isFemale, customSurname) {
+      let activeCountry = countryCode;
+      if (countryCode === 'all') {
+        const pool = ['russia', 'us', 'italy', 'spain', 'france', 'japan'];
+        activeCountry = rand(pool);
+      }
+
+      let baseSurname = customSurname;
+      if (!baseSurname) {
+        if (activeCountry === 'russia') baseSurname = rand(DB.russiaSurnames);
+        else if (activeCountry === 'us') baseSurname = rand(DB.usSurnames);
+        else if (activeCountry === 'italy') baseSurname = rand(DB.italySurnames);
+        else if (activeCountry === 'spain') baseSurname = rand(DB.spainSurnames);
+        else if (activeCountry === 'france') baseSurname = rand(DB.franceSurnames);
+        else if (activeCountry === 'japan') baseSurname = rand(DB.japanSurnames);
+      }
+
+      let fn = '';
+      if (isFemale) {
+        if (activeCountry === 'russia') fn = rand(DB.russiaFemaleNames);
+        else if (activeCountry === 'us') fn = rand(DB.usFemaleNames);
+        else if (activeCountry === 'italy') fn = rand(DB.italyFemaleNames);
+        else if (activeCountry === 'spain') fn = rand(DB.spainFemaleNames);
+        else if (activeCountry === 'france') fn = rand(DB.franceFemaleNames);
+        else if (activeCountry === 'japan') fn = rand(DB.japanFemaleNames);
+      } else {
+        if (activeCountry === 'russia') fn = rand(DB.russiaMaleNames);
+        else if (activeCountry === 'us') fn = rand(DB.usMaleNames);
+        else if (activeCountry === 'italy') fn = rand(DB.italyMaleNames);
+        else if (activeCountry === 'spain') fn = rand(DB.spainMaleNames);
+        else if (activeCountry === 'france') fn = rand(DB.franceMaleNames);
+        else if (activeCountry === 'japan') fn = rand(DB.japanMaleNames);
+      }
+
+      const ln = isFemale ? declineFemaleSurname(baseSurname) : baseSurname;
+      const cInfo = COUNTRY_DATA[activeCountry] || { name: 'Россия', flag: '🇷🇺' };
+
+      return {
+        nick: `${fn}_${ln}`,
+        catKey: activeCountry,
+        catName: cInfo.name,
+        flag: cInfo.flag,
+        gender: isFemale ? 'Женский' : 'Мужской',
+        isFemale: isFemale
+      };
+    }
+
+    let currentList = [];
+    let savedFavs = JSON.parse(localStorage.getItem('crmp_fav_names_v7') || '[]');
+    let recentHistory = JSON.parse(localStorage.getItem('crmp_history_v1') || '[]');
+    let isSpinning = false;
+
+    function saveHistory(nick) {
+      if (!recentHistory.includes(nick)) {
+        recentHistory.unshift(nick);
+        if (recentHistory.length > 12) recentHistory.pop();
+        localStorage.setItem('crmp_history_v1', JSON.stringify(recentHistory));
+        renderHistory();
+      }
+    }
+
+    function renderHistory() {
+      const container = document.getElementById('history-chips');
+      document.getElementById('history-count').innerText = recentHistory.length;
+      if (!recentHistory.length) {
+        container.innerHTML = `<span style="color: var(--text-dim); font-size: 0.85rem;">История пуста. Нажмите «Сгенерировать».</span>`;
+        return;
+      }
+      container.innerHTML = recentHistory.map(nick => `
+        <div class="nick-chip" data-copy="${nick}" title="Клик для копирования">
+          <span>${nick}</span>
+          <span class="del-btn" data-del-history="${nick}">&times;</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('btn-clear-history').addEventListener('click', () => {
+      recentHistory = [];
+      localStorage.removeItem('crmp_history_v1');
+      renderHistory();
+    });
+
+    document.getElementById('history-chips').addEventListener('click', (e) => {
+      const delNick = e.target.dataset.delHistory;
+      if (delNick) {
+        recentHistory = recentHistory.filter(x => x !== delNick);
+        localStorage.setItem('crmp_history_v1', JSON.stringify(recentHistory));
+        renderHistory();
+        return;
+      }
+      const chip = e.target.closest('.nick-chip');
+      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+    });
+
+    const namesGrid = document.getElementById('names-grid');
+    const btnGenerate = document.getElementById('btn-generate');
+
+    function generate() {
+      if (isSpinning) return;
+
+      const countryPick = document.getElementById('filter-faction').value;
+      const genderPick = document.getElementById('filter-gender').value;
+      const count = Math.min(parseInt(document.getElementById('filter-count').value, 10) || 3, 6);
+
+      let customSurname = document.getElementById('custom-surname').value.trim();
+      if (customSurname) {
+        customSurname = customSurname.charAt(0).toUpperCase() + customSurname.slice(1);
+      }
+
+      const results = [];
+      const seen = new Set();
+      let maxTries = count * 8;
+
+      while (results.length < count && maxTries-- > 0) {
+        const isFemale = genderPick === 'random' ? Math.random() > 0.45 : genderPick === 'female';
+        const item = createNickname(countryPick, isFemale, customSurname);
+        if (!seen.has(item.nick)) {
+          seen.add(item.nick);
+          results.push(item);
+        }
+      }
+
+      currentList = results;
+      isSpinning = true;
+      btnGenerate.disabled = true;
+
+      namesGrid.classList.toggle('is-single', currentList.length === 1);
+
+      const ITEM_HEIGHT = 38;
+      const DECOY_COUNT = 14;
+
+      let html = '';
+      for (let i = 0; i < currentList.length; i++) {
+        const item = currentList[i];
+        const isFav = savedFavs.includes(item.nick);
+        const genderClass = item.isFemale ? 'gender-female' : 'gender-male';
+
+        let decoysHtml = '';
+        for (let d = 0; d < DECOY_COUNT; d++) {
+          const isF = Math.random() > 0.5;
+          const decoy = createNickname(countryPick, isF, customSurname).nick;
+          decoysHtml += `<div class="slot-item">${decoy}</div>`;
+        }
+
+        html += `
+          <div class="modern-card" id="card-${i}" data-nick="${item.nick}">
+            <div class="card-top">
+              <div class="card-meta">
+                <span class="flag-icon">${item.flag}</span>
+                <span>${item.catName}</span>
+              </div>
+              <div class="card-actions-mini">
+                <button class="btn-action-icon btn-bio-card" data-bio-idx="${i}" title="Открыть RP-биографию персонажа">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </button>
+                <button class="btn-action-icon btn-fav-icon ${isFav ? 'active' : ''}" data-fav="${item.nick}" title="В избранное">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="${isFav ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                </button>
+              </div>
+            </div>
+            <div class="card-center">
+              <div class="slot-viewport">
+                <div class="slot-strip spinning" id="reel-${i}">
+                  ${decoysHtml}
+                  <div class="slot-item is-target">${item.nick}</div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <span class="copy-hint">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                Клик для копирования
+              </span>
+              <span class="gender-label-wrap ${genderClass}">
+                <span class="gender-mini-dot"></span>
+                ${item.gender}
+              </span>
+            </div>
+          </div>
+        `;
+      }
+
+      namesGrid.innerHTML = html;
+
+      const targetTranslateY = -(DECOY_COUNT * ITEM_HEIGHT);
+      let completedCount = 0;
+
+      for (let i = 0; i < currentList.length; i++) {
+        const reel = document.getElementById(`reel-${i}`);
+        const card = document.getElementById(`card-${i}`);
+        const spinDuration = 750 + i * 240;
+
+        requestAnimationFrame(() => {
+          reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.12, 0.85, 0.18, 1.0)`;
+          reel.style.transform = `translateY(${targetTranslateY}px)`;
+        });
+
+        setTimeout(() => {
+          reel.classList.remove('spinning');
+          card.classList.add('just-locked');
+          saveHistory(currentList[i].nick);
+
+          setTimeout(() => card.classList.remove('just-locked'), 400);
+
+          completedCount++;
+          if (completedCount === currentList.length) {
+            isSpinning = false;
+            btnGenerate.disabled = false;
+          }
+        }, spinDuration);
+      }
+    }
+
+    namesGrid.addEventListener('click', (e) => {
+      if (isSpinning) return;
+      const bioBtn = e.target.closest('.btn-bio-card');
+      if (bioBtn) {
+        e.stopPropagation();
+        openBio(currentList[bioBtn.dataset.bioIdx]);
+        return;
+      }
+      const favBtn = e.target.closest('.btn-fav-icon');
+      if (favBtn) {
+        e.stopPropagation();
+        toggleFav(favBtn.dataset.fav);
+        return;
+      }
+      const card = e.target.closest('.modern-card');
+      if (card && card.dataset.nick) copyText(card.dataset.nick);
+    });
+
+    const bioModal = document.getElementById('bio-modal');
+    const btnCloseBio = document.getElementById('btn-close-bio');
+    const bioContentView = document.getElementById('bio-content-view');
+    let currentBioData = null;
+
+    const BIO_TRAITS = [
+      "Хладнокровный, пунктуальный, предан своему слову",
+      "Строгий, расчетливый, с выраженными лидерскими качествами",
+      "Тактичный, стрессоустойчивый, быстро принимает верные решения",
+      "Дисциплинированный, не поддается на внешние провокации",
+      "Харизматичный, внимательный к деталям, предан своим людям"
+    ];
+
+    function generateBioData(item) {
+      const age = Math.floor(Math.random() * (42 - 21 + 1)) + 21;
+      return {
+        nick: item.nick,
+        name: item.nick.replace('_', ' '),
+        gender: item.gender,
+        age: `${age} лет`,
+        nationality: `${item.flag} ${item.catName}`,
+        traits: rand(BIO_TRAITS),
+        goal: "Карьерный рост, авторитет и развитие своего дела"
+      };
+    }
+
+    function openBio(item) {
+      currentBioData = generateBioData(item);
+      bioContentView.innerHTML = `
+        <div class="bio-row"><span class="bio-label">Имя и Фамилия:</span><span class="bio-val">${currentBioData.name}</span></div>
+        <div class="bio-row"><span class="bio-label">RP Никнейм:</span><span class="bio-val" style="font-family:ui-monospace,monospace">${currentBioData.nick}</span></div>
+        <div class="bio-row"><span class="bio-label">Пол / Возраст:</span><span class="bio-val">${currentBioData.gender}, ${currentBioData.age}</span></div>
+        <div class="bio-row"><span class="bio-label">Страна / Происхождение:</span><span class="bio-val">${currentBioData.nationality}</span></div>
+        <div class="bio-row"><span class="bio-label">Черты характера:</span><span class="bio-val">${currentBioData.traits}</span></div>
+        <div class="bio-row"><span class="bio-label">Цель персонажа:</span><span class="bio-val">${currentBioData.goal}</span></div>
+      `;
+      bioModal.classList.add('open');
+    }
+
+    btnCloseBio.addEventListener('click', () => bioModal.classList.remove('open'));
+    bioModal.addEventListener('click', (e) => {
+      if (e.target === bioModal) bioModal.classList.remove('open');
+    });
+
+    document.getElementById('btn-copy-bio-bb').addEventListener('click', () => {
+      if (!currentBioData) return;
+      const bb = `[b]1. Имя и Фамилия персонажа:[/b] ${currentBioData.name}\n` +
+                 `[b]2. Никнейм на сервере:[/b] ${currentBioData.nick}\n` +
+                 `[b]3. Пол / Возраст:[/b] ${currentBioData.gender}, ${currentBioData.age}\n` +
+                 `[b]4. Страна / Происхождение:[/b] ${currentBioData.nationality}\n` +
+                 `[b]5. Черты характера:[/b] ${currentBioData.traits}\n` +
+                 `[b]6. Цели персонажа:[/b] ${currentBioData.goal}`;
+      copyText(bb);
+      showToast('Анкета с BB-кодами скопирована!');
+    });
+
+    document.getElementById('btn-copy-bio-plain').addEventListener('click', () => {
+      if (!currentBioData) return;
+      const plain = `Имя и Фамилия: ${currentBioData.name}\n` +
+                    `Ник: ${currentBioData.nick}\n` +
+                    `Пол / Возраст: ${currentBioData.gender}, ${currentBioData.age}\n` +
+                    `Страна / Происхождение: ${currentBioData.nationality}\n` +
+                    `Характер: ${currentBioData.traits}\n` +
+                    `Цель: ${currentBioData.goal}`;
+      copyText(plain);
+      showToast('Текст биографии скопирован!');
+    });
+
+    function toggleFav(nick) {
+      const idx = savedFavs.indexOf(nick);
+      if (idx === -1) {
+        savedFavs.push(nick);
+        showToast('Добавлено в избранное');
+      } else {
+        savedFavs.splice(idx, 1);
+        showToast('Удалено из избранного');
+      }
+      localStorage.setItem('crmp_fav_names_v7', JSON.stringify(savedFavs));
+      renderFavs();
+      
+      document.querySelectorAll(`.btn-fav-icon[data-fav="${nick}"]`).forEach(btn => {
+        const isFav = savedFavs.includes(nick);
+        btn.classList.toggle('active', isFav);
+        const svg = btn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', isFav ? 'currentColor' : 'none');
+      });
+    }
+
+    function removeFav(nick) {
+      savedFavs = savedFavs.filter(x => x !== nick);
+      localStorage.setItem('crmp_fav_names_v7', JSON.stringify(savedFavs));
+      renderFavs();
+      document.querySelectorAll(`.btn-fav-icon[data-fav="${nick}"]`).forEach(btn => {
+        btn.classList.remove('active');
+        const svg = btn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', 'none');
+      });
+    }
+
+    function renderFavs() {
+      const list = document.getElementById('fav-chips');
+      document.getElementById('fav-count').innerText = savedFavs.length;
+      if (!savedFavs.length) {
+        list.innerHTML = `<span style="color: var(--text-dim); font-size: 0.85rem;">Пока ничего не сохранено. Нажмите сердечко у карточки.</span>`;
+        return;
+      }
+      list.innerHTML = savedFavs.map(nick => `
+        <div class="nick-chip" data-copy="${nick}" title="Клик для копирования">
+          <span>${nick}</span>
+          <span class="del-btn" data-del-fav="${nick}">&times;</span>
+        </div>
+      `).join('');
+    }
+
+    document.getElementById('fav-chips').addEventListener('click', (e) => {
+      const delNick = e.target.dataset.delFav;
+      if (delNick) {
+        removeFav(delNick);
+        return;
+      }
+      const chip = e.target.closest('.nick-chip');
+      if (chip && chip.dataset.copy) copyText(chip.dataset.copy);
+    });
+
+    document.getElementById('btn-clear-fav').addEventListener('click', () => {
+      if (!savedFavs.length) return;
+      if (confirm('Очистить весь список избранного?')) {
+        savedFavs = [];
+        localStorage.removeItem('crmp_fav_names_v7');
+        renderFavs();
+        document.querySelectorAll('.btn-fav-icon').forEach(btn => {
+          btn.classList.remove('active');
+          const svg = btn.querySelector('svg');
+          if (svg) svg.setAttribute('fill', 'none');
+        });
+      }
+    });
+
+    // ==========================================
+    // АВТОНОМНЫЙ ГЕНЕРАТОР НЕПОВТОРИМЫХ БИОГРАФИЙ
+    // ==========================================
+    const BIO_ENGINE = {
+      temperaments: [
+        "Рассудительный и прагматичный. В критических ситуациях опирается на холодный расчет и факты, никогда не поддаваясь эмоциям.",
+        "Дисциплинированный, с развитым стратегическим мышлением. Умеет моментально оценивать риски и брать ответственность за поступки.",
+        "Харизматичный и проницательный лидер. Обладает врожденным чутьем на людей, тонко выстраивая союзнические отношения.",
+        "Скрытный, наблюдательный и немногословный. Предпочитает действовать точно и без предупреждений, высоко ценит верность слову.",
+        "Несгибаемый реалист с железным внутренним стержнем. Ни при каких обстоятельствах не отступает от намеченных ориентиров."
+      ],
+
+      origins: [
+        "родился в семье инженера-конструктора и учительницы литературы. В доме всегда поддерживался образцовый порядок и культ самообразования.",
+        "вырос в династии кадровых офицеров, где понятие долга, чести и субординации прививалось буквально с первых шагов.",
+        "провел ранние годы в семье частного мастера-автомеханика, уже в юности научившись зарабатывать личные деньги своим трудом.",
+        "воспитывался в интеллигентной семье медицинских работников, что развило хладнокровие и способность сохранять трезвость ума в стрессовых ситуациях.",
+        "вырос в небольшом промышленном районе, где авторитет среди сверстников добывался исключительно прямотой характера и силой воли.",
+        "родился в семье скромного коммерсанта, с юных лет вникая в логику ведения переговоров, цену договоренностей и конкуренцию.",
+        "воспитывался отцом-ветераном, который воспитал в сыне стойкость к невзгодам и предельную физическую выносливость.",
+        "вырос в семье архитекторов, переняв привычку просчитывать любые жизненные события на несколько шагов вперед."
+      ],
+
+      childhoodAndSchool: [
+        "В школьные годы активно занимался легкой атлетикой и спортивным самбо, неоднократно занимая призовые места на региональных турнирах.",
+        "Много времени проводил за чтением специальной литературы, параллельно тренируя выдержку в секции рукопашного боя.",
+        "С ранних лет демонстрировал задатки лидера: организовывал дворовые спортивные команды и часто выступал арбитром в спорах.",
+        "Предпочитал держаться в стороне от шумных компаний, сфокусировавшись на точных науках и физическом самосовершенствовании.",
+        "Школьную программу осваивал с легкостью, успевая совмещать учебу с подработками, чтобы не зависеть от карманных денег родителей.",
+        "Увлекался экстремальным спортом и техникой, развивая быстроту реакции и способность оперативно устранять любые неполадки.",
+        "Уже в юности показал принципиальную позицию: никогда не терпел несправедливости и открыто заступался за тех, кто был слабее."
+      ],
+
+      youth: [
+        "Окончив среднее образование с отличием, без колебаний поступил в профильное учебное заведение, параллельно осваивая практические навыки.",
+        "Пройдя срочную службу в элитных подразделениях, получил колоссальный опыт командного взаимодействия и психологической выдержки.",
+        "В студенческие годы был вынужден совмещать дневные лекции с ночными дежурствами, что закалило характер и научило ценить каждую минуту времени.",
+        "В 19 лет столкнулся с первыми серьезными вызовами самостоятельной жизни, но благодаря хладнокровию сумел выйти из трудностей победителем.",
+        "Активно занимался общественной деятельностью, налаживая прочные связи среди будущих специалистов своего профиля.",
+        "Рано покинул родительский дом, чтобы самостоятельно построить материальный фундамент и доказать право на полную независимость."
+      ],
+
+      turningPoints: {
+        gos: [
+          "Решающим толчком к выбору пути стало столкновение с произволом в отношении близких. Увидев безнаказанность, дал себе слово занять высокий пост в государственной системе и навести железный порядок законными методами.",
+          "В период армейской службы предотвратил серьезное ЧП на стратегическом объекте. Руководство части оценило мужество и рекомендовало на службу в силовые структуры, где быстро начался стремительный карьерный взлет.",
+          "Работая рядовым помощником следователя, сумел в одиночку вскрыть коррупционную схему чиновников, доказав свою принципиальность, неподкупность и абсолютную преданность государственным интересам.",
+          "Случайное участие в спасательной операции при чрезвычайных обстоятельствах расставило жизненные приоритеты: защищать права граждан и стоять на страже закона стало главным ориентиром."
+        ],
+        opg: [
+          "Предательство компаньонов в первом совместном деле обернулось крупными долгами. Не найдя защиты у официальных органов, обратился к авторитетным людям улицы. Быстро оценив обстановку, заслужил уважение старших своим умением держать слово.",
+          "Став свидетелем того, как влиятельные структуры разорили дело его семьи, осознал: считаются лишь с теми, за кем стоит реальная сила. Шаг за шагом сформировал собственный ближний круг, где на первом месте стояла преданность и жесткая дисциплина.",
+          "Оказавшись в эпицентре криминального передела влияния, хладнокровно просчитал ходы соперников и предотвратил кровопролитие, заработав репутацию грамотного стратега, с чьим мнением обязаны считаться все стороны.",
+          "Жесткая уличная среда научила главному правилу: закон принадлежит сильным. Отказавшись подчиняться чужим условиям, создал собственное объединение единомышленников с четкой иерархией."
+        ],
+        biz: [
+          "Вложив последние накопленные средства в рискованный логистический контракт, сумел закрыть сделку с пятикратной прибылью. Этот триумф показал истинное призвание: масштабные инвестиции и управление крупными потоками капитала.",
+          "Сумев защитить прибыльный семейный объект от недружественного рейдерского поглощения юридическим путем, приобрел славу несговорчивого переговорщика, с которым выгодно дружить и опасно враждовать.",
+          "Отказ от рутинной работы ради собственного стартапа стал поворотной точкой. За несколько лет упорной борьбы удалось выстроить устойчивый бизнес, сформировав команду высококлассных профессионалов.",
+          "Осознав, что деньги — это прежде всего влияние, переориентировал деятельность на стратегические контракты, открывая новые горизонты для масштабирования своего дела."
+        ],
+        civil: [
+          "Приняв взвешенное решение о смене обстановки, переехал на новое место для полной перезагрузки карьеры, рассчитывая исключительно на свои профессиональные навыки и репутацию.",
+          "Преодолев тяжелый период профессионального выгорания, нашел стабильную точку опоры и решил выстроить спокойную, обеспеченную и достойную жизнь с нуля.",
+          "Череда сложных жизненных уроков помогла отсеять фальшивых знакомых, оставив рядом только тех, на кого можно опереться в любую секунду.",
+          "Освоив востребованную специальность, доказал себе и окружающим, что честным трудом и упорством можно добиться абсолютного уважения коллег и стабильного дохода."
+        ]
+      },
+
+      presentState: {
+        gos: [
+          "В настоящий момент уверенно поднимается по карьерной лестнице, заслужив репутацию принципиального руководителя, который никогда не бросает слов на ветер и требует образцовой дисциплины от подчиненных.",
+          "Сегодня ставит перед собой амбициозную цель занять ключевой руководящий пост в ведомстве, проводя кадровую реформу и повышая авторитет государственной власти среди граждан.",
+          "Пользуется абсолютным доверием старшего офицерского состава, успешно координирует оперативные задачи и пресекает любые проявления халатности."
+        ],
+        opg: [
+          "На сегодняшний день держит под личным контролем ключевые процессы, пользуясь непререкаемым авторитетом среди доверенных лиц и жестко пресекая любые попытки дестабилизации ситуации.",
+          "Продолжает планомерно укреплять позиции своего синдиката, грамотно балансируя между жесткими силовыми мерами и тонкой дипломатией на закрытых переговорах.",
+          "Собрал вокруг себя сплоченный круг соратников, для которых верность общему делу и личное указание являются высшим законом."
+        ],
+        biz: [
+          "В настоящее время активно диверсифицирует активы, инвестирует в перспективные коммерческие площади и расширяет сеть партнерских соглашений на региональном уровне.",
+          "Уверенно масштабирует личное дело, сохраняя безупречную репутацию в деловых кругах и формируя солидную подушку финансовой безопасности.",
+          "Находится на пороге заключения ключевого стратегического контракта, который позволит занять лидирующие позиции на рынке."
+        ],
+        civil: [
+          "Сегодня сосредоточен на личностном росте, стабильном заработке и создании крепкой ячейки общества, пользуясь искренним уважением своего окружения.",
+          "Уверенно смотрит в будущее, развивает любимое ремесло и поддерживает теплые взаимоотношения с надежными друзьями, проверенными годами.",
+          "Выстроил гармоничный баланс между работой и саморазвитием, не отступая от моральных ориентиров и принципов порядочности."
+        ]
+      }
+    };
+
+    let generatedBioText = '';
+
+    document.getElementById('btn-build-unique-bio').addEventListener('click', () => {
+      let name = document.getElementById('bio-custom-name').value.trim();
+      if (!name) {
+        const tempNick = createNickname('all', false, '');
+        name = tempNick.nick.replace('_', ' ');
+      }
+      const age = parseInt(document.getElementById('bio-custom-age').value, 10) || 26;
+      const role = document.getElementById('bio-role-select').value;
+
+      const temperament = rand(BIO_ENGINE.temperaments);
+      const origin = rand(BIO_ENGINE.origins);
+      const childhood = rand(BIO_ENGINE.childhoodAndSchool);
+      const youth = rand(BIO_ENGINE.youth);
+      const turning = rand(BIO_ENGINE.turningPoints[role]);
+      const present = rand(BIO_ENGINE.presentState[role]);
+
+      generatedBioText = 
+`[b]1. Основная информация:[/b]
+• Имя и Фамилия: ${name}
+• Возраст: ${age} лет
+• Черты характера: ${temperament}
+
+[b]2. Происхождение и детские годы:[/b]
+${name} ${origin} ${childhood}
+
+[b]3. Юность и переломный момент:[/b]
+${youth}
+${turning}
+
+[b]4. Настоящее время:[/b]
+${present}`;
+
+      document.getElementById('unique-bio-view').innerText = generatedBioText.replace(/\[\/?b\]/g, '');
+      showToast('Биография успешно сгенерирована!');
+    });
+
+    document.getElementById('btn-copy-unique-bb').addEventListener('click', () => {
+      if (!generatedBioText) return;
+      copyText(generatedBioText);
+      showToast('Анкета с BB-кодами скопирована!');
+    });
+
+    document.getElementById('btn-copy-unique-plain').addEventListener('click', () => {
+      if (!generatedBioText) return;
+      copyText(generatedBioText.replace(/\[\/?b\]/g, ''));
+      showToast('Текст скопирован!');
+    });
+
+    const toast = document.getElementById('toast');
+    const toastMsg = document.getElementById('toast-msg');
+    let toastTimer;
+
+    function showToast(text) {
+      toastMsg.innerText = text;
+      toast.classList.add('active');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('active'), 1800);
+    }
+
+    function copyText(str) {
+      navigator.clipboard.writeText(str).then(() => {
+        showToast(`Скопировано: ${str.slice(0, 24)}${str.length > 24 ? '...' : ''}`);
+      });
+    }
+
+    document.getElementById('btn-copy-all').addEventListener('click', () => {
+      if (!currentList.length) return;
+      const all = currentList.map(x => x.nick).join('\n');
+      navigator.clipboard.writeText(all).then(() => {
+        showToast(`Скопировано ${currentList.length} ников!`);
+      });
+    });
+
+    const qrModal = document.getElementById('qr-modal');
+    const btnOpenQr = document.getElementById('btn-open-qr');
+    const btnCloseQr = document.getElementById('btn-close-qr');
+    const qrImage = document.getElementById('qr-image');
+    const qrUrlDisplay = document.getElementById('qr-url-display');
+    const btnCopyLink = document.getElementById('btn-copy-link');
+    const btnDownloadQr = document.getElementById('btn-download-qr');
+
+    function getTargetUrl() {
+      if (!window.location.href.startsWith('http') || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        return 'https://roleid.ru';
+      }
+      return window.location.href;
+    }
+
+    btnOpenQr.addEventListener('click', () => {
+      const targetUrl = getTargetUrl();
+      qrUrlDisplay.innerText = targetUrl;
+      qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=0&color=07080c&bgcolor=ffffff&data=${encodeURIComponent(targetUrl)}`;
+      qrModal.classList.add('open');
+    });
+
+    function closeQr() { qrModal.classList.remove('open'); }
+    btnCloseQr.addEventListener('click', closeQr);
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) closeQr();
+    });
+
+    btnCopyLink.addEventListener('click', () => copyText(getTargetUrl()));
+
+    btnDownloadQr.addEventListener('click', async () => {
+      if (!qrImage.src) return;
+      try {
+        const response = await fetch(qrImage.src);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = 'roleid-qr.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(blobUrl);
+        showToast('QR-код успешно скачан!');
+      } catch (e) {
+        window.open(qrImage.src, '_blank');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Escape') {
+        closeQr();
+        bioModal.classList.remove('open');
+        return;
+      }
+      if (e.code === 'Space' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'SELECT') {
+        const activeTab = document.querySelector('.tab-content.active');
+        if (activeTab && activeTab.id === 'tab-names') {
+          e.preventDefault();
+          generate();
+        }
+      }
+    });
+
+    document.getElementById('btn-generate').addEventListener('click', generate);
+    document.getElementById('filter-faction').addEventListener('change', generate);
+    document.getElementById('filter-gender').addEventListener('change', generate);
+    document.getElementById('filter-count').addEventListener('change', generate);
+    document.getElementById('custom-surname').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') generate();
+    });
+
+    renderHistory();
+    renderFavs();
+    generate();
+  </script>
+</body>
+</html>      --blob-2: radial-gradient(circle, #f59e0b, #b45309);
       --blob-3: radial-gradient(circle, #7f1d1d, #450a0a);
       --accent-flow: linear-gradient(135deg, #ef4444, #f59e0b, #b91c1c);
       --accent-highlight: #f87171;
