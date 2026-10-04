@@ -448,6 +448,12 @@
       transform: translateY(1px);
     }
 
+    .btn-generate:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .btn-icon-copy {
       height: 44px;
       padding: 0 1rem;
@@ -529,7 +535,7 @@
       flex-direction: column;
       justify-content: space-between;
       gap: 0.9rem;
-      transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+      transition: transform 0.15s ease, border-color 0.2s ease, background-color 0.15s ease, box-shadow 0.2s ease;
       contain: content;
       animation: cardEntrance 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
@@ -538,6 +544,11 @@
       transform: translateY(-2px);
       border-color: var(--card-hover-border);
       background: #131620;
+    }
+
+    .modern-card.just-locked {
+      border-color: var(--accent-highlight);
+      box-shadow: 0 0 25px rgba(192, 132, 252, 0.3);
     }
 
     .card-top {
@@ -598,24 +609,47 @@
     .btn-fav-icon.active { color: #f43f5e; }
     .btn-bio-card:hover { color: var(--accent-highlight); }
 
+    /* КАЗИНО РУЛЕТКА / СЛОТ-МАШИНА */
     .card-center { 
       padding: 0.1rem 0; 
+      position: relative;
     }
 
-    .nick-text {
-      display: inline-block;
+    .slot-viewport {
+      height: 38px;
+      overflow: hidden;
+      position: relative;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 18%, black 82%, transparent 100%);
+    }
+
+    .slot-strip {
+      display: flex;
+      flex-direction: column;
+      will-change: transform, filter;
+      transform: translateY(0);
+    }
+
+    .slot-strip.spinning {
+      filter: blur(1.5px);
+    }
+
+    .slot-item {
+      height: 38px;
+      display: flex;
+      align-items: center;
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 1.25rem;
       font-weight: 700;
       color: #ffffff;
       letter-spacing: -0.015em;
-      transform-origin: left center;
-      transition: all 0.18s ease;
+      white-space: nowrap;
+      transition: color 0.18s ease, transform 0.18s ease;
     }
 
-    .modern-card:hover .nick-text {
-      transform: translateY(-2px) scale(1.03);
+    .modern-card:hover .slot-item.is-target {
       color: var(--accent-highlight);
+      transform: translateY(-2px) scale(1.02);
     }
 
     .card-footer {
@@ -916,6 +950,11 @@
       </div>
 
       <div class="top-actions">
+        <button class="btn-top-util" id="btn-toggle-sound" title="Включить / Выключить звук автомата">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">Звук</span>
+        </button>
+
         <button class="btn-top-util btn-install" id="btn-pwa-install" title="Установить приложение на телефон или ПК">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           Установить
@@ -1144,6 +1183,73 @@
     });
     setTheme(currentTheme);
 
+    /* ЗВУКОВОЙ ДВИЖОК КАЗИНО (WEB AUDIO API) */
+    let audioCtx = null;
+    let isSoundEnabled = localStorage.getItem('roleid_sound') !== 'off';
+
+    function initAudio() {
+      if (!audioCtx) {
+        const AudioClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioClass) audioCtx = new AudioClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    function playTickSound() {
+      if (!isSoundEnabled || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(140 + Math.random() * 40, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.04);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.04);
+      } catch (e) {}
+    }
+
+    function playLockSound() {
+      if (!isSoundEnabled || !audioCtx) return;
+      try {
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(520, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.12);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.22);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(now + 0.22);
+      } catch (e) {}
+    }
+
+    const btnToggleSound = document.getElementById('btn-toggle-sound');
+    const soundIcon = document.getElementById('sound-icon');
+    const soundLabel = document.getElementById('sound-label');
+
+    function updateSoundUi() {
+      soundIcon.innerText = isSoundEnabled ? '🔊' : '🔇';
+      soundLabel.innerText = isSoundEnabled ? 'Звук' : 'Без звука';
+    }
+    updateSoundUi();
+
+    btnToggleSound.addEventListener('click', () => {
+      initAudio();
+      isSoundEnabled = !isSoundEnabled;
+      localStorage.setItem('roleid_sound', isSoundEnabled ? 'on' : 'off');
+      updateSoundUi();
+      showToast(isSoundEnabled ? 'Звуковые эффекты включены' : 'Звук отключен');
+    });
+
+    /* БАЗА ИМЕН И ФАМИЛИЙ (РАСШИРЕННЫЕ ИСПАНИЯ И ФРАНЦИЯ) */
     const DB = {
       russiaMaleNames: [
         "Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", 
@@ -1157,23 +1263,31 @@
       usMaleNames: [
         "James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph",
         "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark",
-        "Donald", "Steven", "Paul", "Andrew", "Joshua", "Kevin", "Brian", "George"
+        "Donald", "Steven", "Paul", "Andrew", "Joshua", "Kevin", "Brian", "George",
+        "Edward", "Ronald", "Timothy", "Jason", "Jeffrey", "Ryan", "Jacob", "Gary", "Nicholas"
       ],
       italyMaleNames: [
         "Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico",
-        "Francesco", "Antonio", "Enzo", "Salvatore", "Vincenzo", "Santino", "Gianni", "Luigi"
+        "Francesco", "Antonio", "Enzo", "Salvatore", "Vincenzo", "Santino", "Gianni", "Luigi",
+        "Pietro", "Angelo", "Domenico", "Massimo", "Carmine", "Giuseppe", "Fabio", "Stefano"
       ],
       spainMaleNames: [
         "Alejandro", "Carlos", "Mateo", "Diego", "Javier", "Manuel", "Lucas", "Santiago",
-        "Daniel", "Alvaro", "Adrian", "Gabriel", "Hugo", "Pablo", "Rodrigo", "Fernando"
+        "Daniel", "Alvaro", "Adrian", "Gabriel", "Hugo", "Pablo", "Rodrigo", "Fernando",
+        "Gonzalo", "Marcos", "Miguel", "Rafael", "Andres", "Emilio", "Sergio", "Ruben",
+        "Raul", "Hector", "Ivan", "Jorge", "Sebastian", "Joaquin", "Ignacio", "Salvador",
+        "Lorenzo", "Arturo", "Felipe", "Cristian", "Guillermo", "Esteban", "Ricardo", "Enrique"
       ],
       franceMaleNames: [
         "Louis", "Gabriel", "Leo", "Raphael", "Arthur", "Jules", "Lucas", "Adam",
-        "Hugo", "Liam", "Paul", "Alexandre", "Antoine", "Julien", "Maxime", "Pierre"
+        "Hugo", "Liam", "Paul", "Alexandre", "Antoine", "Julien", "Maxime", "Pierre",
+        "Thomas", "Nicolas", "Clement", "Baptiste", "Valentin", "Theo", "Romain", "Benjamin",
+        "Vincent", "Victor", "Mathis", "Etienne", "Florian", "Sebastien", "Mathieu", "Gaspard",
+        "Leon", "Tristan", "Olivier", "Remi", "Bastien", "Guillaume", "Adrien", "Thibault"
       ],
       japanMaleNames: [
         "Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Sora",
-        "Kaito", "Takeshi", "Yuto", "Makoto", "Tetsuo", "Hayato", "Haruto"
+        "Kaito", "Takeshi", "Yuto", "Makoto", "Tetsuo", "Hayato", "Haruto", "Kazuki"
       ],
 
       russiaFemaleNames: [
@@ -1183,18 +1297,24 @@
         "Amina", "Madina", "Fatima", "Maryam", "Zarema", "Leyla", "Aida", "Samira", "Kheda"
       ],
       usFemaleNames: [
-        "Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia"
+        "Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia",
+        "Samantha", "Brittany", "Rachel", "Lauren", "Amber", "Danielle", "Kayla", "Stephanie"
       ],
       italyFemaleNames: [
-        "Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina", "Giorgia"
+        "Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina", "Giorgia",
+        "Beatrice", "Federica", "Vittoria", "Camilla", "Silvia", "Sara", "Roberta", "Elisa"
       ],
       spainFemaleNames: [
         "Lucia", "Sofia", "Martina", "Maria", "Paula", "Valeria", "Emma", "Daniela",
-        "Carla", "Alba", "Sara", "Elena", "Carmen", "Claudia", "Vega", "Noa"
+        "Carla", "Alba", "Sara", "Elena", "Carmen", "Claudia", "Vega", "Noa",
+        "Irene", "Laura", "Julia", "Marta", "Alicia", "Adriana", "Victoria", "Natalia",
+        "Andrea", "Blanca", "Rocio", "Jimena", "Nuria", "Triana", "Ines", "Paloma", "Candela"
       ],
       franceFemaleNames: [
         "Emma", "Jade", "Louise", "Alice", "Chloe", "Lina", "Lea", "Rose",
-        "Anna", "Mila", "Camille", "Manon", "Juliette", "Charlotte", "Ines", "Sarah"
+        "Anna", "Mila", "Camille", "Manon", "Juliette", "Charlotte", "Ines", "Sarah",
+        "Amelie", "Clemence", "Margaux", "Zoe", "Mathilde", "Oceane", "Clara", "Pauline",
+        "Lucie", "Adele", "Elodie", "Solene", "Capucine", "Celine", "Audrey", "Marion", "Estelle"
       ],
       japanFemaleNames: [
         "Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori", "Akane"
@@ -1211,19 +1331,27 @@
       ],
       usSurnames: [
         "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis",
-        "Wilson", "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin", "Lee"
+        "Wilson", "Anderson", "Taylor", "Thomas", "Moore", "Jackson", "Martin", "Lee",
+        "White", "Harris", "Clark", "Lewis", "Robinson", "Walker", "Hall", "Allen", "Young"
       ],
       italySurnames: [
         "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino",
-        "Greco", "Conti", "DeLuca", "Mancini", "Costa", "Giordano", "Lombardi"
+        "Greco", "Conti", "DeLuca", "Mancini", "Costa", "Giordano", "Lombardi",
+        "Rizzo", "Barbieri", "Fontana", "Santoro", "Caruso", "Galli", "Marchetti"
       ],
       spainSurnames: [
         "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez",
-        "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez"
+        "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez",
+        "Romero", "Alonso", "Gutierrez", "Navarro", "Torres", "Dominguez", "Vazquez", "Ramos",
+        "Gil", "Ramirez", "Serrano", "Blanco", "Molina", "Morales", "Suarez", "Ortega",
+        "Delgado", "Castro", "Ortiz", "Marin", "Rubio", "Nuñez", "Medina", "Castillo", "Santos"
       ],
       franceSurnames: [
         "Martin", "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand",
-        "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David"
+        "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David",
+        "Bertrand", "Morel", "Fournier", "Girard", "Bonnet", "Dupont", "Lambert", "Fontaine",
+        "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc",
+        "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Renaud"
       ],
       japanSurnames: [
         "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto",
@@ -1231,10 +1359,10 @@
       ],
       fixedSurnames: [
         "Borz", "Gasparyan", "Mirzoyan", "Korshun", "Molot",
-        "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson",
-        "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "DeLuca",
-        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez", "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez",
-        "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David",
+        "Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson", "Anderson", "White", "Harris", "Clark", "Lewis", "Robinson", "Walker", "Hall", "Allen", "Young",
+        "Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "DeLuca", "Rizzo", "Barbieri", "Fontana", "Santoro", "Caruso", "Galli",
+        "Garcia", "Rodriguez", "Gonzalez", "Fernandez", "Lopez", "Martinez", "Sanchez", "Perez", "Gomez", "Martin", "Jimenez", "Ruiz", "Hernandez", "Diaz", "Moreno", "Alvarez", "Romero", "Alonso", "Gutierrez", "Navarro", "Torres", "Dominguez", "Vazquez", "Ramos", "Gil", "Ramirez", "Serrano", "Blanco", "Molina", "Morales", "Suarez", "Ortega", "Delgado", "Castro", "Ortiz", "Marin", "Rubio", "Nuñez", "Medina", "Castillo", "Santos",
+        "Bernard", "Thomas", "Petit", "Robert", "Richard", "Durand", "Dubois", "Moreau", "Laurent", "Simon", "Michel", "Lefebvre", "Leroy", "Roux", "David", "Bertrand", "Morel", "Fournier", "Girard", "Bonnet", "Dupont", "Lambert", "Fontaine", "Rousseau", "Vincent", "Muller", "Lefevre", "Faure", "Andre", "Mercier", "Blanc", "Guerin", "Boyer", "Garnier", "Chevalier", "Francois", "Legrand", "Gauthier", "Renaud",
         "Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"
       ]
     };
@@ -1307,6 +1435,7 @@
     let currentList = [];
     let savedFavs = JSON.parse(localStorage.getItem('crmp_fav_names_v7') || '[]');
     let recentHistory = JSON.parse(localStorage.getItem('crmp_history_v1') || '[]');
+    let isSpinning = false;
 
     function saveHistory(nick) {
       if (!recentHistory.includes(nick)) {
@@ -1352,7 +1481,14 @@
       }
     });
 
+    const namesGrid = document.getElementById('names-grid');
+    const btnGenerate = document.getElementById('btn-generate');
+
+    /* МЕХАНИКА КАЗИНО СЛОТ-МАШИНЫ */
     function generate() {
+      if (isSpinning) return;
+      initAudio();
+
       const countryPick = document.getElementById('filter-faction').value;
       const genderPick = document.getElementById('filter-gender').value;
       const count = Math.min(parseInt(document.getElementById('filter-count').value, 10) || 3, 6);
@@ -1364,7 +1500,7 @@
 
       const results = [];
       const seen = new Set();
-      let maxTries = count * 7;
+      let maxTries = count * 8;
 
       while (results.length < count && maxTries-- > 0) {
         const isFemale = genderPick === 'random' ? Math.random() > 0.45 : genderPick === 'female';
@@ -1372,27 +1508,34 @@
         if (!seen.has(item.nick)) {
           seen.add(item.nick);
           results.push(item);
-          saveHistory(item.nick);
         }
       }
 
       currentList = results;
-      renderGrid();
-    }
+      isSpinning = true;
+      btnGenerate.disabled = true;
 
-    const namesGrid = document.getElementById('names-grid');
-
-    function renderGrid() {
       namesGrid.classList.toggle('is-single', currentList.length === 1);
 
+      const ITEM_HEIGHT = 38;
+      const DECOY_COUNT = 14;
+
+      // Строим DOM карточек и лент слотов
       let html = '';
       for (let i = 0; i < currentList.length; i++) {
         const item = currentList[i];
         const isFav = savedFavs.includes(item.nick);
-        const delay = Math.min(i * 35, 250);
+
+        // Генерируем 14 случайных промежуточных имен для анимации кручения
+        let decoysHtml = '';
+        for (let d = 0; d < DECOY_COUNT; d++) {
+          const isF = Math.random() > 0.5;
+          const decoy = createNickname(countryPick, isF, customSurname).nick;
+          decoysHtml += `<div class="slot-item">${decoy}</div>`;
+        }
 
         html += `
-          <div class="modern-card" style="animation-delay: ${delay}ms;" data-nick="${item.nick}">
+          <div class="modern-card" id="card-${i}" data-nick="${item.nick}">
             <div class="card-top">
               <div class="card-meta">
                 <span class="status-dot ${item.catKey}"></span>
@@ -1408,7 +1551,12 @@
               </div>
             </div>
             <div class="card-center">
-              <div class="nick-text">${item.nick}</div>
+              <div class="slot-viewport">
+                <div class="slot-strip spinning" id="reel-${i}">
+                  ${decoysHtml}
+                  <div class="slot-item is-target">${item.nick}</div>
+                </div>
+              </div>
             </div>
             <div class="card-footer">
               <span class="copy-hint">
@@ -1420,10 +1568,48 @@
           </div>
         `;
       }
+
       namesGrid.innerHTML = html;
+
+      // Запуск тикающего звука рулетки
+      const tickTimer = setInterval(() => {
+        playTickSound();
+      }, 70);
+
+      // Запуск скролла для каждой карточки с задержкой (эффект барабанов слота)
+      const targetTranslateY = -(DECOY_COUNT * ITEM_HEIGHT);
+      let completedCount = 0;
+
+      for (let i = 0; i < currentList.length; i++) {
+        const reel = document.getElementById(`reel-${i}`);
+        const card = document.getElementById(`card-${i}`);
+        const spinDuration = 800 + i * 280; // Каждый следующий барабан тормозит позже
+
+        requestAnimationFrame(() => {
+          reel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.12, 0.85, 0.18, 1.0)`;
+          reel.style.transform = `translateY(${targetTranslateY}px)`;
+        });
+
+        setTimeout(() => {
+          reel.classList.remove('spinning');
+          card.classList.add('just-locked');
+          playLockSound();
+          saveHistory(currentList[i].nick);
+
+          setTimeout(() => card.classList.remove('just-locked'), 400);
+
+          completedCount++;
+          if (completedCount === currentList.length) {
+            clearInterval(tickTimer);
+            isSpinning = false;
+            btnGenerate.disabled = false;
+          }
+        }, spinDuration);
+      }
     }
 
     namesGrid.addEventListener('click', (e) => {
+      if (isSpinning) return;
       const bioBtn = e.target.closest('.btn-bio-card');
       if (bioBtn) {
         e.stopPropagation();
@@ -1468,8 +1654,8 @@
       russia: "Карьерный рост, высокий авторитет и развитие своего дела",
       us: "Построение крупной карьеры и финансовая независимость",
       italy: "Влияние, уважение в обществе и развитие синдиката",
-      spain: "Расширение семейного дела, контроль рынка и авторитет",
-      france: "Финансовый успех, легальный бизнес и высокое признание",
+      spain: "Расширение семейного дела, контроль рынка и высокий авторитет",
+      france: "Финансовый успех, легальный бизнес и уважение элиты",
       japan: "Служение традициям клана и защита репутации семьи"
     };
 
@@ -1547,14 +1733,25 @@
       }
       localStorage.setItem('crmp_fav_names_v7', JSON.stringify(savedFavs));
       renderFavs();
-      renderGrid();
+      
+      // Обновляем иконку сердечка на активных карточках
+      document.querySelectorAll(`.btn-fav-icon[data-fav="${nick}"]`).forEach(btn => {
+        const isFav = savedFavs.includes(nick);
+        btn.classList.toggle('active', isFav);
+        const svg = btn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', isFav ? 'currentColor' : 'none');
+      });
     }
 
     function removeFav(nick) {
       savedFavs = savedFavs.filter(x => x !== nick);
       localStorage.setItem('crmp_fav_names_v7', JSON.stringify(savedFavs));
       renderFavs();
-      renderGrid();
+      document.querySelectorAll(`.btn-fav-icon[data-fav="${nick}"]`).forEach(btn => {
+        btn.classList.remove('active');
+        const svg = btn.querySelector('svg');
+        if (svg) svg.setAttribute('fill', 'none');
+      });
     }
 
     function renderFavs() {
@@ -1590,7 +1787,11 @@
         savedFavs = [];
         localStorage.removeItem('crmp_fav_names_v7');
         renderFavs();
-        renderGrid();
+        document.querySelectorAll('.btn-fav-icon').forEach(btn => {
+          btn.classList.remove('active');
+          const svg = btn.querySelector('svg');
+          if (svg) svg.setAttribute('fill', 'none');
+        });
       }
     });
 
