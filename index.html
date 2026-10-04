@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: последние новости проекта @old_team_news, таблицы цен перекупа (низкий, средний, высокий БУ), генератор никнеймов и RP биографии.">
+  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: последние новости проекта, таблицы цен перекупа (низкий, средний, высокий БУ), генератор никнеймов и RP биографии.">
 
   <style>
     :root {
@@ -98,29 +98,23 @@
     }
 
     .blob-1 {
-      width: 640px;
-      height: 640px;
+      width: 640px; height: 640px;
       background: var(--blob-1);
-      top: -10%;
-      left: -6%;
+      top: -10%; left: -6%;
       animation: orbitMotion1 12s infinite alternate ease-in-out;
     }
 
     .blob-2 {
-      width: 680px;
-      height: 680px;
+      width: 680px; height: 680px;
       background: var(--blob-2);
-      bottom: -15%;
-      right: -8%;
+      bottom: -15%; right: -8%;
       animation: orbitMotion2 14s infinite alternate ease-in-out;
     }
 
     .blob-3 {
-      width: 500px;
-      height: 500px;
+      width: 500px; height: 500px;
       background: var(--blob-3);
-      top: 30%;
-      left: 25%;
+      top: 30%; left: 25%;
       opacity: 0.22;
       animation: orbitMotion3 10s infinite alternate ease-in-out;
     }
@@ -151,7 +145,6 @@
       inset: 0;
       background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.25s ease;
@@ -453,121 +446,157 @@
       transform: translateX(-2px);
     }
 
-    /* НАЧАЛЬНОЕ МЕНЮ (HUB) */
-    .hub-grid {
+    /* НОВОЕ ЛАКОНИЧНОЕ BENTO-МЕНЮ (HUB) */
+    .bento-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(12, 1fr);
       gap: 1.15rem;
       margin-top: 1rem;
     }
 
-    .hub-card {
-      background: var(--card-bg);
+    .bento-card {
+      background: #0d0f15;
       border: 1px solid var(--card-border);
       border-radius: 20px;
-      padding: 1.6rem 1.5rem;
+      padding: 1.6rem;
       cursor: pointer;
       user-select: none;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      gap: 1.2rem;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
       overflow: hidden;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .hub-card::before {
+    .bento-card::before {
       content: "";
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--accent-flow);
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(192, 132, 252, 0.12), transparent 70%);
       opacity: 0;
       transition: opacity 0.22s ease;
+      pointer-events: none;
     }
 
-    .hub-card:hover {
+    .bento-card:hover {
       transform: translateY(-4px);
       border-color: var(--card-hover-border);
-      background: #131622;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 20px rgba(192, 132, 252, 0.12);
+      background: #12151e;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
     }
 
-    .hub-card:hover::before { opacity: 1; }
+    .bento-card:hover::before { opacity: 1; }
 
-    .hub-card-header {
+    /* Флагманский блок - Таблицы перекупа (на 7 колонок) */
+    .bento-hero {
+      grid-column: span 7;
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(217, 70, 239, 0.04), #0d0f15 75%);
+      border-color: rgba(192, 132, 252, 0.2);
+    }
+
+    /* Блок новостей (на 5 колонок) */
+    .bento-news {
+      grid-column: span 5;
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.08), #0d0f15 80%);
+    }
+
+    .bento-half { grid-column: span 6; }
+
+    .bento-top-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
     }
 
-    .hub-card-icon {
-      width: 48px; height: 48px;
-      border-radius: 14px;
+    .bento-icon-box {
+      width: 44px; height: 44px;
+      border-radius: 12px;
       background: #141720;
-      border: 1px solid var(--card-border);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent-highlight);
-      font-size: 1.4rem;
-      transition: transform 0.2s ease, background 0.2s ease;
+      font-size: 1.35rem;
     }
 
-    .hub-card:hover .hub-card-icon {
-      transform: scale(1.08);
-      background: #1a1e2b;
-      border-color: rgba(192, 132, 252, 0.3);
-    }
-
-    .hub-badge {
+    .bento-pill {
       font-size: 0.72rem;
       font-weight: 700;
-      padding: 0.25rem 0.6rem;
-      border-radius: 8px;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-dim);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      letter-spacing: 0.04em;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
     }
 
-    .hub-badge.highlight {
-      background: rgba(192, 132, 252, 0.12);
+    .bento-pill.glow {
       color: var(--accent-highlight);
+      background: rgba(192, 132, 252, 0.1);
       border-color: rgba(192, 132, 252, 0.3);
     }
 
-    .hub-card-body h3 {
+    .bento-pill.live {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.1);
+      border-color: rgba(16, 185, 129, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .bento-pill.live::before {
+      content: "";
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+    }
+
+    .bento-title {
       font-size: 1.25rem;
       font-weight: 800;
       color: #fff;
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.35rem;
       letter-spacing: -0.01em;
     }
 
-    .hub-card-body p {
+    .bento-desc {
       font-size: 0.86rem;
       color: var(--text-muted);
       line-height: 1.5;
     }
 
-    .hub-card-footer {
+    .bento-hero-metrics {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: 0.85rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: var(--text-dim);
-      transition: color 0.15s ease;
+      gap: 1rem;
+      margin-top: 1.1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .hub-card:hover .hub-card-footer { color: var(--accent-highlight); }
+    .bento-metric-item {
+      display: flex;
+      flex-direction: column;
+    }
 
-/* РАЗДЕЛ НОВОСТЕЙ (ROLEID) */
+    .bento-metric-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+      font-family: ui-monospace, monospace;
+    }
+
+    .bento-metric-lbl {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* РАЗДЕЛ НОВОСТЕЙ */
     .news-header-box {
       display: flex;
       justify-content: space-between;
@@ -577,11 +606,11 @@
       margin-bottom: 1.4rem;
     }
 
-    .news-grid {
+    .news-feed-list {
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
-      max-width: 760px;
+      max-width: 780px;
       margin: 0 auto;
     }
 
@@ -592,8 +621,8 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.2s ease, transform 0.2s ease;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      transition: border-color 0.2s ease, transform 0.2s ease;
     }
 
     .news-card:hover {
@@ -614,7 +643,7 @@
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 1rem;
+      gap: 0.9rem;
     }
 
     .news-meta {
@@ -636,7 +665,7 @@
     }
 
     .news-text {
-      font-size: 0.94rem;
+      font-size: 0.95rem;
       color: #f1f5f9;
       line-height: 1.7;
       white-space: pre-line;
@@ -649,7 +678,6 @@
       inset: 0;
       background: rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
       z-index: 1200;
       display: flex;
       align-items: center;
@@ -1343,8 +1371,8 @@
     }
     .social-btn:hover { transform: translateY(-2px); color: #fff; }
 
-    @media (max-width: 820px) {
-      .hub-grid { grid-template-columns: 1fr; }
+    @media (max-width: 860px) {
+      .bento-hero, .bento-news, .bento-half { grid-column: span 12; }
       .filters-cluster { grid-template-columns: repeat(2, 1fr); }
       .actions-cluster { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
@@ -1382,13 +1410,13 @@
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         <span>Главное меню</span>
       </button>
-      <button class="sidebar-nav-item" data-tab="tab-news">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
-        <span>Новости (@old_team_news)</span>
-      </button>
       <button class="sidebar-nav-item" data-tab="tab-faq">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span>FAQ Перекупа авто</span>
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-news">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <span>Новости и обновления</span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-names">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -1409,7 +1437,6 @@
 
       <div style="height: 1px; background: rgba(255,255,255,0.06); margin: 0.35rem 0;"></div>
 
-      <!-- КНОПКА ОБУЧЕНИЯ В РАЗДЕЛАХ -->
       <button class="sidebar-nav-item" id="btn-sidebar-tour" style="border-color: rgba(192, 132, 252, 0.25); background: rgba(192, 132, 252, 0.06); color: var(--accent-highlight);">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
         <span>Обучение (Курс дела)</span>
@@ -1468,108 +1495,116 @@
       <p class="subtitle">Специализированная база цен перекупщика, генератор RP-ников, автобиографии и новости для серверов Radmir RP</p>
     </header>
 
-    <!-- ЭКРАН 0: НАЧАЛЬНОЕ МЕНЮ (HUB) -->
+    <!-- ЭКРАН 0: НОВОЕ ЛАКОНИЧНОЕ BENTO-МЕНЮ (HUB) -->
     <div class="tab-content active" id="tab-hub">
-      <div class="hub-grid">
-        <!-- Карточка 1: Новости Telegram -->
-        <div class="hub-card" data-open-tab="tab-news">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">📢</div>
-            <span class="hub-badge highlight">@old_team_news</span>
+      <div class="bento-grid">
+        
+        <!-- КАРТОЧКА 1: ФЛАГМАН - ТАБЛИЦЫ ПЕРЕКУПА (HERO) -->
+        <div class="bento-card bento-hero" data-open-tab="tab-faq">
+          <div>
+            <div class="bento-top-row">
+              <div class="bento-icon-box">🚗</div>
+              <span class="bento-pill glow">Прайс-лист</span>
+            </div>
+            <h3 class="bento-title">Таблицы перекупа Б/У рынка</h3>
+            <p class="bento-desc">
+              Актуальные цены покупки и перепродажи на всех рынках Radmir RP с расчётом чистой прибыли с каждой сделки и учётом стейджей.
+            </p>
           </div>
-          <div class="hub-card-body">
-            <h3>Новости и обновления</h3>
-            <p>Прямой фид свежих постов из официального канала Telegram: анонсы обновлений, конкурсы и новости команды проекта.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Читать новости</span>
-            <span>&rarr;</span>
+
+          <div class="bento-hero-metrics">
+            <div class="bento-metric-item">
+              <span class="bento-metric-val">203</span>
+              <span class="bento-metric-lbl">Автомобиля</span>
+            </div>
+            <div class="bento-metric-item">
+              <span class="bento-metric-val">3</span>
+              <span class="bento-metric-lbl">Класса Б/У</span>
+            </div>
+            <div class="bento-metric-item">
+              <span class="bento-metric-val">+50%</span>
+              <span class="bento-metric-lbl">Стейдж</span>
+            </div>
           </div>
         </div>
 
-        <!-- Карточка 2: FAQ Перекупа -->
-        <div class="hub-card" data-open-tab="tab-faq">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">🚗</div>
-            <span class="hub-badge highlight">203 авто</span>
+        <!-- КАРТОЧКА 2: НОВОСТИ ПРОЕКТА -->
+        <div class="bento-card bento-news" data-open-tab="tab-news">
+          <div>
+            <div class="bento-top-row">
+              <div class="bento-icon-box">📢</div>
+              <span class="bento-pill live">Live</span>
+            </div>
+            <h3 class="bento-title">Новости и обновления</h3>
+            <p class="bento-desc">
+              Прямая лента свежих анонсов, обновлений серверов и событий проекта.
+            </p>
           </div>
-          <div class="hub-card-body">
-            <h3>Таблицы цен перекупа</h3>
-            <p>Актуальные прайсы скупки и перепродажи на Низком, Среднем и Высоком авторынках Radmir RP с расчётом чистой прибыли.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Открыть прайс-листы</span>
-            <span>&rarr;</span>
-          </div>
-        </div>
-
-        <!-- Карточка 3: Генератор ников -->
-        <div class="hub-card" data-open-tab="tab-names">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">🪪</div>
-            <span class="hub-badge">Слот-машина</span>
-          </div>
-          <div class="hub-card-body">
-            <h3>Генератор RP Ников</h3>
-            <p>Подбор одобренных никнеймов по формату Radmir RP: русские имена, привязка к фамилиям фам, мужские и женские склонения.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Генерировать ник</span>
-            <span>&rarr;</span>
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-highlight); margin-top: 1rem;">
+            Смотреть ленту &rarr;
           </div>
         </div>
 
-        <!-- Карточка 4: RP Биографии -->
-        <div class="hub-card" data-open-tab="tab-bio">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">📜</div>
-            <span class="hub-badge highlight">Для форума</span>
+        <!-- КАРТОЧКА 3: ГЕНЕРАТОР НИКОВ -->
+        <div class="bento-card bento-half" data-open-tab="tab-names">
+          <div class="bento-top-row">
+            <div class="bento-icon-box">🪪</div>
+            <span class="bento-pill">Radmir Format</span>
           </div>
-          <div class="hub-card-body">
-            <h3>RP Биографии и Квенты</h3>
-            <p>Умный генератор неповторимых квентов для гос. структур (МВД/ФСБ/Армия) и банд для заявок на старший состав.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Создать биографию</span>
-            <span>&rarr;</span>
+          <div>
+            <h3 class="bento-title">Генератор RP Никнеймов</h3>
+            <p class="bento-desc">
+              Слот-машина ников: славянские имена под гос. структуры, поддержка своих фамилий фам и склонения.
+            </p>
           </div>
         </div>
 
-        <!-- Карточка 5: Рандомайзер чисел -->
-        <div class="hub-card" data-open-tab="tab-random">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">🎲</div>
-            <span class="hub-badge">Для строя</span>
+        <!-- КАРТОЧКА 4: RP БИОГРАФИИ -->
+        <div class="bento-card bento-half" data-open-tab="tab-bio">
+          <div class="bento-top-row">
+            <div class="bento-icon-box">📜</div>
+            <span class="bento-pill glow">BB-коды</span>
           </div>
-          <div class="hub-card-body">
-            <h3>Рандомайзер чисел</h3>
-            <p>Мгновенное определение победителей в строю, дуэлях, розыгрышах автомобилей и внутриигровых мероприятиях лидеров.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Запустить рандом</span>
-            <span>&rarr;</span>
+          <div>
+            <h3 class="bento-title">RP Биографии и Квенты</h3>
+            <p class="bento-desc">
+              Генерация развернутых уникальных историй для форума на старший состав и лидерские посты.
+            </p>
           </div>
         </div>
 
-        <!-- Карточка 6: ИИ-Помощник -->
-        <div class="hub-card" id="hub-card-open-ai">
-          <div class="hub-card-header">
-            <div class="hub-card-icon">🤖</div>
-            <span class="hub-badge highlight">AI Online</span>
+        <!-- КАРТОЧКА 5: РАНДОМАЙЗЕР -->
+        <div class="bento-card bento-half" data-open-tab="tab-random">
+          <div class="bento-top-row">
+            <div class="bento-icon-box">🎲</div>
+            <span class="bento-pill">Для строя</span>
           </div>
-          <div class="hub-card-body">
-            <h3>Radmir RP Ассистент</h3>
-            <p>Персональный ИИ: знает расценки авторынков, правила терминов DM/DB/TK, команды /me, /do, /todo и систему повышения.</p>
-          </div>
-          <div class="hub-card-footer">
-            <span>Задать вопрос</span>
-            <span>&rarr;</span>
+          <div>
+            <h3 class="bento-title">Рандомайзер чисел</h3>
+            <p class="bento-desc">
+              Быстрое определение победителей конкурсов во фракциях, дуэлей и розыгрышей.
+            </p>
           </div>
         </div>
+
+        <!-- КАРТОЧКА 6: РУЛЕТКА -->
+        <div class="bento-card bento-half" data-open-tab="tab-wheel">
+          <div class="bento-top-row">
+            <div class="bento-icon-box">🎡</div>
+            <span class="bento-pill">Интерактив</span>
+          </div>
+          <div>
+            <h3 class="bento-title">Колесо фортуны</h3>
+            <p class="bento-desc">
+              Анимированная рулетка для прозрачного выбора никнеймов и распределения призов.
+            </p>
+          </div>
+        </div>
+
       </div>
     </div>
 
-<!-- ЭКРАН НОВОСТЕЙ (ROLEID) -->
+    <!-- ЭКРАН НОВОСТЕЙ (ROLEID LIVE) -->
     <div class="tab-content" id="tab-news">
       <button class="back-to-hub-btn" data-back-to-hub>
         &larr; Назад в меню
@@ -1580,7 +1615,7 @@
           <div>
             <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;">Новости и обновления</h3>
             <p style="color: var(--text-muted); font-size: 0.88rem;">
-              Свежие анонсы, события и изменения на проекте Radmir RP
+              Официальная лента свежих событий, анонсов и новостей серверов Radmir RP
             </p>
           </div>
           <div>
@@ -1590,7 +1625,7 @@
           </div>
         </div>
 
-        <div class="news-grid" id="news-grid">
+        <div class="news-feed-list" id="news-grid">
           <div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка новостей...</div>
         </div>
       </div>
@@ -1965,15 +2000,13 @@
 
   <script>
     // ==========================================
-    // ССЫЛКИ НА CLOUDFLARE WORKERS
+    // СИСТЕМНЫЙ API ЭНДПОИНТ НОВОСТЕЙ
     // ==========================================
     const WORKER_URL = "https://crimson-wave-c3d6.wamq812.workers.dev";
-    
-    // ВСТАВЬ СЮДА ССЫЛКУ НА СВОЙ WORKER ДЛЯ ТЕЛЕГРАМА (из Части 1)
-    const TG_NEWS_WORKER_URL = "https://dark-flower-96f7.wamq812.workers.dev/";
+    const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
 
     // ==========================================
-    // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА
+    // 1. ИНИЦИАЛИЗАЦИЯ ИИ-ЧАТА (ROLEID AI)
     // ==========================================
     const FREE_MODELS = [
       "openrouter/free",
@@ -2000,14 +2033,6 @@
       btnToggleChat.addEventListener('click', () => {
         chatModal.classList.toggle('open');
         if (chatModal.classList.contains('open') && chatInput) chatInput.focus();
-      });
-    }
-
-    const hubCardAi = document.getElementById('hub-card-open-ai');
-    if (hubCardAi) {
-      hubCardAi.addEventListener('click', () => {
-        chatModal.classList.add('open');
-        if (chatInput) chatInput.focus();
       });
     }
 
@@ -2117,7 +2142,7 @@
 
       if (tabId === 'tab-wheel') drawWheel();
       if (tabId === 'tab-faq') renderFaqTable();
-      if (tabId === 'tab-news') loadTelegramNews();
+      if (tabId === 'tab-news') loadProjectNews();
       closeSidebar();
     }
 
@@ -2125,7 +2150,7 @@
       item.addEventListener('click', () => switchTab(item.dataset.tab));
     });
 
-    document.querySelectorAll('.hub-card[data-open-tab]').forEach(card => {
+    document.querySelectorAll('.bento-card[data-open-tab]').forEach(card => {
       card.addEventListener('click', () => switchTab(card.dataset.openTab));
     });
 
@@ -2134,35 +2159,17 @@
     });
 
     // ==========================================
-    // 3. ЗАГРУЗКА НОВОСТЕЙ ИЗ TELEGRAM (@old_team_news)
+    // 3. ЗАГРУЗКА И ВЫВОД НОВОСТЕЙ ПРОЕКТА
     // ==========================================
     const newsGrid = document.getElementById('news-grid');
     const btnRefreshNews = document.getElementById('btn-refresh-news');
 
-    // Резервные посты на случай задержки подключения воркера
-    const FALLBACK_NEWS = [
-      {
-        id: 1,
-        date: "Сегодня",
-        text: "🔥 Последние обновления сервера и свежие новости перекупа уже доступны на ROLEID. Подписывайтесь на наш официальный Telegram-канал @old_team_news!",
-        photo: null,
-        url: "https://t.me/old_team_news"
-      },
-      {
-        id: 2,
-        date: "Вчера",
-        text: "🚗 База Б/У авторынка Radmir RP пополнена: добавлены новые расценки высокого класса и правила расчёта чистой прибыли со стейджем.",
-        photo: null,
-        url: "https://t.me/old_team_news"
-      }
-    ];
-
-    async function loadTelegramNews() {
+    async function loadProjectNews() {
       if (!newsGrid) return;
       newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка последних обновлений...</div>`;
 
       try {
-        const response = await fetch(TG_NEWS_WORKER_URL);
+        const response = await fetch(NEWS_API_ENDPOINT);
         const data = await response.json();
 
         if (data && data.posts && data.posts.length > 0) {
@@ -2171,6 +2178,7 @@
           showEmptyNews();
         }
       } catch (err) {
+        console.warn("Ошибка загрузки новостей:", err);
         showEmptyNews();
       }
     }
@@ -2207,10 +2215,10 @@
         </div>
       `).join('');
     }
-    
+
     if (btnRefreshNews) {
       btnRefreshNews.addEventListener('click', () => {
-        loadTelegramNews();
+        loadProjectNews();
         showToast('Лента обновляется...');
       });
     }
@@ -2222,21 +2230,21 @@
       {
         icon: "👋",
         title: "Добро пожаловать в ROLEID!",
-        desc: "Ваш специализированный карманный сервис, настроенный для игроков Radmir RP. Давайте проведем быстрый 30-секундный экскурс по ключевым возможностям."
-      },
-      {
-        icon: "📢",
-        title: "Новости проекта @old_team_news",
-        desc: "Прямая авто-трансляция всех обновлений, постов и анонсов из Telegram без необходимости выходить из браузера."
+        desc: "Ваш специализированный карманный сервис, созданный для комфортной игры на серверах Radmir RP. Давайте проведем быстрый 30-секундный экскурс по возможностям."
       },
       {
         icon: "🚗",
-        title: "Таблицы перекупа Б/У рынка",
-        desc: "203 автомобиля из официальных прайс-листов низкого, среднего и высокого рынков Radmir. Расчёт чистой прибыли, учёт стейджей и мгновенный поиск."
+        title: "Таблицы цен авторынка",
+        desc: "Полная база 203 автомобилей низкого, среднего и высокого классов. Расчёт чистой прибыли, учёт стоимости стейджа и мгновенный поиск."
+      },
+      {
+        icon: "📢",
+        title: "Новости и обновления",
+        desc: "Прямая авто-трансляция всех важных событий, анонсов и изменений серверов прямо внутри сайта."
       },
       {
         icon: "🪪",
-        title: "Генератор RP Ников и Биографий",
+        title: "RP Никнеймы и Биографии",
         desc: "Создание одобренных никнеймов под формат Radmir с привязкой к фамилии вашей фамы, а также автогенератор квентов для форума."
       }
     ];
@@ -2276,7 +2284,7 @@
 
     function closeTour() {
       if (tourOverlay) tourOverlay.classList.remove('open');
-      localStorage.setItem('radmir_tour_seen', 'true');
+      localStorage.setItem('roleid_tour_seen', 'true');
     }
 
     if (btnTourNext) {
@@ -2300,7 +2308,7 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-      const hasSeenTour = localStorage.getItem('radmir_tour_seen');
+      const hasSeenTour = localStorage.getItem('roleid_tour_seen');
       if (!hasSeenTour) {
         setTimeout(openTour, 600);
       }
@@ -2310,13 +2318,13 @@
     // 5. ТЕМЫ ОФОРМЛЕНИЯ
     // ==========================================
     const themeDots = document.querySelectorAll('.theme-dot');
-    let currentTheme = localStorage.getItem('radmir_theme') || 'violet';
+    let currentTheme = localStorage.getItem('roleid_theme') || 'violet';
 
     function setTheme(theme) {
       document.body.className = '';
       if (theme !== 'violet') document.body.classList.add(`theme-${theme}`);
       themeDots.forEach(dot => dot.classList.toggle('active', dot.dataset.theme === theme));
-      localStorage.setItem('radmir_theme', theme);
+      localStorage.setItem('roleid_theme', theme);
     }
 
     themeDots.forEach(dot => {
@@ -2679,14 +2687,14 @@
     }
 
     let currentList = [];
-    let recentHistory = JSON.parse(localStorage.getItem('radmir_history_v1') || '[]');
+    let recentHistory = JSON.parse(localStorage.getItem('roleid_history_v1') || '[]');
     let isSpinning = false;
 
     function saveHistory(nick) {
       if (!recentHistory.includes(nick)) {
         recentHistory.unshift(nick);
         if (recentHistory.length > 12) recentHistory.pop();
-        localStorage.setItem('radmir_history_v1', JSON.stringify(recentHistory));
+        localStorage.setItem('roleid_history_v1', JSON.stringify(recentHistory));
         renderHistory();
       }
     }
@@ -2847,7 +2855,6 @@
       btnCloseBio.addEventListener('click', () => bioModal.classList.remove('open'));
     }
 
-    // Генератор развернутой биографии
     const BIO_TEMPLATES = {
       gos: ["С ранних лет проявлял интерес к закону. Окончив Нижегородскую академию МВД, поступил на службу, доказав верность присяге и готовность стоять на защите граждан."],
       opg: ["Столкнувшись с несправедливостью улиц, быстро понял цену верному слову и силе. Сколотив круг надежных людей, завоевал авторитет среди бригад своим хладнокровием."],
