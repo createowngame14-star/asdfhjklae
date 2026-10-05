@@ -83,9 +83,7 @@
     @keyframes floatGlow1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(80px,60px) scale(1.15); } }
     @keyframes floatGlow2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-80px,-60px) scale(1.2); } }
 
-    /* ============================
-       СКЕЛЕТОНЫ (SHIMMER ЗАГЛУШКИ)
-    ============================ */
+    /* СКЕЛЕТОНЫ */
     .skeleton {
       background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
       background-size: 200% 100%;
@@ -128,20 +126,7 @@
       margin-bottom: 0.6rem;
     }
 
-    .skeleton-term-row {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 0.85rem 1rem;
-    }
-    .skeleton-term-abbr {
-      width: 52px; height: 22px; border-radius: 6px; flex-shrink: 0;
-      background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
-      background-size: 200% 100%;
-      animation: skeletonShimmer 1.6s ease-in-out infinite;
-    }
-
-    /* ============================
-       ЦВЕТОВОЙ ИНДИКАТОР НАГРУЗКИ
-    ============================ */
+    /* ИНДИКАТОР НАГРУЗКИ */
     .server-progress-fill.low { background: linear-gradient(90deg, #10b981, #34d399) !important; }
     .server-progress-fill.mid { background: linear-gradient(90deg, #f59e0b, #fbbf24) !important; }
     .server-progress-fill.high { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
@@ -152,9 +137,7 @@
     .server-load-percent.mid { color: #fbbf24 !important; }
     .server-load-percent.high { color: #f87171 !important; }
 
-    /* ============================
-       BADGE НА ИКОНКЕ НОВОСТЕЙ
-    ============================ */
+    /* BADGE НА НОВОСТЯХ */
     .sidebar-nav-item { position: relative; }
     .sidebar-badge {
       position: absolute;
@@ -803,6 +786,37 @@
     .faq-panel { display: none; animation: cardEntrance 0.28s ease both; }
     .faq-panel.active { display: block; }
 
+    /* ПЕРЕКЛЮЧАТЕЛЬ ТРЁХ БУ */
+    .faq-prices-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      margin-bottom: 1.2rem;
+      padding: 0.35rem;
+      background: #0a0c12;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+    }
+    .faq-price-tab {
+      padding: 0.65rem 0.9rem;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
+    }
+    .faq-price-tab:hover { background: rgba(255,255,255,0.04); color: #fff; }
+    .faq-price-tab.active {
+      background: rgba(192,132,252,0.14);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px var(--accent-highlight);
+    }
+
     .faq-notice-box {
       background: rgba(192,132,252,0.04);
       border: 1px solid rgba(192,132,252,0.15);
@@ -1036,6 +1050,8 @@
       .hero-title { font-size: 3.5rem; }
       .tour-icon-wrap { width: 76px; height: 76px; }
       .tour-icon { font-size: 2.2rem; }
+      .faq-prices-tabs { grid-template-columns: 1fr; }
+      .faq-price-tab { padding: 0.55rem; }
     }
   </style>
 </head>
@@ -1043,7 +1059,6 @@
 
   <div class="bg-ambient"></div>
 
-  <!-- БОКОВОЕ МЕНЮ -->
   <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
   <aside class="sidebar-drawer" id="sidebar-drawer">
     <div class="sidebar-header">
@@ -1153,7 +1168,6 @@
       </div>
     </div>
 
-    <!-- ГЛАВНЫЙ ЭКРАН -->
     <div class="tab-content active" id="tab-hub">
       <div class="hero-split">
         <div class="hero-left">
@@ -1207,7 +1221,6 @@
       </div>
     </div>
 
-    <!-- ОНЛАЙН СЕРВЕРОВ -->
     <div class="tab-content" id="tab-servers">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box">
@@ -1227,75 +1240,52 @@
         <div class="servers-grid" id="servers-grid">
           <div class="skeleton-server-card">
             <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 55%; height: 16px;"></span>
               <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
             </div>
             <div class="skeleton-bar"></div>
             <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+              <span class="skeleton" style="width: 40%; height: 12px;"></span>
+              <span class="skeleton" style="width: 40px; height: 12px;"></span>
             </div>
           </div>
           <div class="skeleton-server-card">
             <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 55%; height: 16px;"></span>
               <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
             </div>
             <div class="skeleton-bar"></div>
             <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+              <span class="skeleton" style="width: 40%; height: 12px;"></span>
+              <span class="skeleton" style="width: 40px; height: 12px;"></span>
             </div>
           </div>
           <div class="skeleton-server-card">
             <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 55%; height: 16px;"></span>
               <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
             </div>
             <div class="skeleton-bar"></div>
             <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+              <span class="skeleton" style="width: 40%; height: 12px;"></span>
+              <span class="skeleton" style="width: 40px; height: 12px;"></span>
             </div>
           </div>
           <div class="skeleton-server-card">
             <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 55%; height: 16px;"></span>
               <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
             </div>
             <div class="skeleton-bar"></div>
             <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
-            </div>
-          </div>
-          <div class="skeleton-server-card">
-            <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
-              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
-            </div>
-            <div class="skeleton-bar"></div>
-            <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
-            </div>
-          </div>
-          <div class="skeleton-server-card">
-            <div class="skeleton-server-top">
-              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
-              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
-            </div>
-            <div class="skeleton-bar"></div>
-            <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
-              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+              <span class="skeleton" style="width: 40%; height: 12px;"></span>
+              <span class="skeleton" style="width: 40px; height: 12px;"></span>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- НОВОСТИ -->
     <div class="tab-content" id="tab-news">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box">
@@ -1322,17 +1312,10 @@
             <div class="skeleton skeleton-line w60"></div>
             <div class="skeleton skeleton-line w40"></div>
           </div>
-          <div class="skeleton-news-card">
-            <div class="skeleton skeleton-line w30"></div>
-            <div class="skeleton skeleton-line w80"></div>
-            <div class="skeleton skeleton-line w60"></div>
-            <div class="skeleton skeleton-line w50"></div>
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- FAQ / БАЗА ЗНАНИЙ -->
     <div class="tab-content" id="tab-faq">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box">
@@ -1368,6 +1351,13 @@
 
           <div class="faq-content">
             <div class="faq-panel active" id="faq-prices">
+              <!-- ПЕРЕКЛЮЧАТЕЛЬ ТРЁХ БУ -->
+              <div class="faq-prices-tabs">
+                <button class="faq-price-tab active" data-sub="low">🚗 Низкий БУ</button>
+                <button class="faq-price-tab" data-sub="med">🚙 Средний БУ</button>
+                <button class="faq-price-tab" data-sub="high">🏎️ Высокий БУ</button>
+              </div>
+
               <div class="faq-notice-box">
                 <div id="faq-category-notice">
                   <b>Низкий класс (СТОК авто БЕЗ стейджа):</b> Только ликвидные автомобили, на которые всегда есть стабильный спрос.
@@ -1429,7 +1419,6 @@
       </div>
     </div>
 
-    <!-- ГЕНЕРАТОР НИКОВ -->
     <div class="tab-content" id="tab-names">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
 
@@ -1481,7 +1470,6 @@
       </div>
     </div>
 
-    <!-- RP БИОГРАФИИ -->
     <div class="tab-content" id="tab-bio">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box">
@@ -1511,7 +1499,6 @@
       </div>
     </div>
 
-    <!-- РАНДОМАЙЗЕР -->
     <div class="tab-content" id="tab-random">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
@@ -1528,7 +1515,6 @@
       </div>
     </div>
 
-    <!-- РУЛЕТКА -->
     <div class="tab-content" id="tab-wheel">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
@@ -1542,7 +1528,6 @@
     </div>
   </div>
 
-  <!-- КУРС ДЕЛА -->
   <div class="tour-overlay" id="tour-overlay">
     <div class="tour-modal" id="tour-modal">
       <div class="tour-progress-bar">
@@ -1572,7 +1557,6 @@
     </div>
   </div>
 
-  <!-- ИИ-ЧАТ -->
   <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
   <div class="ai-chat-modal" id="ai-chat-modal">
     <div class="ai-chat-header">
@@ -1795,7 +1779,6 @@
       card.addEventListener('click', () => switchTab(card.dataset.openTab));
     });
 
-    /* FAQ subnav */
     document.querySelectorAll('.faq-subnav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.faq-subnav-btn').forEach(b => b.classList.remove('active'));
@@ -1805,7 +1788,6 @@
       });
     });
 
-    /* TERMS */
     function renderTerms() {
       const grid = document.getElementById('terms-grid');
       const badge = document.getElementById('terms-count-badge');
@@ -1831,7 +1813,6 @@
     }
     document.getElementById('terms-search-input')?.addEventListener('input', renderTerms);
 
-    /* FACTIONS */
     function renderFactions() {
       const grid = document.getElementById('factions-grid');
       if (!grid) return;
@@ -1865,9 +1846,7 @@
       grid.innerHTML = html;
     }
 
-    /* ============================================================
-       СЕРВЕРЫ — с скелетонами и цветовым индикатором
-    ============================================================ */
+    /* СЕРВЕРЫ */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     const btnRefreshServers = document.getElementById('btn-refresh-servers');
@@ -1897,11 +1876,9 @@
 
     async function loadServersOnline() {
       if (!serversGrid) return;
-      // Показываем скелетоны при первой загрузке (если контент ещё пуст или placeholder)
       if (!serversGrid.querySelector('.server-card')) {
         serversGrid.innerHTML = getServersSkeletonHTML();
       }
-
       try {
         const res = await fetch(SERVERS_API_ENDPOINT);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1941,9 +1918,7 @@
     if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Обновлено!'); });
     if (!serversTimer) serversTimer = setInterval(loadServersOnline, 120000);
 
-    /* ============================================================
-       НОВОСТИ — с кэшем, badge и скелетонами
-    ============================================================ */
+    /* НОВОСТИ + КЭШ + BADGE */
     const newsGrid = document.getElementById('news-grid');
     const btnRefreshNews = document.getElementById('btn-refresh-news');
     const newsCacheNote = document.getElementById('news-cache-note');
@@ -1955,13 +1930,9 @@
 
     function saveUserReactions() { localStorage.setItem('roleid_user_reactions', JSON.stringify(userReactions)); }
 
-    // Кэш новостей
     function saveNewsCache(posts) {
       try {
-        localStorage.setItem('roleid_news_cache', JSON.stringify({
-          posts: posts,
-          ts: Date.now()
-        }));
+        localStorage.setItem('roleid_news_cache', JSON.stringify({ posts: posts, ts: Date.now() }));
       } catch (e) {}
     }
     function loadNewsCache() {
@@ -1973,7 +1944,6 @@
       } catch (e) { return null; }
     }
 
-    // Badge
     function updateNewsBadge(posts) {
       if (!newsBadge || !posts || !posts.length) return;
       const lastSeen = localStorage.getItem('roleid_news_last_seen') || '';
@@ -1997,7 +1967,6 @@
       }
     }
 
-    // Скелетоны для новостей
     function getNewsSkeletonHTML(count = 2) {
       let html = '';
       for (let i = 0; i < count; i++) {
@@ -2068,7 +2037,6 @@
 
     async function loadProjectNews(silent = false) {
       if (!newsGrid) return;
-      // Скелетон — только если лента пуста или перезагружаем вручную
       if (!silent && !newsGrid.querySelector('.news-card')) {
         newsGrid.innerHTML = getNewsSkeletonHTML(2);
       }
@@ -2087,7 +2055,6 @@
           throw new Error('Пустой ответ');
         }
       } catch (e) {
-        // Пытаемся показать кэш
         const cached = loadNewsCache();
         if (cached && cached.posts.length > 0) {
           currentNewsPosts = cached.posts;
@@ -2209,7 +2176,6 @@
       if (!localStorage.getItem('roleid_tour_seen')) setTimeout(openTour, 900);
     });
 
-    /* THEME */
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('roleid_theme') || 'violet';
     function setTheme(t) {
@@ -2228,7 +2194,7 @@
     };
 
     let currentFaqCategory = 'low';
-    const faqSubnavBtns = document.querySelectorAll('.faq-subnav-btn[data-sub]');
+    const faqPriceTabs = document.querySelectorAll('.faq-price-tab[data-sub]');
     const faqTableBody = document.getElementById('faq-table-body');
     const faqSearchInput = document.getElementById('faq-search-input');
     const faqCountBadge = document.getElementById('faq-count-badge');
@@ -2267,9 +2233,9 @@
       `).join('');
     }
 
-    faqSubnavBtns.forEach(btn => {
+    faqPriceTabs.forEach(btn => {
       btn.addEventListener('click', () => {
-        faqSubnavBtns.forEach(b => b.classList.remove('active'));
+        faqPriceTabs.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentFaqCategory = btn.dataset.sub;
         if (faqCategoryNotice && FAQ_NOTICES[currentFaqCategory]) {
@@ -2562,14 +2528,12 @@
       }
     });
 
-    /* INIT */
     applyLang(currentLang);
     renderHistory();
     renderFaqTable();
     renderTerms();
     renderFactions();
     generate();
-    // Загружаем новости сразу при старте (для badge)
     loadProjectNews(true);
     loadServersOnline();
   </script>
