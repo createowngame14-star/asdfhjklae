@@ -208,41 +208,35 @@
 
     .subtitle { color: var(--text-muted); font-size: 1.05rem; max-width: 620px; margin: 0 auto 2.5rem; line-height: 1.65; }
 
-    /* БЫСТРАЯ НАВИГАЦИЯ ПИЛЮЛЯМИ */
-    .hero-quick-nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem;
-      justify-content: center;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    .quick-pill {
+    /* КНОПКА ОТКРЫТИЯ МЕНЮ НА ГЛАВНОЙ */
+    .hero-open-menu {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1.1rem;
+      gap: 0.75rem;
+      padding: 0.9rem 1.7rem;
       background: #0f1118;
       border: 1px solid var(--card-border);
       border-radius: 9999px;
       color: var(--text-muted);
       font-family: inherit;
-      font-size: 0.86rem;
-      font-weight: 600;
+      font-size: 0.92rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .quick-pill:hover {
+    .hero-open-menu:hover {
       color: #fff;
       border-color: var(--card-hover-border);
       background: #141824;
       transform: translateY(-2px);
-      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
     }
-    .quick-pill-icon {
-      font-size: 1rem;
-      line-height: 1;
+    .hero-open-menu .menu-arrow {
+      color: var(--accent-highlight);
+      font-weight: 800;
+      transition: transform 0.25s ease;
     }
+    .hero-open-menu:hover .menu-arrow { transform: translateX(4px); }
 
     .back-to-hub-btn {
       display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px solid var(--card-border);
@@ -461,8 +455,6 @@
       .bio-editor-grid { grid-template-columns: 1fr; }
       .faq-subnav { grid-template-columns: 1fr; }
       .faq-rules-list { grid-template-columns: 1fr; }
-      .hero-quick-nav { gap: 0.45rem; }
-      .quick-pill { padding: 0.55rem 0.9rem; font-size: 0.8rem; }
     }
     @media (max-width: 500px) {
       .filters-cluster { grid-template-columns: 1fr; }
@@ -577,29 +569,10 @@
           Экосистема инструментов, таблиц и аналитики для игроков серверов Radmir RP
         </p>
 
-        <div class="hero-quick-nav">
-          <button class="quick-pill" data-open-tab="tab-servers">
-            <span class="quick-pill-icon">📊</span><span>Онлайн</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-faq">
-            <span class="quick-pill-icon">🚗</span><span>Цены</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-news">
-            <span class="quick-pill-icon">📢</span><span>Новости</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-names">
-            <span class="quick-pill-icon">🪪</span><span>Ники</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-bio">
-            <span class="quick-pill-icon">📜</span><span>Биографии</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-random">
-            <span class="quick-pill-icon">🎲</span><span>Рандом</span>
-          </button>
-          <button class="quick-pill" data-open-tab="tab-wheel">
-            <span class="quick-pill-icon">🎡</span><span>Рулетка</span>
-          </button>
-        </div>
+        <button class="hero-open-menu" id="btn-hero-open-menu">
+          Открыть разделы
+          <span class="menu-arrow">→</span>
+        </button>
       </div>
     </div>
 
@@ -968,6 +941,8 @@
     btnCloseSidebar?.addEventListener('click', closeSidebar);
     sidebarBackdrop?.addEventListener('click', closeSidebar);
 
+    document.getElementById('btn-hero-open-menu')?.addEventListener('click', openSidebar);
+
     function switchTab(tabId) {
       sidebarNavItems.forEach(i => i.classList.toggle('active', i.dataset.tab === tabId));
       tabContents.forEach(c => c.classList.remove('active'));
@@ -984,9 +959,6 @@
 
     sidebarNavItems.forEach(item => item.addEventListener('click', () => switchTab(item.dataset.tab)));
     document.querySelectorAll('[data-back-to-hub]').forEach(btn => btn.addEventListener('click', () => switchTab('tab-hub')));
-    document.querySelectorAll('.quick-pill[data-open-tab]').forEach(pill => {
-      pill.addEventListener('click', () => switchTab(pill.dataset.openTab));
-    });
 
     // Мониторинг онлайна серверов
     const serversGrid = document.getElementById('servers-grid');
