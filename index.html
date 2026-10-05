@@ -83,9 +83,6 @@
     @keyframes floatGlow1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(80px,60px) scale(1.15); } }
     @keyframes floatGlow2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-80px,-60px) scale(1.2); } }
 
-    /* =====================
-       ГЛАВНАЯ БЕЗ СКРОЛЛА
-    ===================== */
     body:has(#tab-hub.active) footer { display: none; }
 
     /* БОКОВОЕ МЕНЮ */
@@ -201,7 +198,7 @@
     .tab-content { display: none; animation: cardEntrance 0.32s cubic-bezier(0.16,1,0.3,1) both; }
     .tab-content.active { display: block; }
 
-    /* ГЛАВНЫЙ ЭКРАН — ВПИСАН В ОДИН ЭКРАН */
+    /* ГЛАВНЫЙ ЭКРАН */
     .hero-split {
       flex: 1; display: grid; grid-template-columns: 1fr 1fr;
       align-items: center; gap: 4rem; padding: 0;
@@ -272,7 +269,6 @@
 
     @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    /* ПЛАВАЮЩИЕ КАРТОЧКИ — ПОЯВЛЯЮТСЯ ПО ОЧЕРЕДИ МЕДЛЕННЕЕ */
     .hero-visual { position: relative; width: 100%; height: 100%; min-height: 440px; }
     .visual-card {
       position: absolute; width: 130px; height: 130px;
@@ -342,7 +338,6 @@
     .news-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-highlight); background: rgba(192,132,252,0.1); border: 1px solid rgba(192,132,252,0.25); padding: 0.25rem 0.65rem; border-radius: 8px; }
     .news-text { font-size: 0.95rem; color: #f1f5f9; line-height: 1.7; white-space: pre-line; word-break: break-word; }
 
-    /* РЕАКЦИИ НА НОВОСТИ */
     .news-reactions {
       display: flex; flex-wrap: wrap; gap: 0.4rem;
       margin-top: 1rem; padding-top: 1rem;
@@ -587,104 +582,119 @@
       50% { box-shadow: 0 12px 35px rgba(192,132,252,0.6), 0 0 0 6px rgba(192,132,252,0.1); }
     }
 
-    /* FAQ */
-    .faq-section-header { margin-bottom: 2rem; }
+    /* ============================================================
+       FAQ — ВЕРТИКАЛЬНЫЙ САЙДБАР + КОНТЕНТ СПРАВА
+    ============================================================ */
+    .faq-section-header { margin-bottom: 1.75rem; }
     .faq-section-header h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
     .faq-section-header p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
 
-    .faq-subnav {
+    .faq-layout {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.75rem;
-      margin-bottom: 2rem;
+      grid-template-columns: 220px 1fr;
+      gap: 1.75rem;
+      align-items: flex-start;
     }
+
+    .faq-subnav {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      position: sticky;
+      top: 1rem;
+      background: #0a0c12;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 0.5rem;
+    }
+
     .faq-subnav-btn {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      padding: 1.05rem 1.15rem;
-      background: #0b0d13;
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
+      gap: 0.7rem;
+      padding: 0.7rem 0.75rem;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
       color: var(--text-muted);
       font-family: inherit;
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
       text-align: left;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
-      overflow: hidden;
-    }
-    .faq-subnav-btn::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top right, var(--accent-highlight), transparent 70%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-      mix-blend-mode: overlay;
+      width: 100%;
     }
     .faq-subnav-btn:hover {
-      background: #12141c;
-      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
       color: #fff;
-      transform: translateY(-2px);
     }
-    .faq-subnav-btn:hover::before { opacity: 0.08; }
     .faq-subnav-btn.active {
-      background: linear-gradient(180deg, rgba(192,132,252,0.1), rgba(192,132,252,0.02));
-      border-color: var(--accent-highlight);
+      background: rgba(192,132,252,0.1);
       color: #fff;
-      box-shadow: 0 10px 28px rgba(192,132,252,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+      box-shadow: inset 0 0 0 1px rgba(192,132,252,0.3);
     }
-    .faq-subnav-btn.active::before { opacity: 0.15; }
+    .faq-subnav-btn.active::before {
+      content: "";
+      position: absolute;
+      left: -0.5rem;
+      top: 20%;
+      bottom: 20%;
+      width: 3px;
+      border-radius: 0 3px 3px 0;
+      background: var(--accent-flow);
+      background-size: 200% 200%;
+      animation: gradientShine 3s ease infinite;
+    }
 
     .faq-subnav-icon {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       justify-content: center;
-      width: 42px;
-      height: 42px;
+      width: 32px;
+      height: 32px;
       flex-shrink: 0;
-      border-radius: 12px;
+      border-radius: 9px;
       background: #141720;
       border: 1px solid rgba(255,255,255,0.06);
-      font-size: 1.25rem;
+      font-size: 0.95rem;
       line-height: 1;
-      transition: all 0.25s ease;
-      position: relative;
-      z-index: 1;
+      transition: all 0.2s ease;
     }
     .faq-subnav-btn.active .faq-subnav-icon {
       background: rgba(192,132,252,0.15);
       border-color: rgba(192,132,252,0.35);
       transform: scale(1.05);
-      box-shadow: 0 6px 18px rgba(192,132,252,0.25);
     }
 
     .faq-subnav-label {
       display: flex;
       flex-direction: column;
       gap: 0.15rem;
-      position: relative;
-      z-index: 1;
-      line-height: 1.2;
+      line-height: 1.15;
+      min-width: 0;
     }
     .faq-subnav-label span {
-      font-size: 0.92rem;
+      font-size: 0.86rem;
       font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .faq-subnav-label small {
-      font-size: 0.68rem;
-      font-weight: 600;
+      font-size: 0.64rem;
       color: var(--text-dim);
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      transition: color 0.25s ease;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .faq-subnav-btn.active .faq-subnav-label small { color: var(--accent-highlight); }
+
+    .faq-content { min-width: 0; }
 
     .faq-panel { display: none; animation: cardEntrance 0.28s ease both; }
     .faq-panel.active { display: block; }
@@ -738,7 +748,7 @@
 
     /* ТЕРМИНЫ */
     .terms-list {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 0.4rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem;
     }
     .term-row {
       display: flex; align-items: flex-start; gap: 1rem;
@@ -770,7 +780,7 @@
     .factions-group-title.crime::before { background: linear-gradient(180deg, #f87171, #b91c1c); }
     .factions-group-title.civil::before { background: linear-gradient(180deg, #34d399, #06b6d4); }
 
-    .faction-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem; }
+    .faction-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.4rem; }
     .faction-item {
       display: flex; align-items: flex-start; gap: 0.85rem;
       padding: 0.95rem 1rem; border-radius: 12px;
@@ -909,8 +919,18 @@
       .actions-cluster { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
       .faq-rules-list { grid-template-columns: 1fr; }
-      .faq-subnav { grid-template-columns: 1fr; }
-      .faq-subnav-btn { padding: 0.95rem 1rem; }
+      .faq-layout { grid-template-columns: 1fr; gap: 1rem; }
+      .faq-subnav {
+        position: static;
+        flex-direction: row;
+        overflow-x: auto;
+        scrollbar-width: none;
+        padding: 0.4rem;
+      }
+      .faq-subnav::-webkit-scrollbar { display: none; }
+      .faq-subnav-btn { flex-shrink: 0; padding: 0.6rem 0.8rem; }
+      .faq-subnav-btn.active::before { display: none; }
+      .faq-subnav-label small { display: none; }
       .tour-modal { padding: 1.8rem 1.5rem 1.5rem; }
       .tour-title { font-size: 1.3rem; }
       .tour-desc { font-size: 0.88rem; }
@@ -1147,86 +1167,92 @@
           <p data-i18n="faq.subtitle">Цены перекупа, словарь CRMP-терминов и информация о фракциях проекта</p>
         </div>
 
-        <div class="faq-subnav">
-          <button class="faq-subnav-btn active" data-panel="faq-prices">
-            <span class="faq-subnav-icon">💰</span>
-            <span class="faq-subnav-label">
-              <span data-i18n="faq.tab.prices">Цены перекупа</span>
-              <small>Б/У рынок</small>
-            </span>
-          </button>
-          <button class="faq-subnav-btn" data-panel="faq-terms">
-            <span class="faq-subnav-icon">📖</span>
-            <span class="faq-subnav-label">
-              <span data-i18n="faq.tab.terms">Термины CRMP</span>
-              <small>Словарь</small>
-            </span>
-          </button>
-          <button class="faq-subnav-btn" data-panel="faq-factions">
-            <span class="faq-subnav-icon">🏛️</span>
-            <span class="faq-subnav-label">
-              <span data-i18n="faq.tab.factions">Фракции</span>
-              <small>Гос / Криминал</small>
-            </span>
-          </button>
-        </div>
+        <div class="faq-layout">
+          <!-- ЛЕВЫЙ САЙДБАР — чтобы добавить новый раздел, просто скопируй кнопку и создай панель с тем же data-panel -->
+          <aside class="faq-subnav">
+            <button class="faq-subnav-btn active" data-panel="faq-prices">
+              <span class="faq-subnav-icon">💰</span>
+              <span class="faq-subnav-label">
+                <span data-i18n="faq.tab.prices">Цены перекупа</span>
+                <small>Б/У рынок</small>
+              </span>
+            </button>
+            <button class="faq-subnav-btn" data-panel="faq-terms">
+              <span class="faq-subnav-icon">📖</span>
+              <span class="faq-subnav-label">
+                <span data-i18n="faq.tab.terms">Термины CRMP</span>
+                <small>Словарь</small>
+              </span>
+            </button>
+            <button class="faq-subnav-btn" data-panel="faq-factions">
+              <span class="faq-subnav-icon">🏛️</span>
+              <span class="faq-subnav-label">
+                <span data-i18n="faq.tab.factions">Фракции</span>
+                <small>Гос / Криминал</small>
+              </span>
+            </button>
+          </aside>
 
-        <div class="faq-panel active" id="faq-prices">
-          <div class="faq-notice-box">
-            <div id="faq-category-notice">
-              <b>Низкий класс (СТОК авто БЕЗ стейджа):</b> Только ликвидные автомобили, на которые всегда есть стабильный спрос.
-            </div>
-            <div class="faq-rules-list">
-              <div class="faq-rule-item">
-                <span style="font-size: 1rem;">⚙️</span>
-                <div><b>Стейдж авто:</b> Прибавляйте +50% от стоимости стейджа к цене (Stage 1 за 700k &rarr; +350 000 ₽).</div>
+          <!-- ПРАВАЯ ЧАСТЬ — КОНТЕНТ -->
+          <div class="faq-content">
+            <div class="faq-panel active" id="faq-prices">
+              <div class="faq-notice-box">
+                <div id="faq-category-notice">
+                  <b>Низкий класс (СТОК авто БЕЗ стейджа):</b> Только ликвидные автомобили, на которые всегда есть стабильный спрос.
+                </div>
+                <div class="faq-rules-list">
+                  <div class="faq-rule-item">
+                    <span style="font-size: 1rem;">⚙️</span>
+                    <div><b>Стейдж авто:</b> Прибавляйте +50% от стоимости стейджа к цене (Stage 1 за 700k &rarr; +350 000 ₽).</div>
+                  </div>
+                  <div class="faq-rule-item">
+                    <span style="font-size: 1rem;">💡</span>
+                    <div><b>Торг:</b> Допустимо брать чуть дороже или отдавать чуть дешевле — это не скажется на доходе.</div>
+                  </div>
+                </div>
               </div>
-              <div class="faq-rule-item">
-                <span style="font-size: 1rem;">💡</span>
-                <div><b>Торг:</b> Допустимо брать чуть дороже или отдавать чуть дешевле — это не скажется на доходе.</div>
+
+              <div class="faq-search-row">
+                <div class="pill-input-wrapper faq-search-wrapper">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="faq-search-input" class="custom-fame-input" placeholder="Поиск авто (BMW, Lada, Supra)..." autocomplete="off">
+                </div>
+                <div class="faq-count-badge" id="faq-count-badge">Авто: 40</div>
+              </div>
+
+              <div class="faq-table-container">
+                <table class="faq-table">
+                  <thead>
+                    <tr>
+                      <th style="width: 38%;">Модель авто</th>
+                      <th style="width: 21%;">Покупка</th>
+                      <th style="width: 21%;">Продажа</th>
+                      <th style="width: 20%;">Профит</th>
+                    </tr>
+                  </thead>
+                  <tbody id="faq-table-body"></tbody>
+                </table>
+              </div>
+              <div style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-dim); text-align: center;">
+                💡 Кликните на строку, чтобы скопировать цены
               </div>
             </div>
-          </div>
 
-          <div class="faq-search-row">
-            <div class="pill-input-wrapper faq-search-wrapper">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="faq-search-input" class="custom-fame-input" placeholder="Поиск авто (BMW, Lada, Supra)..." autocomplete="off">
+            <div class="faq-panel" id="faq-terms">
+              <div class="faq-search-row">
+                <div class="pill-input-wrapper faq-search-wrapper">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" id="terms-search-input" class="custom-fame-input" placeholder="Поиск термина (DM, MG, PG)..." autocomplete="off">
+                </div>
+                <div class="faq-count-badge" id="terms-count-badge">Терминов: 0</div>
+              </div>
+              <div class="terms-list" id="terms-grid"></div>
             </div>
-            <div class="faq-count-badge" id="faq-count-badge">Авто: 40</div>
-          </div>
 
-          <div class="faq-table-container">
-            <table class="faq-table">
-              <thead>
-                <tr>
-                  <th style="width: 38%;">Модель авто</th>
-                  <th style="width: 21%;">Покупка</th>
-                  <th style="width: 21%;">Продажа</th>
-                  <th style="width: 20%;">Профит</th>
-                </tr>
-              </thead>
-              <tbody id="faq-table-body"></tbody>
-            </table>
-          </div>
-          <div style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-dim); text-align: center;">
-            💡 Кликните на строку, чтобы скопировать цены
-          </div>
-        </div>
-
-        <div class="faq-panel" id="faq-terms">
-          <div class="faq-search-row">
-            <div class="pill-input-wrapper faq-search-wrapper">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-              <input type="text" id="terms-search-input" class="custom-fame-input" placeholder="Поиск термина (DM, MG, PG)..." autocomplete="off">
+            <div class="faq-panel" id="faq-factions">
+              <div class="factions-container" id="factions-grid"></div>
             </div>
-            <div class="faq-count-badge" id="terms-count-badge">Терминов: 0</div>
           </div>
-          <div class="terms-list" id="terms-grid"></div>
-        </div>
-
-        <div class="faq-panel" id="faq-factions">
-          <div class="factions-container" id="factions-grid"></div>
         </div>
       </div>
     </div>
@@ -1415,7 +1441,6 @@
     const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
     const SERVERS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
 
-    /* i18n */
     const I18N = {
       ru: {
         'nav.sections': 'Разделы', 'nav.theme': 'ТЕМА:', 'nav.home': 'Главная',
@@ -1478,7 +1503,6 @@
     }
     document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang)));
 
-    /* CRMP TERMS */
     const CRMP_TERMS = [
       { abbr: 'RP', full: 'RolePlay', desc: 'Отыгрывание роли персонажа в игровом мире.' },
       { abbr: 'DM', full: 'DeathMatch', desc: 'Убийство игрока без RP-причины. Наказывается баном.' },
@@ -1506,7 +1530,6 @@
       { abbr: 'АХК', full: 'AutoHotkey', desc: 'Программа для автокликов. Запрещена на большинстве серверов.' }
     ];
 
-    /* FACTIONS */
     const FACTIONS = [
       { name: 'МВД', icon: '👮', type: 'gos', desc: 'Полиция. Патрули, рейды, штрафы, аресты преступников. Требует отыгровки.' },
       { name: 'ФСБ', icon: '🕵️', type: 'gos', desc: 'Спецслужба. Особые операции, контрразведка, слежки за ОПГ.' },
@@ -1520,7 +1543,6 @@
       { name: 'Автошкола', icon: '🚗', type: 'civil', desc: 'Обучение вождению, выдача водительских прав.' }
     ];
 
-    /* AI CHAT — одна модель для быстрого ответа */
     const FREE_MODELS = [
       "meta-llama/llama-3.3-70b-instruct:free",
       "google/gemini-2.0-flash-exp:free"
@@ -1567,7 +1589,6 @@
     if (btnSendChat) btnSendChat.addEventListener('click', sendAiMessage);
     if (chatInput) chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendAiMessage(); });
 
-    /* NAV */
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -1672,7 +1693,6 @@
       grid.innerHTML = html;
     }
 
-    /* SERVERS */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     const btnRefreshServers = document.getElementById('btn-refresh-servers');
@@ -1715,7 +1735,6 @@
     if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Обновлено!'); });
     if (!serversTimer) serversTimer = setInterval(loadServersOnline, 120000);
 
-    /* NEWS + REACTIONS */
     const newsGrid = document.getElementById('news-grid');
     const btnRefreshNews = document.getElementById('btn-refresh-news');
 
@@ -1723,9 +1742,7 @@
     const SITE_REACTIONS = ['👍', '🔥', '❤️', '😍', '😂'];
     let currentNewsPosts = [];
 
-    function saveUserReactions() {
-      localStorage.setItem('roleid_user_reactions', JSON.stringify(userReactions));
-    }
+    function saveUserReactions() { localStorage.setItem('roleid_user_reactions', JSON.stringify(userReactions)); }
 
     function toggleUserReaction(postId, emoji) {
       if (!userReactions[postId]) userReactions[postId] = {};
@@ -1746,35 +1763,24 @@
       const tgReactions = post.reactions || [];
       const userReact = userReactions[post.id] || {};
       let html = '';
-
       tgReactions.forEach(r => {
         const isActive = userReact[r.emoji] ? 'active' : '';
         const userPlus = userReact[r.emoji] ? 1 : 0;
-        html += `<button class="news-react-btn ${isActive}" data-react-post="${post.id}" data-react-emoji="${r.emoji}">
-          <span class="react-emoji">${r.emoji}</span>
-          <span class="react-count">${r.count + userPlus}</span>
-        </button>`;
+        html += `<button class="news-react-btn ${isActive}" data-react-post="${post.id}" data-react-emoji="${r.emoji}"><span class="react-emoji">${r.emoji}</span><span class="react-count">${r.count + userPlus}</span></button>`;
       });
-
       SITE_REACTIONS.forEach(emoji => {
         if (tgReactions.some(r => r.emoji === emoji)) return;
         const isActive = userReact[emoji] ? 'active' : '';
         const count = userReact[emoji] ? 1 : 0;
         if (count === 0 && !userReact[emoji]) return;
-        html += `<button class="news-react-btn ${isActive}" data-react-post="${post.id}" data-react-emoji="${emoji}">
-          <span class="react-emoji">${emoji}</span>
-          <span class="react-count">${count}</span>
-        </button>`;
+        html += `<button class="news-react-btn ${isActive}" data-react-post="${post.id}" data-react-emoji="${emoji}"><span class="react-emoji">${emoji}</span><span class="react-count">${count}</span></button>`;
       });
-
       html += `<button class="news-react-add" data-react-add="${post.id}">+</button>`;
       return html;
     }
 
     function buildPickerHTML(postId) {
-      return `<div class="news-react-picker" data-react-picker="${postId}">
-        ${SITE_REACTIONS.map(e => `<button class="news-react-pick-btn" data-react-pick-post="${postId}" data-react-pick-emoji="${e}">${e}</button>`).join('')}
-      </div>`;
+      return `<div class="news-react-picker" data-react-picker="${postId}">${SITE_REACTIONS.map(e => `<button class="news-react-pick-btn" data-react-pick-post="${postId}" data-react-pick-emoji="${e}">${e}</button>`).join('')}</div>`;
     }
 
     async function loadProjectNews() {
@@ -1790,14 +1796,9 @@
             <div class="news-card" data-post-id="${p.id}">
               ${p.photo ? `<img src="${p.photo}" class="news-img" alt="Фото" loading="lazy">` : ''}
               <div class="news-content">
-                <div class="news-meta">
-                  <span class="news-badge">ROLEID &bull; Live</span>
-                  <span>${p.date}</span>
-                </div>
+                <div class="news-meta"><span class="news-badge">ROLEID &bull; Live</span><span>${p.date}</span></div>
                 <div class="news-text">${p.text || ''}</div>
-                <div class="news-reactions" data-reactions-for="${p.id}">
-                  ${buildReactionsHTML(p)}
-                </div>
+                <div class="news-reactions" data-reactions-for="${p.id}">${buildReactionsHTML(p)}</div>
               </div>
             </div>
           `).join('');
@@ -1805,37 +1806,24 @@
           newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Новостей пока нет.</div>`;
         }
       } catch (e) {
-        console.error("Ошибка загрузки новостей:", e);
         newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Не удалось загрузить новости. Сервер временно недоступен.</div>`;
       }
     }
 
     newsGrid?.addEventListener('click', (e) => {
       const reactBtn = e.target.closest('[data-react-post]');
-      if (reactBtn) {
-        e.stopPropagation();
-        toggleUserReaction(reactBtn.dataset.reactPost, reactBtn.dataset.reactEmoji);
-        return;
-      }
+      if (reactBtn) { e.stopPropagation(); toggleUserReaction(reactBtn.dataset.reactPost, reactBtn.dataset.reactEmoji); return; }
       const addBtn = e.target.closest('[data-react-add]');
       if (addBtn) {
         e.stopPropagation();
         const postId = addBtn.dataset.reactAdd;
         const existingPicker = document.querySelector(`[data-react-picker="${postId}"]`);
         document.querySelectorAll('.news-react-picker').forEach(p => p.remove());
-        if (!existingPicker) {
-          const wrap = addBtn.parentElement;
-          wrap.insertAdjacentHTML('beforeend', buildPickerHTML(postId));
-        }
+        if (!existingPicker) addBtn.parentElement.insertAdjacentHTML('beforeend', buildPickerHTML(postId));
         return;
       }
       const pickBtn = e.target.closest('[data-react-pick-post]');
-      if (pickBtn) {
-        e.stopPropagation();
-        toggleUserReaction(pickBtn.dataset.reactPickPost, pickBtn.dataset.reactPickEmoji);
-        document.querySelectorAll('.news-react-picker').forEach(p => p.remove());
-        return;
-      }
+      if (pickBtn) { e.stopPropagation(); toggleUserReaction(pickBtn.dataset.reactPickPost, pickBtn.dataset.reactPickEmoji); document.querySelectorAll('.news-react-picker').forEach(p => p.remove()); return; }
     });
 
     document.addEventListener('click', (e) => {
@@ -1848,31 +1836,11 @@
 
     /* ТУР */
     const TOUR_STEPS = [
-      {
-        icon: '👋',
-        title: 'Добро пожаловать в ROLEID!',
-        desc: 'Твой карманный помощник для игры на Radmir RP. За минуту покажу всё, что здесь есть, и как этим пользоваться.'
-      },
-      {
-        icon: '🎮',
-        title: 'Что такое Radmir RP',
-        desc: 'Огромный ролевой мир на 16+ серверах. Работы, фракции, перекуп авто, ограбления — ты строишь собственную историю в Нижегородской области.'
-      },
-      {
-        icon: '💰',
-        title: 'Как заработать первые деньги',
-        desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.'
-      },
-      {
-        icon: '🪪',
-        title: 'Правильный ник для сервера',
-        desc: 'Ник в формате Имя_Фамилия, без цифр и мата. В разделе <b>«Ники»</b> генератор создаст одобренный ник под твою фаму. Бонус: нажми <kbd>Пробел</kbd> в разделе — получишь ещё несколько вариантов.'
-      },
-      {
-        icon: '🚀',
-        title: 'Всё нужное — под рукой',
-        desc: 'В <b>FAQ</b> собраны CRMP-термины (DM, MG, PG и ещё 20+), карточки фракций и цены. А если что-то непонятно — жми кнопку чата справа снизу, ИИ-помощник ответит.'
-      }
+      { icon: '👋', title: 'Добро пожаловать в ROLEID!', desc: 'Твой карманный помощник для игры на Radmir RP. За минуту покажу всё, что здесь есть.' },
+      { icon: '🎮', title: 'Что такое Radmir RP', desc: 'Огромный ролевой мир на 16+ серверах. Работы, фракции, перекуп авто — ты строишь собственную историю в Нижегородской области.' },
+      { icon: '💰', title: 'Как заработать первые деньги', desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.' },
+      { icon: '🪪', title: 'Правильный ник для сервера', desc: 'Ник в формате Имя_Фамилия, без цифр и мата. В разделе <b>«Ники»</b> генератор создаст одобренный ник под твою фаму. Бонус: нажми <kbd>Пробел</kbd> в разделе.' },
+      { icon: '🚀', title: 'Всё нужное — под рукой', desc: 'В <b>FAQ</b> собраны CRMP-термины, карточки фракций и цены. А если что-то непонятно — жми кнопку чата справа снизу.' }
     ];
 
     let curTour = 0;
@@ -1900,11 +1868,9 @@
     function updateTour(idx) {
       curTour = idx;
       const step = TOUR_STEPS[idx];
-
       if (tourIcon) tourIcon.innerText = step.icon;
       if (tourTitle) tourTitle.innerText = step.title;
       if (tourDesc) tourDesc.innerHTML = step.desc;
-
       if (tourCounterVal) tourCounterVal.innerText = `${idx + 1} из ${TOUR_STEPS.length}`;
       if (tourProgressFill) tourProgressFill.style.width = `${((idx + 1) / TOUR_STEPS.length) * 100}%`;
 
@@ -1933,45 +1899,19 @@
           btnTourNext.classList.remove('pulse');
         }
       }
-
       reanimateTourContent();
     }
 
-    function openTour() {
-      updateTour(0);
-      tourOverlay?.classList.add('open');
-    }
-
-    function closeTour() {
-      tourOverlay?.classList.remove('open');
-      localStorage.setItem('roleid_tour_seen', 'true');
-    }
+    function openTour() { updateTour(0); tourOverlay?.classList.add('open'); }
+    function closeTour() { tourOverlay?.classList.remove('open'); localStorage.setItem('roleid_tour_seen', 'true'); }
 
     btnTourNext?.addEventListener('click', () => {
-      if (curTour < TOUR_STEPS.length - 1) {
-        updateTour(curTour + 1);
-      } else {
-        closeTour();
-        setTimeout(() => {
-          openSidebar();
-          showToast('Приятной игры на Radmir RP! 🎮');
-        }, 350);
-      }
+      if (curTour < TOUR_STEPS.length - 1) updateTour(curTour + 1);
+      else { closeTour(); setTimeout(() => { openSidebar(); showToast('Приятной игры на Radmir RP! 🎮'); }, 350); }
     });
-
-    btnTourBack?.addEventListener('click', () => {
-      if (curTour > 0) updateTour(curTour - 1);
-    });
-
-    btnTourSkip?.addEventListener('click', () => {
-      closeTour();
-      showToast('Курс дела можно открыть в любой момент из меню');
-    });
-
-    btnSidebarTour?.addEventListener('click', () => {
-      closeSidebar();
-      setTimeout(openTour, 250);
-    });
+    btnTourBack?.addEventListener('click', () => { if (curTour > 0) updateTour(curTour - 1); });
+    btnTourSkip?.addEventListener('click', () => { closeTour(); showToast('Курс дела можно открыть в любой момент из меню'); });
+    btnSidebarTour?.addEventListener('click', () => { closeSidebar(); setTimeout(openTour, 250); });
 
     window.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem('roleid_tour_seen')) setTimeout(openTour, 900);
@@ -1989,7 +1929,6 @@
     themeDots.forEach(d => d.addEventListener('click', () => setTheme(d.dataset.theme)));
     setTheme(currentTheme);
 
-    /* FAQ CARS */
     const FAQ_CARS_DATA = {
       low: [["Ig 2712","12 000 ₽","20 000 ₽"],["Volvo 850R","70 000 ₽","90 000 ₽"],["Lada 2101","30 000 ₽","40 000 ₽"],["Lada 2107","50 000 ₽","70 000 ₽"],["Ig 27151","15 000 ₽","20 000 ₽"],["Lada 2109","70 000 ₽","85 000 ₽"],["Honda CRX","70 000 ₽","90 000 ₽"],["Volkswagen Golf 2","75 000 ₽","90 000 ₽"],["Audi 80 Avant","100 000 ₽","130 000 ₽"],["Lada 2115","90 000 ₽","100 000 ₽"],["Lada 2108","65 000 ₽","80 000 ₽"],["Daewoo Lanos","90 000 ₽","110 000 ₽"],["Lada 2106","60 000 ₽","70 000 ₽"],["Lada 2114","100 000 ₽","130 000 ₽"],["Lada 2110","60 000 ₽","80 000 ₽"],["Lada 21045","30 000 ₽","35 000 ₽"],["Lada 2105","50 000 ₽","65 000 ₽"],["Alfa Romeo 155","85 000 ₽","95 000 ₽"],["Lada 21099","80 000 ₽","90 000 ₽"],["LADA 21123 купе","110 000 ₽","130 000 ₽"],["LADA 2112","80 000 ₽","90 000 ₽"],["KIA Rio","210 000 ₽","250 000 ₽"],["Skoda Octavia A4 VRS","110 000 ₽","140 000 ₽"],["Audi A4 B5","140 000 ₽","180 000 ₽"],["Renault Logan","110 000 ₽","140 000 ₽"],["Honda Civic Si","180 000 ₽","220 000 ₽"],["BMW 323i E30","200 000 ₽","250 000 ₽"],["Lada Priora","150 000 ₽","180 000 ₽"],["Lada Vesta","240 000 ₽","280 000 ₽"],["BMW M5 E28","90 000 ₽","120 000 ₽"],["Saab 9.3 Turbo","250 000 ₽","300 000 ₽"],["Daewoo Matiz","100 000 ₽","130 000 ₽"],["ZAZ 1102 Tavria","35 000 ₽","40 000 ₽"],["GAZ 24 Волга","140 000 ₽","157 000 ₽"],["Honda Ami","100 000 ₽","112 000 ₽"],["Lada 2103","60 000 ₽","67 000 ₽"],["Lada 2113","76 000 ₽","85 000 ₽"],["Audi A4 B6 Avant","200 000 ₽","224 000 ₽"],["Lada 2102","40 000 ₽","49 000 ₽"],["Volkswagen Passat B3","80 000 ₽","110 000 ₽"]],
       med: [["BMW X5 E53","850 000 ₽","920 000 ₽"],["Mazda RX-7 Spirit R","1 040 000 ₽","1 133 600 ₽"],["Ford Raptor F150","1 820 000 ₽","1 983 800 ₽"],["BMW 540i E34","585 000 ₽","637 650 ₽"],["Mercedes E420 W210","507 000 ₽","552 630 ₽"],["BMW 540i E39","845 000 ₽","920 050 ₽"],["Toyota Supra A80","1 000 000 ₽","1 150 000 ₽"],["Subaru WRX STI","1 170 000 ₽","1 275 300 ₽"],["Nissan Skyline ER34","780 000 ₽","850 200 ₽"],["Mercedes S600 W140","900 000 ₽","1 000 000 ₽"],["Volkswagen Golf R","1 300 000 ₽","1 400 000 ₽"],["BMW M5 E60","1 950 000 ₽","2 200 000 ₽"],["BMW X6M E71","1 690 000 ₽","1 842 100 ₽"],["BMW X5M E70","1 625 000 ₽","1 771 250 ₽"],["Toyota Chaser","715 000 ₽","779 350 ₽"],["BMW 750i E38","910 000 ₽","991 900 ₽"],["Toyota Mark II 90","682 500 ₽","743 925 ₽"],["Toyota Camry V55","975 000 ₽","1 062 750 ₽"],["Mazda 3 MPS","487 500 ₽","531 375 ₽"],["Mazda MX-5","663 000 ₽","722 670 ₽"],["Nissan Silvia S15","1 040 000 ₽","1 133 600 ₽"],["Jeep Grand Cherokee","400 000 ₽","500 000 ₽"],["Toyota Camry V40","552 500 ₽","602 225 ₽"],["Subaru Impreza WRX STI","975 000 ₽","1 062 750 ₽"],["Audi S3 8V","1 365 000 ₽","1 487 850 ₽"],["Audi RS6 C5","975 000 ₽","1 062 750 ₽"],["Mercedes E55 AMG W211","2 080 000 ₽","2 267 200 ₽"],["Mercedes ML63 AMG W164","1 100 000 ₽","1 250 000 ₽"],["BMW 740 F02","1 885 000 ₽","2 055 650 ₽"],["Volvo XC90","2 047 500 ₽","2 231 775 ₽"],["Mercedes C63 W204","2 080 000 ₽","2 267 200 ₽"],["Toyota Mark II 100","780 000 ₽","850 200 ₽"],["Honda Civic TypeR FK8","1 300 000 ₽","1 417 000 ₽"],["BMW M3 E46","845 000 ₽","920 050 ₽"],["BMW 1M E82","1 235 000 ₽","1 346 150 ₽"],["Honda Civic TypeR FN2","585 000 ₽","637 650 ₽"],["Skoda Octavia VRS","1 000 000 ₽","1 200 000 ₽"],["Nissan 370Z","1 170 000 ₽","1 275 300 ₽"],["BMW M3 E92","1 625 000 ₽","1 771 250 ₽"],["Toyota LC 100","1 040 000 ₽","1 133 600 ₽"],["Land Rover Defender","3 120 000 ₽","3 400 800 ₽"],["Chevrolet Suburban","780 000 ₽","850 200 ₽"],["Mercedes E320 CDI W210","455 000 ₽","495 950 ₽"],["Mercedes GL63 AMG X166","2 470 000 ₽","2 692 300 ₽"],["Subaru Impreza WRX STI","780 000 ₽","850 200 ₽"],["Volkswagen Touareg II","1 235 000 ₽","1 346 150 ₽"],["Lexus RC-F","2 600 000 ₽","2 834 000 ₽"],["Hyundai Santa Fe","455 000 ₽","495 950 ₽"],["KIA K5","1 950 000 ₽","2 125 500 ₽"],["BMW 330D G20","2 600 000 ₽","2 834 000 ₽"],["Chevrolet Corvette C6","2 925 000 ₽","3 188 250 ₽"],["Volkswagen Passat B8","975 000 ₽","1 062 750 ₽"],["Toyota LC 200 II","2 600 000 ₽","2 834 000 ₽"],["Mercedes E63 AMG W211","2 470 000 ₽","2 692 300 ₽"],["Nissan 180SX","780 000 ₽","850 200 ₽"]],
@@ -2056,7 +1995,6 @@
       });
     }
 
-    /* NICKNAMES */
     const DB = {
       russiaMaleNames: ["Aleksandr","Dmitriy","Sergey","Andrey","Mikhail","Artem","Ivan","Daniil","Kirill","Nikita","Maxim","Vladimir","Yaroslav","Vladislav","Ilya","Matvey","Roman","Denis","Pavel","Timofey","Gleb","Bogdan","Egor","Vadim","Oleg","Anton","Igor","Vitaliy","Stanislav","Ruslan","Viktor","Timur","Alexey","Nikolay","Stepan","Yuri","Konstantin","Mark","Lev","Semyon","Arseniy","Georgiy","Vyacheslav","Valentin","Petr","Vasiliy","Eduard","Anatoliy","Boris","German","Kliment","Saveliy","Fedor","Arkadiy","Trofim","Elisey","Vsevolod","Rodion","Iosif","Emil","Kamil","Rinat","Damir","Marat","Alan","Artur","Robert","David","Makar","Yegor","Arsen","Miroslav","Savva"],
       usMaleNames: ["James","John","Robert","Michael","William","David","Richard","Thomas","Daniel","Matthew"],
@@ -2187,7 +2125,6 @@
       showToast('История очищена');
     });
 
-    /* BIO */
     const BIO_TEMPLATES = {
       gos: ["С ранних лет проявлял интерес к закону. Окончив Нижегородскую академию МВД, поступил на службу, доказав верность присяге."],
       opg: ["Столкнувшись с несправедливостью улиц, быстро понял цену верному слову и силе. Сколотив круг надежных людей, завоевал авторитет среди бригад."],
@@ -2207,7 +2144,6 @@
     document.getElementById('btn-copy-unique-bb')?.addEventListener('click', () => { if (genBio) { copyText(genBio); showToast('BB-код скопирован!'); } });
     document.getElementById('btn-copy-unique-plain')?.addEventListener('click', () => { if (genBio) { copyText(genBio.replace(/\[\/?b\]/g, '')); showToast('Текст скопирован!'); } });
 
-    /* RANDOM */
     let isRollingNumber = false;
     document.getElementById('btn-roll-number')?.addEventListener('click', () => {
       if (isRollingNumber) return;
@@ -2242,7 +2178,6 @@
       }, intervalTime);
     });
 
-    /* WHEEL */
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas?.getContext('2d');
     let wheelAngle = 0;
@@ -2310,7 +2245,6 @@
       requestAnimationFrame(animateWheel);
     });
 
-    /* UTILS */
     const toast = document.getElementById('toast'), toastMsg = document.getElementById('toast-msg');
     function showToast(txt) { if (!toast || !toastMsg) return; toastMsg.innerText = txt; toast.classList.add('active'); setTimeout(() => toast.classList.remove('active'), 1800); }
     function copyText(str) { navigator.clipboard.writeText(str).then(() => showToast('Скопировано!')); }
@@ -2322,7 +2256,6 @@
     });
     document.getElementById('btn-close-qr')?.addEventListener('click', () => document.getElementById('qr-modal')?.classList.remove('open'));
 
-    /* KEYBOARD */
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
         const tag = document.activeElement?.tagName;
@@ -2337,7 +2270,6 @@
       }
     });
 
-    /* INIT */
     applyLang(currentLang);
     renderHistory();
     renderFaqTable();
