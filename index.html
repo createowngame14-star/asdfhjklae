@@ -83,7 +83,104 @@
     @keyframes floatGlow1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(80px,60px) scale(1.15); } }
     @keyframes floatGlow2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-80px,-60px) scale(1.2); } }
 
-    body:has(#tab-hub.active) footer { display: none; }
+    /* ============================
+       СКЕЛЕТОНЫ (SHIMMER ЗАГЛУШКИ)
+    ============================ */
+    .skeleton {
+      background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.6s ease-in-out infinite;
+      border-radius: 6px;
+      display: block;
+    }
+    @keyframes skeletonShimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+    .skeleton-line { height: 12px; margin-bottom: 8px; }
+    .skeleton-line.w60 { width: 60%; }
+    .skeleton-line.w40 { width: 40%; }
+    .skeleton-line.w80 { width: 80%; }
+    .skeleton-line.w30 { width: 30%; }
+    .skeleton-line.w50 { width: 50%; }
+
+    .skeleton-server-card {
+      background: #12141c; border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 1.2rem 1.4rem; display: flex; flex-direction: column; gap: 0.85rem;
+    }
+    .skeleton-server-top { display: flex; justify-content: space-between; align-items: center; }
+    .skeleton-bar {
+      height: 6px; width: 100%; border-radius: 9999px;
+      background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.6s ease-in-out infinite;
+    }
+
+    .skeleton-news-card {
+      background: #12141c; border: 1px solid var(--card-border); border-radius: 20px;
+      padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem;
+    }
+    .skeleton-news-img {
+      width: 100%; height: 220px; border-radius: 14px;
+      background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.6s ease-in-out infinite;
+      margin-bottom: 0.6rem;
+    }
+
+    .skeleton-term-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.85rem 1rem;
+    }
+    .skeleton-term-abbr {
+      width: 52px; height: 22px; border-radius: 6px; flex-shrink: 0;
+      background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
+      background-size: 200% 100%;
+      animation: skeletonShimmer 1.6s ease-in-out infinite;
+    }
+
+    /* ============================
+       ЦВЕТОВОЙ ИНДИКАТОР НАГРУЗКИ
+    ============================ */
+    .server-progress-fill.low { background: linear-gradient(90deg, #10b981, #34d399) !important; }
+    .server-progress-fill.mid { background: linear-gradient(90deg, #f59e0b, #fbbf24) !important; }
+    .server-progress-fill.high { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
+    .server-status-dot.low { background: #10b981 !important; box-shadow: 0 0 8px #10b981 !important; }
+    .server-status-dot.mid { background: #f59e0b !important; box-shadow: 0 0 8px #f59e0b !important; }
+    .server-status-dot.high { background: #ef4444 !important; box-shadow: 0 0 8px #ef4444 !important; }
+    .server-load-percent.low { color: #34d399 !important; }
+    .server-load-percent.mid { color: #fbbf24 !important; }
+    .server-load-percent.high { color: #f87171 !important; }
+
+    /* ============================
+       BADGE НА ИКОНКЕ НОВОСТЕЙ
+    ============================ */
+    .sidebar-nav-item { position: relative; }
+    .sidebar-badge {
+      position: absolute;
+      right: 0.7rem;
+      top: 50%;
+      transform: translateY(-50%);
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #ef4444, #f59e0b);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.5);
+      animation: badgePulse 2s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .sidebar-badge.visible { display: inline-flex; }
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); }
+      50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.9); }
+    }
 
     /* БОКОВОЕ МЕНЮ */
     .sidebar-backdrop {
@@ -325,7 +422,7 @@
     .server-name { font-weight: 800; color: #fff; font-size: 1.05rem; }
     .server-status-dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981; }
     .server-progress-bg { width: 100%; height: 6px; background: rgba(255,255,255,0.06); border-radius: 9999px; overflow: hidden; }
-    .server-progress-fill { height: 100%; background: var(--accent-flow); border-radius: 9999px; transition: width 0.5s ease; }
+    .server-progress-fill { height: 100%; background: var(--accent-flow); border-radius: 9999px; transition: width 0.5s ease, background 0.3s ease; }
     .server-card-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: var(--text-muted); }
 
     /* НОВОСТИ */
@@ -337,6 +434,18 @@
     .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
     .news-badge { font-size: 0.76rem; font-weight: 700; color: var(--accent-highlight); background: rgba(192,132,252,0.1); border: 1px solid rgba(192,132,252,0.25); padding: 0.25rem 0.65rem; border-radius: 8px; }
     .news-text { font-size: 0.95rem; color: #f1f5f9; line-height: 1.7; white-space: pre-line; word-break: break-word; }
+    .news-cache-note {
+      display: none;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      text-align: center;
+      padding: 0.6rem;
+      margin-bottom: 1rem;
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px solid rgba(245, 158, 11, 0.2);
+      border-radius: 10px;
+    }
+    .news-cache-note.visible { display: block; }
 
     .news-reactions {
       display: flex; flex-wrap: wrap; gap: 0.4rem;
@@ -582,9 +691,7 @@
       50% { box-shadow: 0 12px 35px rgba(192,132,252,0.6), 0 0 0 6px rgba(192,132,252,0.1); }
     }
 
-    /* ============================================================
-       FAQ — ВЕРТИКАЛЬНЫЙ САЙДБАР + КОНТЕНТ СПРАВА
-    ============================================================ */
+    /* FAQ */
     .faq-section-header { margin-bottom: 1.75rem; }
     .faq-section-header h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
     .faq-section-header p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
@@ -626,10 +733,7 @@
       position: relative;
       width: 100%;
     }
-    .faq-subnav-btn:hover {
-      background: rgba(255,255,255,0.04);
-      color: #fff;
-    }
+    .faq-subnav-btn:hover { background: rgba(255,255,255,0.04); color: #fff; }
     .faq-subnav-btn.active {
       background: rgba(192,132,252,0.1);
       color: #fff;
@@ -747,9 +851,7 @@
     }
 
     /* ТЕРМИНЫ */
-    .terms-list {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem;
-    }
+    .terms-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem; }
     .term-row {
       display: flex; align-items: flex-start; gap: 1rem;
       padding: 0.85rem 1rem; background: transparent; border-radius: 10px;
@@ -773,9 +875,7 @@
       font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
       letter-spacing: 0.12em; color: var(--text-dim); margin-bottom: 0.9rem;
     }
-    .factions-group-title::before {
-      content: ""; display: block; width: 3px; height: 13px; border-radius: 2px;
-    }
+    .factions-group-title::before { content: ""; display: block; width: 3px; height: 13px; border-radius: 2px; }
     .factions-group-title.gos::before { background: linear-gradient(180deg, #38bdf8, #6366f1); }
     .factions-group-title.crime::before { background: linear-gradient(180deg, #f87171, #b91c1c); }
     .factions-group-title.civil::before { background: linear-gradient(180deg, #34d399, #06b6d4); }
@@ -920,13 +1020,7 @@
       .bio-editor-grid { grid-template-columns: 1fr; }
       .faq-rules-list { grid-template-columns: 1fr; }
       .faq-layout { grid-template-columns: 1fr; gap: 1rem; }
-      .faq-subnav {
-        position: static;
-        flex-direction: row;
-        overflow-x: auto;
-        scrollbar-width: none;
-        padding: 0.4rem;
-      }
+      .faq-subnav { position: static; flex-direction: row; overflow-x: auto; scrollbar-width: none; padding: 0.4rem; }
       .faq-subnav::-webkit-scrollbar { display: none; }
       .faq-subnav-btn { flex-shrink: 0; padding: 0.6rem 0.8rem; }
       .faq-subnav-btn.active::before { display: none; }
@@ -975,6 +1069,7 @@
       <button class="sidebar-nav-item" data-tab="tab-news">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
         <span data-i18n="nav.news">Новости и обновления</span>
+        <span class="sidebar-badge" id="news-badge"></span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-names">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
@@ -1130,7 +1225,72 @@
           </div>
         </div>
         <div class="servers-grid" id="servers-grid">
-          <div style="grid-column: 1/-1; text-align:center; padding:3rem; color:var(--text-dim);">...</div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
+          <div class="skeleton-server-card">
+            <div class="skeleton-server-top">
+              <span class="skeleton skeleton-line w60" style="height: 16px; width: 55%;"></span>
+              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+            </div>
+            <div class="skeleton-bar"></div>
+            <div style="display: flex; justify-content: space-between;">
+              <span class="skeleton skeleton-line w40" style="margin: 0;"></span>
+              <span class="skeleton skeleton-line w20" style="margin: 0; width: 40px;"></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1152,8 +1312,22 @@
             </button>
           </div>
         </div>
+        <div class="news-cache-note" id="news-cache-note">
+          📴 Показаны сохранённые новости — сервер временно недоступен
+        </div>
         <div class="news-feed-list" id="news-grid">
-          <div style="text-align:center; padding:3rem; color:var(--text-dim);">...</div>
+          <div class="skeleton-news-card">
+            <div class="skeleton-news-img"></div>
+            <div class="skeleton skeleton-line w80"></div>
+            <div class="skeleton skeleton-line w60"></div>
+            <div class="skeleton skeleton-line w40"></div>
+          </div>
+          <div class="skeleton-news-card">
+            <div class="skeleton skeleton-line w30"></div>
+            <div class="skeleton skeleton-line w80"></div>
+            <div class="skeleton skeleton-line w60"></div>
+            <div class="skeleton skeleton-line w50"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -1168,7 +1342,6 @@
         </div>
 
         <div class="faq-layout">
-          <!-- ЛЕВЫЙ САЙДБАР — чтобы добавить новый раздел, просто скопируй кнопку и создай панель с тем же data-panel -->
           <aside class="faq-subnav">
             <button class="faq-subnav-btn active" data-panel="faq-prices">
               <span class="faq-subnav-icon">💰</span>
@@ -1193,7 +1366,6 @@
             </button>
           </aside>
 
-          <!-- ПРАВАЯ ЧАСТЬ — КОНТЕНТ -->
           <div class="faq-content">
             <div class="faq-panel active" id="faq-prices">
               <div class="faq-notice-box">
@@ -1611,7 +1783,7 @@
       if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
       if (tabId === 'tab-wheel') drawWheel();
       if (tabId === 'tab-faq') { renderFaqTable(); renderTerms(); renderFactions(); }
-      if (tabId === 'tab-news') loadProjectNews();
+      if (tabId === 'tab-news') { loadProjectNews(); markNewsAsSeen(); }
       if (tabId === 'tab-servers') loadServersOnline();
       closeSidebar();
     }
@@ -1693,14 +1865,43 @@
       grid.innerHTML = html;
     }
 
+    /* ============================================================
+       СЕРВЕРЫ — с скелетонами и цветовым индикатором
+    ============================================================ */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     const btnRefreshServers = document.getElementById('btn-refresh-servers');
     let serversTimer = null;
 
+    function getServersSkeletonHTML(count = 6) {
+      const card = `
+        <div class="skeleton-server-card">
+          <div class="skeleton-server-top">
+            <span class="skeleton" style="width: 55%; height: 16px;"></span>
+            <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
+          </div>
+          <div class="skeleton-bar"></div>
+          <div style="display: flex; justify-content: space-between;">
+            <span class="skeleton" style="width: 40%; height: 12px;"></span>
+            <span class="skeleton" style="width: 40px; height: 12px;"></span>
+          </div>
+        </div>`;
+      return card.repeat(count);
+    }
+
+    function getLoadClass(percent) {
+      if (percent >= 80) return 'high';
+      if (percent >= 50) return 'mid';
+      return 'low';
+    }
+
     async function loadServersOnline() {
       if (!serversGrid) return;
-      serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Опрос серверов...</div>`;
+      // Показываем скелетоны при первой загрузке (если контент ещё пуст или placeholder)
+      if (!serversGrid.querySelector('.server-card')) {
+        serversGrid.innerHTML = getServersSkeletonHTML();
+      }
+
       try {
         const res = await fetch(SERVERS_API_ENDPOINT);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -1712,37 +1913,105 @@
           serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Не удалось получить данные онлайна.</div>`;
         }
       } catch (err) {
-        serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Ошибка запроса к мониторингу.</div>`;
+        if (!serversGrid.querySelector('.server-card')) {
+          serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Ошибка запроса к мониторингу.</div>`;
+        }
       }
     }
+
     function renderServers(servers) {
       if (!serversGrid) return;
       servers.sort((a, b) => a.online - b.online);
-      serversGrid.innerHTML = servers.map(s => `
+      serversGrid.innerHTML = servers.map(s => {
+        const cls = getLoadClass(s.percent);
+        return `
         <div class="server-card">
           <div class="server-card-top">
             <span class="server-name">${s.name}</span>
-            <div class="server-status-dot"></div>
+            <div class="server-status-dot ${cls}" title="Загрузка: ${s.percent}%"></div>
           </div>
-          <div class="server-progress-bg"><div class="server-progress-fill" style="width: ${s.percent}%;"></div></div>
+          <div class="server-progress-bg"><div class="server-progress-fill ${cls}" style="width: ${s.percent}%;"></div></div>
           <div class="server-card-bottom">
             <span>Онлайн: <b>${s.online}</b> / ${s.max}</span>
-            <span style="font-family:ui-monospace,monospace; color:var(--accent-highlight)">${s.percent}%</span>
+            <span class="server-load-percent ${cls}" style="font-family:ui-monospace,monospace;">${s.percent}%</span>
           </div>
-        </div>
-      `).join('');
+        </div>`;
+      }).join('');
     }
     if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Обновлено!'); });
     if (!serversTimer) serversTimer = setInterval(loadServersOnline, 120000);
 
+    /* ============================================================
+       НОВОСТИ — с кэшем, badge и скелетонами
+    ============================================================ */
     const newsGrid = document.getElementById('news-grid');
     const btnRefreshNews = document.getElementById('btn-refresh-news');
+    const newsCacheNote = document.getElementById('news-cache-note');
+    const newsBadge = document.getElementById('news-badge');
 
     let userReactions = JSON.parse(localStorage.getItem('roleid_user_reactions') || '{}');
     const SITE_REACTIONS = ['👍', '🔥', '❤️', '😍', '😂'];
     let currentNewsPosts = [];
 
     function saveUserReactions() { localStorage.setItem('roleid_user_reactions', JSON.stringify(userReactions)); }
+
+    // Кэш новостей
+    function saveNewsCache(posts) {
+      try {
+        localStorage.setItem('roleid_news_cache', JSON.stringify({
+          posts: posts,
+          ts: Date.now()
+        }));
+      } catch (e) {}
+    }
+    function loadNewsCache() {
+      try {
+        const raw = localStorage.getItem('roleid_news_cache');
+        if (!raw) return null;
+        const data = JSON.parse(raw);
+        return (data && Array.isArray(data.posts)) ? data : null;
+      } catch (e) { return null; }
+    }
+
+    // Badge
+    function updateNewsBadge(posts) {
+      if (!newsBadge || !posts || !posts.length) return;
+      const lastSeen = localStorage.getItem('roleid_news_last_seen') || '';
+      let newCount = 0;
+      for (const p of posts) {
+        if (p.id === lastSeen) break;
+        newCount++;
+      }
+      if (newCount > 0) {
+        newsBadge.textContent = newCount > 9 ? '9+' : newCount;
+        newsBadge.classList.add('visible');
+      } else {
+        newsBadge.classList.remove('visible');
+      }
+    }
+
+    function markNewsAsSeen() {
+      if (currentNewsPosts.length) {
+        localStorage.setItem('roleid_news_last_seen', currentNewsPosts[0].id);
+        if (newsBadge) newsBadge.classList.remove('visible');
+      }
+    }
+
+    // Скелетоны для новостей
+    function getNewsSkeletonHTML(count = 2) {
+      let html = '';
+      for (let i = 0; i < count; i++) {
+        html += `
+          <div class="skeleton-news-card">
+            ${i === 0 ? '<div class="skeleton-news-img"></div>' : ''}
+            <div class="skeleton skeleton-line w30"></div>
+            <div class="skeleton skeleton-line w80"></div>
+            <div class="skeleton skeleton-line w60"></div>
+            <div class="skeleton skeleton-line w50"></div>
+          </div>`;
+      }
+      return html;
+    }
 
     function toggleUserReaction(postId, emoji) {
       if (!userReactions[postId]) userReactions[postId] = {};
@@ -1783,30 +2052,53 @@
       return `<div class="news-react-picker" data-react-picker="${postId}">${SITE_REACTIONS.map(e => `<button class="news-react-pick-btn" data-react-pick-post="${postId}" data-react-pick-emoji="${e}">${e}</button>`).join('')}</div>`;
     }
 
-    async function loadProjectNews() {
+    function renderNewsPosts(posts) {
       if (!newsGrid) return;
-      newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Загрузка ленты...</div>`;
+      newsGrid.innerHTML = posts.map(p => `
+        <div class="news-card" data-post-id="${p.id}">
+          ${p.photo ? `<img src="${p.photo}" class="news-img" alt="Фото" loading="lazy" onerror="this.style.display='none'">` : ''}
+          <div class="news-content">
+            <div class="news-meta"><span class="news-badge">ROLEID &bull; Live</span><span>${p.date}</span></div>
+            <div class="news-text">${p.text || ''}</div>
+            <div class="news-reactions" data-reactions-for="${p.id}">${buildReactionsHTML(p)}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function loadProjectNews(silent = false) {
+      if (!newsGrid) return;
+      // Скелетон — только если лента пуста или перезагружаем вручную
+      if (!silent && !newsGrid.querySelector('.news-card')) {
+        newsGrid.innerHTML = getNewsSkeletonHTML(2);
+      }
+      if (newsCacheNote) newsCacheNote.classList.remove('visible');
+
       try {
         const res = await fetch(NEWS_API_ENDPOINT);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (data && data.posts && data.posts.length > 0) {
           currentNewsPosts = data.posts;
-          newsGrid.innerHTML = data.posts.map(p => `
-            <div class="news-card" data-post-id="${p.id}">
-              ${p.photo ? `<img src="${p.photo}" class="news-img" alt="Фото" loading="lazy">` : ''}
-              <div class="news-content">
-                <div class="news-meta"><span class="news-badge">ROLEID &bull; Live</span><span>${p.date}</span></div>
-                <div class="news-text">${p.text || ''}</div>
-                <div class="news-reactions" data-reactions-for="${p.id}">${buildReactionsHTML(p)}</div>
-              </div>
-            </div>
-          `).join('');
+          saveNewsCache(data.posts);
+          renderNewsPosts(data.posts);
+          updateNewsBadge(data.posts);
         } else {
-          newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Новостей пока нет.</div>`;
+          throw new Error('Пустой ответ');
         }
       } catch (e) {
-        newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Не удалось загрузить новости. Сервер временно недоступен.</div>`;
+        // Пытаемся показать кэш
+        const cached = loadNewsCache();
+        if (cached && cached.posts.length > 0) {
+          currentNewsPosts = cached.posts;
+          renderNewsPosts(cached.posts);
+          updateNewsBadge(cached.posts);
+          if (newsCacheNote) newsCacheNote.classList.add('visible');
+        } else {
+          if (!newsGrid.querySelector('.news-card')) {
+            newsGrid.innerHTML = `<div style="text-align:center; padding:3rem; color:var(--text-dim);">Не удалось загрузить новости. Сервер временно недоступен.</div>`;
+          }
+        }
       }
     }
 
@@ -1832,7 +2124,7 @@
       }
     });
 
-    btnRefreshNews?.addEventListener('click', () => { loadProjectNews(); showToast('Лента обновлена!'); });
+    btnRefreshNews?.addEventListener('click', () => { loadProjectNews(false); showToast('Лента обновлена!'); });
 
     /* ТУР */
     const TOUR_STEPS = [
@@ -2270,13 +2562,16 @@
       }
     });
 
+    /* INIT */
     applyLang(currentLang);
     renderHistory();
     renderFaqTable();
     renderTerms();
     renderFactions();
-    loadServersOnline();
     generate();
+    // Загружаем новости сразу при старте (для badge)
+    loadProjectNews(true);
+    loadServersOnline();
   </script>
 </body>
 </html>
