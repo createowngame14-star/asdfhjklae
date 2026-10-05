@@ -24,10 +24,8 @@
       --text-main: #f8fafc;
       --text-muted: #94a3b8;
       --text-dim: #64748b;
-
       --accent-flow: linear-gradient(135deg, #6366f1, #d946ef, #06b6d4);
       --accent-highlight: #c084fc;
-
       --bg-glow-1: rgba(99, 102, 241, 0.18);
       --bg-glow-2: rgba(217, 70, 239, 0.08);
     }
@@ -62,38 +60,21 @@
       background-color: var(--bg-dark);
       color: var(--text-main);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      overflow-x: hidden;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
+      min-height: 100vh; display: flex; flex-direction: column;
+      position: relative; overflow-x: hidden;
+      text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased;
     }
 
-    /* ФОН */
-    .bg-ambient {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
+    .bg-ambient { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
     .bg-ambient::before {
-      content: "";
-      position: absolute;
-      top: -30%; left: -20%;
-      width: 80vw; height: 80vw;
+      content: ""; position: absolute; top: -30%; left: -20%; width: 80vw; height: 80vw;
       max-width: 1100px; max-height: 1100px;
       background: radial-gradient(circle, var(--bg-glow-1) 0%, transparent 65%);
       border-radius: 50%; filter: blur(60px);
       animation: floatGlow1 18s ease-in-out infinite alternate;
     }
     .bg-ambient::after {
-      content: "";
-      position: absolute;
-      bottom: -30%; right: -20%;
-      width: 80vw; height: 80vw;
+      content: ""; position: absolute; bottom: -30%; right: -20%; width: 80vw; height: 80vw;
       max-width: 1100px; max-height: 1100px;
       background: radial-gradient(circle, var(--bg-glow-2) 0%, transparent 65%);
       border-radius: 50%; filter: blur(60px);
@@ -156,10 +137,7 @@
     .theme-dot.emerald { background: linear-gradient(135deg, #10b981, #06b6d4); }
     .theme-dot.ice { background: linear-gradient(135deg, #38bdf8, #1e40af); }
 
-    .lang-switch {
-      display: inline-flex; align-items: center; background: #0f1118; border: 1px solid var(--card-border);
-      border-radius: 9999px; padding: 0.25rem; gap: 0.15rem;
-    }
+    .lang-switch { display: inline-flex; align-items: center; background: #0f1118; border: 1px solid var(--card-border); border-radius: 9999px; padding: 0.25rem; gap: 0.15rem; }
     .lang-btn {
       background: transparent; border: none; color: var(--text-dim); font-family: inherit;
       font-size: 0.75rem; font-weight: 700; cursor: pointer; padding: 0.3rem 0.65rem; border-radius: 9999px;
@@ -181,20 +159,13 @@
 
     /* ГЛАВНЫЙ ЭКРАН (SPLIT) */
     .hero-split {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 4rem;
-      padding: 3rem 0;
+      flex: 1; display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 4rem; padding: 3rem 0;
       min-height: calc(100vh - 200px);
     }
 
     .hero-left {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
+      display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem;
     }
 
     .top-badge {
@@ -204,20 +175,23 @@
     }
     .top-badge span.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 10px #10b981; }
 
+    /* ИСПРАВЛЕННЫЙ ЛОГОТИП — без обрезки буквы D */
     .hero-title {
       font-size: clamp(4rem, 9vw, 8rem);
       font-weight: 800;
-      letter-spacing: -0.06em;
-      line-height: 0.95;
+      line-height: 1;
       text-transform: uppercase;
       margin: 0;
-      display: flex;
+      padding: 0.05em 0.08em 0.08em 0;
+      display: inline-block;
+      letter-spacing: -0.045em;
     }
     .hero-title span {
       display: inline-block;
       opacity: 0;
       transform: translateY(60px) rotate(-8deg);
       animation: letterDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      will-change: transform, opacity;
     }
     .hero-title span:nth-child(1) { animation-delay: 0.05s; }
     .hero-title span:nth-child(2) { animation-delay: 0.12s; }
@@ -232,109 +206,67 @@
     }
 
     .gradient-text-pure { background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .gradient-text-flow { background: var(--accent-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% 200%; animation: gradientShine 4s ease infinite, letterDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    .gradient-text-flow {
+      background: var(--accent-flow);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-size: 200% 200%;
+      animation: gradientShine 4s ease infinite, letterDrop 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
     @keyframes gradientShine { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
     .hero-subtitle {
-      color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      max-width: 480px;
-      opacity: 0;
-      animation: fadeInUp 0.7s ease-out 0.6s forwards;
+      color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; max-width: 480px;
+      opacity: 0; animation: fadeInUp 0.7s ease-out 0.6s forwards;
     }
 
     .hero-open-menu {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 1rem 1.9rem;
-      background: var(--accent-flow);
-      background-size: 200% 200%;
+      display: inline-flex; align-items: center; gap: 0.75rem; padding: 1rem 1.9rem;
+      background: var(--accent-flow); background-size: 200% 200%;
       animation: gradientShine 5s ease infinite, fadeInUp 0.7s ease-out 0.8s forwards;
-      border: none;
-      border-radius: 9999px;
-      color: #fff;
-      font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
+      border: none; border-radius: 9999px; color: #fff; font-family: inherit;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
       transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease;
-      box-shadow: 0 10px 30px rgba(99,102,241,0.3);
-      opacity: 0;
+      box-shadow: 0 10px 30px rgba(99,102,241,0.3); opacity: 0;
     }
-    .hero-open-menu:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 18px 45px rgba(99,102,241,0.45);
-    }
-    .hero-open-menu .menu-arrow {
-      font-weight: 800;
-      transition: transform 0.25s ease;
-    }
+    .hero-open-menu:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 18px 45px rgba(99,102,241,0.45); }
+    .hero-open-menu .menu-arrow { font-weight: 800; transition: transform 0.25s ease; }
     .hero-open-menu:hover .menu-arrow { transform: translateX(4px); }
 
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(24px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    /* ПРАВАЯ ЧАСТЬ — ПЛАВАЮЩИЕ КАРТОЧКИ */
-    .hero-visual {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      min-height: 540px;
-    }
-
+    /* ПЛАВАЮЩИЕ КАРТОЧКИ */
+    .hero-visual { position: relative; width: 100%; height: 100%; min-height: 540px; }
     .visual-card {
-      position: absolute;
-      width: 130px;
-      height: 130px;
-      background: #0f1118;
-      border: 1px solid var(--card-border);
-      border-radius: 26px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      padding: 1rem;
-      box-shadow: 0 20px 45px rgba(0,0,0,0.4);
-      animation: floatCard 7s ease-in-out infinite;
-      opacity: 0;
-      backdrop-filter: blur(10px);
+      position: absolute; width: 130px; height: 130px;
+      background: #0f1118; border: 1px solid var(--card-border); border-radius: 26px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.55rem;
+      padding: 1rem; box-shadow: 0 20px 45px rgba(0,0,0,0.4);
+      backdrop-filter: blur(10px); cursor: pointer;
+      animation: cardReveal 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards, floatCard 7s ease-in-out infinite;
     }
     .visual-card .vc-icon { font-size: 1.9rem; line-height: 1; }
     .visual-card .vc-label {
       font-size: 0.7rem; font-weight: 700; color: var(--text-muted);
       text-transform: uppercase; letter-spacing: 0.06em; text-align: center;
     }
-
-    .visual-card:nth-child(1) { top: 2%; left: 8%;  animation-delay: 0s, 0.4s; }
+    .visual-card:hover {
+      border-color: var(--card-hover-border); transform: translateY(-6px) scale(1.05);
+      box-shadow: 0 25px 55px rgba(0,0,0,0.5), 0 0 30px rgba(192,132,252,0.2);
+    }
+    .visual-card:nth-child(1) { top: 2%; left: 8%; animation-delay: 0s, 0.4s; }
     .visual-card:nth-child(2) { top: 38%; left: -2%; animation-delay: 1.4s, 0.55s; }
     .visual-card:nth-child(3) { top: 74%; left: 12%; animation-delay: 2.6s, 0.7s; }
-    .visual-card:nth-child(4) { top: 8%; right: 12%;  animation-delay: 0.8s, 0.5s; }
+    .visual-card:nth-child(4) { top: 8%; right: 12%; animation-delay: 0.8s, 0.5s; }
     .visual-card:nth-child(5) { top: 44%; right: -4%; animation-delay: 2s, 0.65s; }
     .visual-card:nth-child(6) { top: 78%; right: 18%; animation-delay: 3.2s, 0.8s; }
 
-    @keyframes floatCard {
-      0%, 100% { transform: translateY(0) rotate(0); }
-      50% { transform: translateY(-14px) rotate(-1.5deg); }
-    }
-
-    @keyframes cardReveal {
-      0% { opacity: 0; transform: scale(0.7) translateY(30px); }
-      100% { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .visual-card {
-      animation: cardReveal 0.6s cubic-bezier(0.34,1.56,0.64,1) forwards, floatCard 7s ease-in-out infinite;
-    }
+    @keyframes floatCard { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(-1.5deg); } }
+    @keyframes cardReveal { 0% { opacity: 0; transform: scale(0.7) translateY(30px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
     .back-to-hub-btn {
       display: inline-flex; align-items: center; gap: 0.5rem; background: transparent; border: 1px solid var(--card-border);
       border-radius: 10px; color: var(--text-muted); padding: 0.4rem 0.85rem; font-size: 0.82rem; font-weight: 600;
-      cursor: pointer; margin-bottom: 1.2rem; transition: all 0.15s ease;
+      cursor: pointer; margin-bottom: 1.5rem; transition: all 0.15s ease;
     }
     .back-to-hub-btn:hover { color: #fff; border-color: rgba(255,255,255,0.25); background: #141720; }
 
@@ -356,7 +288,7 @@
     /* НОВОСТИ */
     .news-header-box { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem; }
     .news-feed-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 780px; margin: 0 auto; }
-    .news-card { background: #12141c; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .news-card { background: #12141c; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
     .news-img { width: 100%; max-height: 440px; object-fit: cover; background: #181c27; display: block; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .news-content { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.9rem; }
     .news-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: var(--text-dim); }
@@ -390,87 +322,190 @@
     .btn-tour-skip { background: transparent; border: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 600; cursor: pointer; padding: 0.6rem 0.9rem; }
     .btn-tour-skip:hover { color: #fff; }
 
-    /* FAQ / БАЗА ЗНАНИЙ */
-    .faq-subnav { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.65rem; margin-bottom: 1.2rem; }
-    .faq-subnav-btn {
-      background: #141720; border: 1px solid var(--card-border); border-radius: 12px; color: var(--text-muted);
-      padding: 0.85rem 0.9rem; font-size: 0.88rem; font-weight: 700; cursor: pointer; display: flex;
-      align-items: center; justify-content: center; gap: 0.5rem; transition: all 0.18s ease; text-align: center;
+    /* ============================================================
+       FAQ / БАЗА ЗНАНИЙ (ОБНОВЛЕНО)
+    ============================================================ */
+    .faq-section-header { margin-bottom: 1.75rem; }
+    .faq-section-header h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
+    .faq-section-header p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
+
+    /* Сегментированный переключатель подпанелей */
+    .faq-subnav {
+      display: flex;
+      gap: 0.3rem;
+      padding: 0.35rem;
+      background: #0a0c12;
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      margin-bottom: 2rem;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
-    .faq-subnav-btn:hover { background: #181c27; color: #fff; border-color: rgba(255,255,255,0.2); }
-    .faq-subnav-btn.active { background: rgba(192,132,252,0.14); border-color: var(--accent-highlight); color: #fff; box-shadow: 0 4px 15px rgba(192,132,252,0.18); }
+    .faq-subnav::-webkit-scrollbar { display: none; }
+    .faq-subnav-btn {
+      flex: 1;
+      min-width: 150px;
+      padding: 0.7rem 1rem;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.86rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+    .faq-subnav-btn:hover { color: #fff; background: rgba(255,255,255,0.03); }
+    .faq-subnav-btn.active {
+      background: rgba(192, 132, 252, 0.12);
+      color: #fff;
+      box-shadow: inset 0 0 0 1px var(--accent-highlight);
+    }
 
     .faq-panel { display: none; animation: cardEntrance 0.28s ease both; }
     .faq-panel.active { display: block; }
 
-    .faq-notice-box { background: rgba(192,132,252,0.05); border: 1px solid rgba(192,132,252,0.2); border-radius: 14px; padding: 1.05rem 1.25rem; margin-bottom: 1.2rem; font-size: 0.85rem; line-height: 1.6; color: var(--text-muted); }
-    .faq-rules-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.85rem; }
-    .faq-rule-item { background: #141720; border: 1px solid var(--card-border); border-radius: 10px; padding: 0.6rem 0.8rem; font-size: 0.8rem; display: flex; align-items: flex-start; gap: 0.55rem; }
-    .faq-search-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .faq-search-wrapper { flex: 1; min-width: 250px; }
-    .faq-count-badge { font-size: 0.82rem; font-weight: 700; color: var(--text-dim); background: #141720; border: 1px solid var(--card-border); padding: 0.65rem 0.95rem; border-radius: 12px; white-space: nowrap; }
+    /* Общее для панелей */
+    .faq-notice-box {
+      background: rgba(192,132,252,0.04);
+      border: 1px solid rgba(192,132,252,0.15);
+      border-radius: 14px;
+      padding: 1.1rem 1.3rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.86rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .faq-rules-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 1rem; }
+    .faq-rule-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 0.7rem 0.9rem;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      line-height: 1.5;
+    }
 
-    .faq-table-container { width: 100%; overflow-x: auto; border-radius: 14px; border: 1px solid var(--card-border); background: #0f1118; max-height: 580px; overflow-y: auto; }
+    .faq-search-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+    .faq-search-wrapper { flex: 1; min-width: 250px; }
+    .faq-count-badge {
+      font-size: 0.78rem; font-weight: 700; color: var(--text-dim);
+      background: #0f1117; border: 1px solid var(--card-border);
+      padding: 0.6rem 0.9rem; border-radius: 10px; white-space: nowrap;
+    }
+
+    /* Таблица цен */
+    .faq-table-container {
+      width: 100%; overflow-x: auto; border-radius: 14px;
+      border: 1px solid var(--card-border); background: #0b0d12;
+      max-height: 580px; overflow-y: auto;
+    }
     .faq-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; min-width: 580px; }
-    .faq-table thead { position: sticky; top: 0; background: #141720; z-index: 5; }
-    .faq-table th { padding: 0.85rem 1rem; font-weight: 700; color: var(--text-muted); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--card-border); }
-    .faq-table td { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: #e2e8f0; font-weight: 500; }
+    .faq-table thead { position: sticky; top: 0; background: #111420; z-index: 5; }
+    .faq-table th {
+      padding: 0.9rem 1.1rem; font-weight: 700; color: var(--text-dim);
+      font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .faq-table td { padding: 0.85rem 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.03); color: #e2e8f0; font-weight: 500; }
     .faq-table tbody tr { cursor: pointer; transition: background-color 0.12s ease; }
-    .faq-table tbody tr:hover td { background: rgba(255,255,255,0.04); }
+    .faq-table tbody tr:hover td { background: rgba(255,255,255,0.03); }
+    .faq-table tbody tr:last-child td { border-bottom: none; }
     .faq-car-name { font-weight: 700; color: #ffffff; display: flex; align-items: center; gap: 0.55rem; }
     .faq-price-buy { font-family: ui-monospace, monospace; font-weight: 600; color: #94a3b8; }
     .faq-price-sell { font-family: ui-monospace, monospace; font-weight: 700; color: #38bdf8; }
-    .faq-profit-badge { font-family: ui-monospace, monospace; font-weight: 700; color: #34d399; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.25); border-radius: 8px; padding: 0.2rem 0.5rem; display: inline-block; white-space: nowrap; }
+    .faq-profit-badge {
+      font-family: ui-monospace, monospace; font-weight: 700; color: #34d399;
+      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 8px; padding: 0.2rem 0.55rem; display: inline-block; white-space: nowrap; font-size: 0.8rem;
+    }
 
-    /* ТЕРМИНЫ */
-    .terms-grid {
+    /* ТЕРМИНЫ — компактные строки */
+    .terms-list {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 0.85rem;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 0.4rem;
     }
-    .term-card {
-      background: #12141c; border: 1px solid var(--card-border); border-radius: 14px; padding: 1rem 1.2rem;
-      display: flex; flex-direction: column; gap: 0.4rem;
-      transition: all 0.2s ease;
+    .term-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      background: transparent;
+      border-radius: 10px;
+      transition: all 0.15s ease;
     }
-    .term-card:hover { border-color: var(--card-hover-border); transform: translateY(-2px); background: #151824; }
-    .term-head { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-    .term-abbr {
-      font-family: ui-monospace, monospace; font-weight: 800; font-size: 1rem;
-      color: var(--accent-highlight); background: rgba(192,132,252,0.1);
-      padding: 0.2rem 0.55rem; border-radius: 8px; border: 1px solid rgba(192,132,252,0.2);
+    .term-row:hover { background: rgba(255,255,255,0.025); }
+    .term-row-abbr {
+      font-family: ui-monospace, monospace;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--accent-highlight);
+      background: rgba(192,132,252,0.08);
+      padding: 0.25rem 0.55rem;
+      border-radius: 6px;
+      flex-shrink: 0;
+      min-width: 46px;
+      text-align: center;
+      letter-spacing: 0.02em;
     }
-    .term-full { font-size: 0.78rem; color: var(--text-dim); font-weight: 600; }
-    .term-desc { font-size: 0.85rem; color: #e2e8f0; line-height: 1.5; }
+    .term-row-body { flex: 1; min-width: 0; }
+    .term-row-full { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.15rem; }
+    .term-row-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
-    /* ФРАКЦИИ */
-    .factions-grid {
+    /* ФРАКЦИИ — группированные, минималистичные */
+    .factions-container { display: flex; flex-direction: column; gap: 2.25rem; }
+    .factions-group-title {
+      display: flex; align-items: center; gap: 0.65rem;
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--text-dim);
+      margin-bottom: 0.9rem;
+    }
+    .factions-group-title::before {
+      content: ""; display: block; width: 3px; height: 13px; border-radius: 2px;
+    }
+    .factions-group-title.gos::before { background: linear-gradient(180deg, #38bdf8, #6366f1); }
+    .factions-group-title.crime::before { background: linear-gradient(180deg, #f87171, #b91c1c); }
+    .factions-group-title.civil::before { background: linear-gradient(180deg, #34d399, #06b6d4); }
+
+    .faction-row {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1rem;
+      gap: 0.4rem;
     }
-    .faction-card {
-      background: #12141c; border: 1px solid var(--card-border); border-radius: 16px; padding: 1.2rem 1.3rem;
-      display: flex; flex-direction: column; gap: 0.75rem;
-      transition: all 0.22s ease;
+    .faction-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.95rem 1rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
     }
-    .faction-card:hover { border-color: var(--card-hover-border); transform: translateY(-3px); background: #151824; }
-    .faction-head { display: flex; align-items: center; gap: 0.75rem; }
-    .faction-icon {
-      width: 44px; height: 44px; border-radius: 12px; background: #141720;
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex; align-items: center; justify-content: center; font-size: 1.35rem;
+    .faction-item:hover {
+      background: #0f1117;
+      border-color: var(--card-border);
     }
-    .faction-info { flex: 1; }
-    .faction-name { font-weight: 800; color: #fff; font-size: 1.05rem; }
-    .faction-type { font-size: 0.72rem; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.1rem; }
-    .faction-type.gos { color: #38bdf8; }
-    .faction-type.crime { color: #f87171; }
-    .faction-type.civil { color: #34d399; }
-    .faction-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.55; }
+    .faction-item-icon {
+      font-size: 1.5rem; line-height: 1; flex-shrink: 0;
+      margin-top: 0.1rem;
+      filter: grayscale(0.1);
+    }
+    .faction-item-body { flex: 1; min-width: 0; }
+    .faction-item-name { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; letter-spacing: -0.01em; }
+    .faction-item-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
     /* ФОРМЫ */
-    .command-bar { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 20px; padding: 1.15rem 1.25rem; box-shadow: 0 12px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; gap: 0.85rem; }
+    .command-bar { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 20px; padding: 1.15rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; }
     .filters-cluster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; width: 100%; }
     .pill-select-wrapper, .pill-input-wrapper {
       position: relative; display: flex; align-items: center; background: #141720; border: 1px solid var(--card-border);
@@ -515,7 +550,7 @@
     .slot-strip.spinning { filter: blur(1.5px); }
     .slot-item { height: 38px; display: flex; align-items: center; font-family: ui-monospace, monospace; font-size: 1.25rem; font-weight: 700; color: #ffffff; }
 
-    .glass-box { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 18px; padding: 1.4rem; margin-bottom: 1.5rem; }
+    .glass-box { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 18px; padding: 1.6rem 1.5rem; margin-bottom: 1.5rem; }
     .chips-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.8rem; }
     .nick-chip {
       background: #141720; border: 1px solid var(--card-border); border-radius: 10px; padding: 0.4rem 0.8rem;
@@ -523,7 +558,6 @@
     }
     .nick-chip:hover { background: #181c27; border-color: rgba(255,255,255,0.2); }
 
-    /* РАНДОМАЙЗЕР & РУЛЕТКА */
     .number-display-box { background: #141720; border: 2px dashed rgba(255,255,255,0.1); border-radius: 16px; padding: 2.2rem 1rem; text-align: center; margin: 1.2rem 0; }
     .number-display-val { font-size: 3.8rem; font-weight: 800; font-family: ui-monospace, monospace; background: var(--accent-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .wheel-wrapper { position: relative; display: inline-block; margin: 1.2rem auto 0.8rem; }
@@ -602,8 +636,8 @@
       .filters-cluster { grid-template-columns: repeat(2, 1fr); }
       .actions-cluster { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
-      .faq-subnav { grid-template-columns: 1fr; }
       .faq-rules-list { grid-template-columns: 1fr; }
+      .faq-subnav-btn { min-width: 120px; font-size: 0.8rem; }
     }
     @media (max-width: 500px) {
       .filters-cluster { grid-template-columns: 1fr; }
@@ -690,13 +724,13 @@
 
         <div class="theme-picker" title="Выбор темы">
           <span style="font-size: 0.72rem; color: var(--text-dim); font-weight: 700; margin-right: 0.2rem;" data-i18n="nav.theme">ТЕМА:</span>
-          <div class="theme-dot violet active" data-theme="violet" title="Violet Aurora"></div>
-          <div class="theme-dot crimson" data-theme="crimson" title="Crimson ОПГ"></div>
-          <div class="theme-dot emerald" data-theme="emerald" title="Emerald Гос"></div>
-          <div class="theme-dot ice" data-theme="ice" title="Ice Blue"></div>
+          <div class="theme-dot violet active" data-theme="violet"></div>
+          <div class="theme-dot crimson" data-theme="crimson"></div>
+          <div class="theme-dot emerald" data-theme="emerald"></div>
+          <div class="theme-dot ice" data-theme="ice"></div>
         </div>
 
-        <div class="lang-switch" title="Язык / Language">
+        <div class="lang-switch">
           <button class="lang-btn active" data-lang="ru">RU</button>
           <button class="lang-btn" data-lang="en">EN</button>
         </div>
@@ -775,13 +809,12 @@
               Загрузка текущего онлайна... (Автообновление каждые 2 минуты)
             </p>
           </div>
-          <div style="display: flex; gap: 0.6rem; align-items: center;">
-            <button class="btn-icon-copy" id="btn-refresh-servers" style="height: 38px; padding: 0 1rem; font-size: 0.8rem;">
+          <div>
+            <button class="btn-icon-copy" id="btn-refresh-servers" style="height: 38px; padding: 0 1rem; font-size: 0.8rem; width: auto;">
               🔄 <span data-i18n="btn.refresh">Обновить сейчас</span>
             </button>
           </div>
         </div>
-
         <div class="servers-grid" id="servers-grid">
           <div style="grid-column: 1/-1; text-align:center; padding:3rem; color:var(--text-dim);">...</div>
         </div>
@@ -800,12 +833,11 @@
             </p>
           </div>
           <div>
-            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 1rem; font-size: 0.82rem;">
+            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 1rem; font-size: 0.82rem; width: auto;">
               🔄 <span data-i18n="btn.refreshFeed">Обновить ленту</span>
             </button>
           </div>
         </div>
-
         <div class="news-feed-list" id="news-grid">
           <div style="text-align:center; padding:3rem; color:var(--text-dim);">...</div>
         </div>
@@ -816,17 +848,15 @@
     <div class="tab-content" id="tab-faq">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
       <div class="glass-box">
-        <div style="margin-bottom: 1.2rem;">
-          <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;" data-i18n="faq.title">FAQ / База знаний Radmir RP</h3>
-          <p style="color: var(--text-muted); font-size: 0.88rem;" data-i18n="faq.subtitle">
-            Цены перекупа, словарь CRMP-терминов и информация о фракциях проекта
-          </p>
+        <div class="faq-section-header">
+          <h3 data-i18n="faq.title">FAQ / База знаний Radmir RP</h3>
+          <p data-i18n="faq.subtitle">Цены перекупа, словарь CRMP-терминов и информация о фракциях проекта</p>
         </div>
 
         <div class="faq-subnav">
-          <button class="faq-subnav-btn active" data-panel="faq-prices"><span>💰 <span data-i18n="faq.tab.prices">Цены перекупа</span></span></button>
-          <button class="faq-subnav-btn" data-panel="faq-terms"><span>📖 <span data-i18n="faq.tab.terms">Термины CRMP</span></span></button>
-          <button class="faq-subnav-btn" data-panel="faq-factions"><span>🏛️ <span data-i18n="faq.tab.factions">Фракции</span></span></button>
+          <button class="faq-subnav-btn active" data-panel="faq-prices">💰 <span data-i18n="faq.tab.prices">Цены перекупа</span></button>
+          <button class="faq-subnav-btn" data-panel="faq-terms">📖 <span data-i18n="faq.tab.terms">Термины CRMP</span></button>
+          <button class="faq-subnav-btn" data-panel="faq-factions">🏛️ <span data-i18n="faq.tab.factions">Фракции</span></button>
         </div>
 
         <!-- ПАНЕЛЬ 1: ЦЕНЫ -->
@@ -838,21 +868,18 @@
             <div class="faq-rules-list">
               <div class="faq-rule-item">
                 <span style="font-size: 1rem;">⚙️</span>
-                <div><b>Стейдж авто:</b> Прибавляйте +50% от стоимости стейджа к цене (например: Stage 1 стоит 700k &rarr; к цене авто добавляется +350 000 ₽).</div>
+                <div><b>Стейдж авто:</b> Прибавляйте +50% от стоимости стейджа к цене (Stage 1 за 700k &rarr; +350 000 ₽).</div>
               </div>
               <div class="faq-rule-item">
                 <span style="font-size: 1rem;">💡</span>
-                <div><b>Торг на рынке:</b> Допустимо брать чуть дороже или отдавать чуть дешевле — это не скажется на общем доходе перекупщика.</div>
+                <div><b>Торг:</b> Допустимо брать чуть дороже или отдавать чуть дешевле — это не скажется на доходе.</div>
               </div>
             </div>
           </div>
 
           <div class="faq-search-row">
             <div class="pill-input-wrapper faq-search-wrapper">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="faq-search-input" class="custom-fame-input" placeholder="Поиск авто (BMW, Lada, Supra)..." autocomplete="off">
             </div>
             <div class="faq-count-badge" id="faq-count-badge">Авто: 40</div>
@@ -871,7 +898,7 @@
               <tbody id="faq-table-body"></tbody>
             </table>
           </div>
-          <div style="margin-top: 0.9rem; font-size: 0.78rem; color: var(--text-dim); text-align: center;">
+          <div style="margin-top: 1rem; font-size: 0.78rem; color: var(--text-dim); text-align: center;">
             💡 Кликните на строку, чтобы скопировать цены
           </div>
         </div>
@@ -880,20 +907,17 @@
         <div class="faq-panel" id="faq-terms">
           <div class="faq-search-row">
             <div class="pill-input-wrapper faq-search-wrapper">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="11" cy="11" r="8"></circle>
-                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-              </svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
               <input type="text" id="terms-search-input" class="custom-fame-input" placeholder="Поиск термина (DM, MG, PG)..." autocomplete="off">
             </div>
             <div class="faq-count-badge" id="terms-count-badge">Терминов: 0</div>
           </div>
-          <div class="terms-grid" id="terms-grid"></div>
+          <div class="terms-list" id="terms-grid"></div>
         </div>
 
         <!-- ПАНЕЛЬ 3: ФРАКЦИИ -->
         <div class="faq-panel" id="faq-factions">
-          <div class="factions-grid" id="factions-grid"></div>
+          <div class="factions-container" id="factions-grid"></div>
         </div>
       </div>
     </div>
@@ -944,7 +968,7 @@
       <div class="glass-box">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <h3 style="font-size: 1.05rem; font-weight: 700;">История генераций (<span id="history-count">0</span>)</h3>
-          <button class="btn-icon-copy" id="btn-clear-history" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem;">Очистить</button>
+          <button class="btn-icon-copy" id="btn-clear-history" style="height: 32px; padding: 0 0.7rem; font-size: 0.75rem; width: auto;">Очистить</button>
         </div>
         <div class="chips-wrap" id="history-chips"></div>
       </div>
@@ -1028,7 +1052,7 @@
   </div>
 
   <!-- ИИ-ЧАТ -->
-  <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+  <button class="ai-chat-fab" id="btn-toggle-ai-chat"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
   <div class="ai-chat-modal" id="ai-chat-modal">
     <div class="ai-chat-header">
       <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #fff;">
@@ -1046,7 +1070,6 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА QR -->
   <div class="app-modal-backdrop" id="qr-modal">
     <div class="app-modal-card" style="text-align: center;">
       <button class="btn-close-modal" id="btn-close-qr">&times;</button>
@@ -1075,9 +1098,7 @@
     const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
     const SERVERS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
 
-    /* ============================================================
-       МУЛЬТИЯЗЫЧНОСТЬ
-    ============================================================ */
+    /* i18n */
     const I18N = {
       ru: {
         'nav.sections': 'Разделы', 'nav.theme': 'ТЕМА:', 'nav.home': 'Главная',
@@ -1128,7 +1149,6 @@
     };
 
     let currentLang = localStorage.getItem('roleid_lang') || 'ru';
-
     function applyLang(lang) {
       currentLang = lang;
       localStorage.setItem('roleid_lang', lang);
@@ -1139,22 +1159,17 @@
       });
       document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
     }
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => applyLang(btn.dataset.lang)));
 
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-      btn.addEventListener('click', () => applyLang(btn.dataset.lang));
-    });
-
-    /* ============================================================
-       CRMP ТЕРМИНЫ
-    ============================================================ */
+    /* CRMP TERMS */
     const CRMP_TERMS = [
-      { abbr: 'RP', full: 'RolePlay', desc: 'Отыгрывание роли персонажа в игровом мире. Основной принцип сервера.' },
+      { abbr: 'RP', full: 'RolePlay', desc: 'Отыгрывание роли персонажа в игровом мире.' },
       { abbr: 'DM', full: 'DeathMatch', desc: 'Убийство игрока без RP-причины. Наказывается баном.' },
       { abbr: 'DB', full: 'DriveBy', desc: 'Убийство игрока с транспортного средства без отыгровки.' },
       { abbr: 'SK', full: 'SpawnKill', desc: 'Убийство игрока сразу после его появления на сервере.' },
-      { abbr: 'TK', full: 'TeamKill', desc: 'Убийство союзника по фракции/семье. Строго наказывается.' },
-      { abbr: 'MG', full: 'MetaGaming', desc: 'Использование внеигровой информации (из Discord, чата) в игре.' },
-      { abbr: 'PG', full: 'PowerGaming', desc: 'Нереалистичные действия персонажа: прыжки с крыш без травм и т.п.' },
+      { abbr: 'TK', full: 'TeamKill', desc: 'Убийство союзника по фракции/семье.' },
+      { abbr: 'MG', full: 'MetaGaming', desc: 'Использование внеигровой информации в игре.' },
+      { abbr: 'PG', full: 'PowerGaming', desc: 'Нереалистичные действия персонажа.' },
       { abbr: 'RK', full: 'RevengeKill', desc: 'Месть после смерти. Возврат за убийцей для расправы.' },
       { abbr: 'BH', full: 'BunnyHop', desc: 'Прыжки для ускорения передвижения. Считается багом.' },
       { abbr: 'AH', full: 'Aimbot', desc: 'Читерское ПО для автоматического наведения на цель.' },
@@ -1170,28 +1185,25 @@
       { abbr: 'Фама', full: 'Family', desc: 'Игровая семья или группировка с общим тегом.' },
       { abbr: 'ОПГ', full: 'Организованная преступная группировка', desc: 'Криминальная фракция: банды, мафии, бригады.' },
       { abbr: 'Фракция', full: 'Faction', desc: 'Организация в игре: МВД, ФСБ, Армия, Больница, СМИ и т.д.' },
-      { abbr: 'ДМ-зона', full: 'DeathMatch zone', desc: 'Территория, где разрешены убийства без RP-причины (гетто, война).' },
       { abbr: 'ТК', full: 'ТимКилл', desc: 'Убийство сокомандника — аналог TK.' },
       { abbr: 'АХК', full: 'AutoHotkey', desc: 'Программа для автокликов. Запрещена на большинстве серверов.' }
     ];
 
-    /* ============================================================
-       ФРАКЦИИ
-    ============================================================ */
+    /* FACTIONS */
     const FACTIONS = [
-      { name: 'МВД', icon: '👮', type: 'gos', typeLabel: 'Гос. структура', desc: 'Полиция. Патрули, рейды, штрафы, аресты преступников. Требует отыгровки.' },
-      { name: 'ФСБ', icon: '🕵️', type: 'gos', typeLabel: 'Гос. структура', desc: 'Спецслужба. Особые операции, контрразведка, слежки за ОПГ.' },
-      { name: 'Армия', icon: '🪖', type: 'gos', typeLabel: 'Гос. структура', desc: 'Вооружённые силы. Охрана военных объектов, участие в рейдах.' },
-      { name: 'Правительство', icon: '🏛️', type: 'gos', typeLabel: 'Гос. структура', desc: 'Законы, бюджет, взаимодействие с другими гос. фракциями.' },
-      { name: 'Больница', icon: '🏥', type: 'gos', typeLabel: 'Гос. структура', desc: 'Медики. Лечение игроков, выдача мед. справок и допусков.' },
-      { name: 'СМИ', icon: '📺', type: 'gos', typeLabel: 'Гос. структура', desc: 'Новости, интервью, репортажи с мероприятий проекта.' },
-      { name: 'Тюрьма', icon: '⛓️', type: 'gos', typeLabel: 'Гос. структура', desc: 'Охрана заключённых, конвоирование, предотвращение побегов.' },
-      { name: 'ОПГ', icon: '🔫', type: 'crime', typeLabel: 'Криминал', desc: 'Банды. Грабежи, разборки, контроль территорий (гетто).' },
-      { name: 'Мафия', icon: '💼', type: 'crime', typeLabel: 'Криминал', desc: 'Организованная преступность. Крупные сделки, влияние на бизнес.' },
-      { name: 'Автошкола', icon: '🚗', type: 'civil', typeLabel: 'Гражданская', desc: 'Обучение вождению, выдача водительских прав.' }
+      { name: 'МВД', icon: '👮', type: 'gos', desc: 'Полиция. Патрули, рейды, штрафы, аресты преступников. Требует отыгровки.' },
+      { name: 'ФСБ', icon: '🕵️', type: 'gos', desc: 'Спецслужба. Особые операции, контрразведка, слежки за ОПГ.' },
+      { name: 'Армия', icon: '🪖', type: 'gos', desc: 'Вооружённые силы. Охрана военных объектов, участие в рейдах.' },
+      { name: 'Правительство', icon: '🏛️', type: 'gos', desc: 'Законы, бюджет, взаимодействие с другими гос. фракциями.' },
+      { name: 'Больница', icon: '🏥', type: 'gos', desc: 'Медики. Лечение игроков, выдача мед. справок и допусков.' },
+      { name: 'СМИ', icon: '📺', type: 'gos', desc: 'Новости, интервью, репортажи с мероприятий проекта.' },
+      { name: 'Тюрьма', icon: '⛓️', type: 'gos', desc: 'Охрана заключённых, конвоирование, предотвращение побегов.' },
+      { name: 'ОПГ', icon: '🔫', type: 'crime', desc: 'Банды. Грабежи, разборки, контроль территорий (гетто).' },
+      { name: 'Мафия', icon: '💼', type: 'crime', desc: 'Организованная преступность. Крупные сделки, влияние на бизнес.' },
+      { name: 'Автошкола', icon: '🚗', type: 'civil', desc: 'Обучение вождению, выдача водительских прав.' }
     ];
 
-    // ИИ-чат
+    /* AI CHAT */
     const FREE_MODELS = ["openrouter/free", "meta-llama/llama-3.3-70b-instruct:free", "google/gemini-2.0-flash-exp:free", "qwen/qwen-2.5-72b-instruct:free"];
     let chatHistory = [{ role: "system", content: "Ты официальный ИИ-помощник проекта ROLEID для Radmir RP. Отвечай кратко, уважительно и на русском языке." }];
 
@@ -1216,7 +1228,6 @@
       loading.className = 'ai-msg bot';
       loading.innerText = 'ROLEID AI печатает...';
       chatMessages.appendChild(loading);
-
       let done = false;
       for (const m of FREE_MODELS) {
         try {
@@ -1236,7 +1247,7 @@
     if (btnSendChat) btnSendChat.addEventListener('click', sendAiMessage);
     if (chatInput) chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendAiMessage(); });
 
-    // Навигация
+    /* NAV */
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
     const btnOpenSidebar = document.getElementById('btn-open-sidebar');
@@ -1257,7 +1268,6 @@
       tabContents.forEach(c => c.classList.remove('active'));
       const target = document.getElementById(tabId);
       if (target) { target.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-
       if (tabId === 'tab-wheel') drawWheel();
       if (tabId === 'tab-faq') { renderFaqTable(); renderTerms(); renderFactions(); }
       if (tabId === 'tab-news') loadProjectNews();
@@ -1268,14 +1278,11 @@
 
     sidebarNavItems.forEach(item => item.addEventListener('click', () => switchTab(item.dataset.tab)));
     document.querySelectorAll('[data-back-to-hub]').forEach(btn => btn.addEventListener('click', () => switchTab('tab-hub')));
-
-    // Плавающие карточки на главной
     document.querySelectorAll('.visual-card[data-open-tab]').forEach(card => {
       card.addEventListener('click', () => switchTab(card.dataset.openTab));
-      card.style.cursor = 'pointer';
     });
 
-    // FAQ: переключение подпанелей
+    /* FAQ subnav */
     document.querySelectorAll('.faq-subnav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.faq-subnav-btn').forEach(b => b.classList.remove('active'));
@@ -1285,15 +1292,13 @@
       });
     });
 
-    // Термины
+    /* TERMS */
     function renderTerms() {
       const grid = document.getElementById('terms-grid');
       const badge = document.getElementById('terms-count-badge');
       const query = (document.getElementById('terms-search-input')?.value || '').trim().toLowerCase();
       const filtered = CRMP_TERMS.filter(t =>
-        t.abbr.toLowerCase().includes(query) ||
-        t.full.toLowerCase().includes(query) ||
-        t.desc.toLowerCase().includes(query)
+        t.abbr.toLowerCase().includes(query) || t.full.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query)
       );
       if (badge) badge.innerText = `Терминов: ${filtered.length}`;
       if (!grid) return;
@@ -1302,36 +1307,52 @@
         return;
       }
       grid.innerHTML = filtered.map(t => `
-        <div class="term-card">
-          <div class="term-head">
-            <span class="term-abbr">${t.abbr}</span>
-            <span class="term-full">${t.full}</span>
+        <div class="term-row">
+          <span class="term-row-abbr">${t.abbr}</span>
+          <div class="term-row-body">
+            <div class="term-row-full">${t.full}</div>
+            <div class="term-row-desc">${t.desc}</div>
           </div>
-          <div class="term-desc">${t.desc}</div>
         </div>
       `).join('');
     }
     document.getElementById('terms-search-input')?.addEventListener('input', renderTerms);
 
-    // Фракции
+    /* FACTIONS — grouped */
     function renderFactions() {
       const grid = document.getElementById('factions-grid');
       if (!grid) return;
-      grid.innerHTML = FACTIONS.map(f => `
-        <div class="faction-card">
-          <div class="faction-head">
-            <div class="faction-icon">${f.icon}</div>
-            <div class="faction-info">
-              <div class="faction-name">${f.name}</div>
-              <div class="faction-type ${f.type}">${f.typeLabel}</div>
+      const groups = {
+        gos: { label: 'Государственные структуры', items: [] },
+        crime: { label: 'Криминальные структуры', items: [] },
+        civil: { label: 'Гражданские', items: [] }
+      };
+      FACTIONS.forEach(f => { if (groups[f.type]) groups[f.type].items.push(f); });
+
+      let html = '';
+      ['gos', 'crime', 'civil'].forEach(type => {
+        if (!groups[type].items.length) return;
+        html += `
+          <div>
+            <div class="factions-group-title ${type}">${groups[type].label}</div>
+            <div class="faction-row">
+              ${groups[type].items.map(f => `
+                <div class="faction-item">
+                  <div class="faction-item-icon">${f.icon}</div>
+                  <div class="faction-item-body">
+                    <div class="faction-item-name">${f.name}</div>
+                    <div class="faction-item-desc">${f.desc}</div>
+                  </div>
+                </div>
+              `).join('')}
             </div>
           </div>
-          <div class="faction-desc">${f.desc}</div>
-        </div>
-      `).join('');
+        `;
+      });
+      grid.innerHTML = html;
     }
 
-    // Мониторинг онлайна
+    /* SERVERS */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     const btnRefreshServers = document.getElementById('btn-refresh-servers');
@@ -1354,7 +1375,6 @@
         serversGrid.innerHTML = `<div style="grid-column:1/-1; text-align:center; padding:3rem; color:var(--text-dim);">Ошибка запроса к мониторингу.</div>`;
       }
     }
-
     function renderServers(servers) {
       if (!serversGrid) return;
       servers.sort((a, b) => a.online - b.online);
@@ -1372,11 +1392,10 @@
         </div>
       `).join('');
     }
-
     if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Обновлено!'); });
     if (!serversTimer) serversTimer = setInterval(loadServersOnline, 120000);
 
-    // Новости
+    /* NEWS */
     const newsGrid = document.getElementById('news-grid');
     const btnRefreshNews = document.getElementById('btn-refresh-news');
 
@@ -1406,7 +1425,7 @@
     }
     btnRefreshNews?.addEventListener('click', () => { loadProjectNews(); showToast('Лента обновлена!'); });
 
-    // Обучающий тур
+    /* TOUR */
     const TOUR_STEPS = [
       { icon: "👋", title: "Добро пожаловать в ROLEID!", desc: "Ваш карманный помощник для комфортной игры на Radmir RP." },
       { icon: "📊", title: "Мониторинг серверов", desc: "Следите за онлайном всех серверов в реальном времени с автообновлением раз в 2 минуты." },
@@ -1434,16 +1453,14 @@
     }
     function openTour() { updateTour(0); tourOverlay?.classList.add('open'); }
     function closeTour() { tourOverlay?.classList.remove('open'); localStorage.setItem('roleid_tour_seen', 'true'); }
-
     btnTourNext?.addEventListener('click', () => { if (curTour < TOUR_STEPS.length - 1) updateTour(curTour + 1); else { closeTour(); showToast('Приятной игры!'); } });
     btnTourSkip?.addEventListener('click', closeTour);
     btnSidebarTour?.addEventListener('click', () => { closeSidebar(); openTour(); });
-
     window.addEventListener('DOMContentLoaded', () => {
       if (!localStorage.getItem('roleid_tour_seen')) setTimeout(openTour, 800);
     });
 
-    // Темы
+    /* THEME */
     const themeDots = document.querySelectorAll('.theme-dot');
     let currentTheme = localStorage.getItem('roleid_theme') || 'violet';
     function setTheme(t) {
@@ -1455,17 +1472,11 @@
     themeDots.forEach(d => d.addEventListener('click', () => setTheme(d.dataset.theme)));
     setTheme(currentTheme);
 
-    // FAQ Таблицы перекупа (сокращённая база)
+    /* FAQ CARS */
     const FAQ_CARS_DATA = {
-      low: [
-        ["Ig 2712", "12 000 ₽", "20 000 ₽"], ["Volvo 850R", "70 000 ₽", "90 000 ₽"], ["Lada 2101", "30 000 ₽", "40 000 ₽"], ["Lada 2107", "50 000 ₽", "70 000 ₽"], ["Ig 27151", "15 000 ₽", "20 000 ₽"], ["Lada 2109", "70 000 ₽", "85 000 ₽"], ["Honda CRX", "70 000 ₽", "90 000 ₽"], ["Volkswagen Golf 2", "75 000 ₽", "90 000 ₽"], ["Audi 80 Avant", "100 000 ₽", "130 000 ₽"], ["Lada 2115", "90 000 ₽", "100 000 ₽"], ["Lada 2108", "65 000 ₽", "80 000 ₽"], ["Daewoo Lanos", "90 000 ₽", "110 000 ₽"], ["Lada 2106", "60 000 ₽", "70 000 ₽"], ["Lada 2114", "100 000 ₽", "130 000 ₽"], ["Lada 2110", "60 000 ₽", "80 000 ₽"], ["Lada 21045", "30 000 ₽", "35 000 ₽"], ["Lada 2105", "50 000 ₽", "65 000 ₽"], ["Alfa Romeo 155", "85 000 ₽", "95 000 ₽"], ["Lada 21099", "80 000 ₽", "90 000 ₽"], ["LADA 21123 купе", "110 000 ₽", "130 000 ₽"], ["LADA 2112", "80 000 ₽", "90 000 ₽"], ["KIA Rio", "210 000 ₽", "250 000 ₽"], ["Skoda Octavia A4 VRS", "110 000 ₽", "140 000 ₽"], ["Audi A4 B5", "140 000 ₽", "180 000 ₽"], ["Renault Logan", "110 000 ₽", "140 000 ₽"], ["Honda Civic Si", "180 000 ₽", "220 000 ₽"], ["BMW 323i E30", "200 000 ₽", "250 000 ₽"], ["Lada Priora", "150 000 ₽", "180 000 ₽"], ["Lada Vesta", "240 000 ₽", "280 000 ₽"], ["BMW M5 E28", "90 000 ₽", "120 000 ₽"], ["Saab 9.3 Turbo", "250 000 ₽", "300 000 ₽"], ["Daewoo Matiz", "100 000 ₽", "130 000 ₽"], ["ZAZ 1102 Tavria", "35 000 ₽", "40 000 ₽"], ["GAZ 24 Волга", "140 000 ₽", "157 000 ₽"], ["Honda Ami", "100 000 ₽", "112 000 ₽"], ["Lada 2103", "60 000 ₽", "67 000 ₽"], ["Lada 2113", "76 000 ₽", "85 000 ₽"], ["Audi A4 B6 Avant", "200 000 ₽", "224 000 ₽"], ["Lada 2102", "40 000 ₽", "49 000 ₽"], ["Volkswagen Passat B3", "80 000 ₽", "110 000 ₽"]
-      ],
-      med: [
-        ["BMW X5 E53", "850 000 ₽", "920 000 ₽"], ["Mazda RX-7 Spirit R", "1 040 000 ₽", "1 133 600 ₽"], ["Ford Raptor F150", "1 820 000 ₽", "1 983 800 ₽"], ["BMW 540i E34", "585 000 ₽", "637 650 ₽"], ["Mercedes E420 W210", "507 000 ₽", "552 630 ₽"], ["BMW 540i E39", "845 000 ₽", "920 050 ₽"], ["Toyota Supra A80", "1 000 000 ₽", "1 150 000 ₽"], ["Subaru WRX STI", "1 170 000 ₽", "1 275 300 ₽"], ["Nissan Skyline ER34", "780 000 ₽", "850 200 ₽"], ["Mercedes S600 W140", "900 000 ₽", "1 000 000 ₽"], ["Volkswagen Golf R", "1 300 000 ₽", "1 400 000 ₽"], ["BMW M5 E60", "1 950 000 ₽", "2 200 000 ₽"], ["BMW X6M E71", "1 690 000 ₽", "1 842 100 ₽"], ["BMW X5M E70", "1 625 000 ₽", "1 771 250 ₽"], ["Toyota Chaser", "715 000 ₽", "779 350 ₽"], ["BMW 750i E38", "910 000 ₽", "991 900 ₽"], ["Toyota Mark II 90", "682 500 ₽", "743 925 ₽"], ["Toyota Camry V55", "975 000 ₽", "1 062 750 ₽"], ["Mazda 3 MPS", "487 500 ₽", "531 375 ₽"], ["Mazda MX-5", "663 000 ₽", "722 670 ₽"], ["Nissan Silvia S15", "1 040 000 ₽", "1 133 600 ₽"], ["Jeep Grand Cherokee", "400 000 ₽", "500 000 ₽"], ["Toyota Camry V40", "552 500 ₽", "602 225 ₽"], ["Subaru Impreza WRX STI", "975 000 ₽", "1 062 750 ₽"], ["Audi S3 8V", "1 365 000 ₽", "1 487 850 ₽"], ["Audi RS6 C5", "975 000 ₽", "1 062 750 ₽"], ["Mercedes E55 AMG W211", "2 080 000 ₽", "2 267 200 ₽"], ["Mercedes ML63 AMG W164", "1 100 000 ₽", "1 250 000 ₽"], ["BMW 740 F02", "1 885 000 ₽", "2 055 650 ₽"], ["Volvo XC90", "2 047 500 ₽", "2 231 775 ₽"], ["Mercedes C63 W204", "2 080 000 ₽", "2 267 200 ₽"], ["Toyota Mark II 100", "780 000 ₽", "850 200 ₽"], ["Honda Civic TypeR FK8", "1 300 000 ₽", "1 417 000 ₽"], ["BMW M3 E46", "845 000 ₽", "920 050 ₽"], ["BMW 1M E82", "1 235 000 ₽", "1 346 150 ₽"], ["Honda Civic TypeR FN2", "585 000 ₽", "637 650 ₽"], ["Skoda Octavia VRS", "1 000 000 ₽", "1 200 000 ₽"], ["Nissan 370Z", "1 170 000 ₽", "1 275 300 ₽"], ["BMW M3 E92", "1 625 000 ₽", "1 771 250 ₽"], ["Toyota LC 100", "1 040 000 ₽", "1 133 600 ₽"], ["Land Rover Defender", "3 120 000 ₽", "3 400 800 ₽"], ["Chevrolet Suburban", "780 000 ₽", "850 200 ₽"], ["Mercedes E320 CDI W210", "455 000 ₽", "495 950 ₽"], ["Mercedes GL63 AMG X166", "2 470 000 ₽", "2 692 300 ₽"], ["Subaru Impreza WRX STI", "780 000 ₽", "850 200 ₽"], ["Volkswagen Touareg II", "1 235 000 ₽", "1 346 150 ₽"], ["Lexus RC-F", "2 600 000 ₽", "2 834 000 ₽"], ["Hyundai Santa Fe", "455 000 ₽", "495 950 ₽"], ["KIA K5", "1 950 000 ₽", "2 125 500 ₽"], ["BMW 330D G20", "2 600 000 ₽", "2 834 000 ₽"], ["Chevrolet Corvette C6", "2 925 000 ₽", "3 188 250 ₽"], ["Volkswagen Passat B8", "975 000 ₽", "1 062 750 ₽"], ["Toyota LC 200 II", "2 600 000 ₽", "2 834 000 ₽"], ["Mercedes E63 AMG W211", "2 470 000 ₽", "2 692 300 ₽"], ["Nissan 180SX", "780 000 ₽", "850 200 ₽"]
-      ],
-      high: [
-        ["Porsche Cayenne", "6 000 000 ₽", "6 480 000 ₽"], ["Mercedes E63s AMG W212", "3 000 000 ₽", "3 240 000 ₽"], ["Audi RS-6 C7 Avant", "3 600 000 ₽", "3 888 000 ₽"], ["Rolls-Royce Phantom VII", "9 900 000 ₽", "10 692 000 ₽"], ["Mercedes C63s AMG C205", "3 600 000 ₽", "3 888 000 ₽"], ["Lamborghini Aventador SV", "17 400 000 ₽", "18 792 000 ₽"], ["Maybach X222", "7 800 000 ₽", "8 424 000 ₽"], ["Ferrari 488", "12 000 000 ₽", "12 960 000 ₽"], ["BMW G30 540i LCI", "3 600 000 ₽", "3 888 000 ₽"], ["Toyota LC 200 III", "4 200 000 ₽", "4 536 000 ₽"], ["Land Rover SVA", "6 000 000 ₽", "6 480 000 ₽"], ["Dodge Challenger SRT", "3 360 000 ₽", "3 628 800 ₽"], ["Rolls-Royce Wraith", "12 000 000 ₽", "12 960 000 ₽"], ["Nissan GT-R 35", "4 080 000 ₽", "4 406 400 ₽"], ["Bentley Bentayga", "9 000 000 ₽", "9 720 000 ₽"], ["Porsche 911 / 991", "7 440 000 ₽", "8 035 200 ₽"], ["Ferrari Portofino", "7 200 000 ₽", "7 776 000 ₽"], ["Tesla Model S", "3 600 000 ₽", "3 888 000 ₽"], ["BMW M4 F82 LCI", "2 700 000 ₽", "2 916 000 ₽"], ["Mercedes G63 EXE", "10 800 000 ₽", "11 664 000 ₽"], ["Mercedes G63 W463 TT", "4 200 000 ₽", "4 536 000 ₽"], ["Porsche Panamera", "5 040 000 ₽", "5 443 200 ₽"], ["Lamborghini Huracan", "13 200 000 ₽", "14 256 000 ₽"], ["BMW M2 F87", "3 780 000 ₽", "4 082 400 ₽"], ["Mercedes G63 AMG 6x6", "21 000 000 ₽", "22 680 000 ₽"], ["Mercedes G63 AMG W463 III", "11 400 000 ₽", "12 312 000 ₽"], ["Ford Mustang GT", "3 300 000 ₽", "3 564 000 ₽"], ["BMW X5M F85", "4 200 000 ₽", "4 536 000 ₽"], ["Maybach S650 Pullman", "15 000 000 ₽", "16 200 000 ₽"], ["Lamborghini Urus", "15 000 000 ₽", "16 200 000 ₽"], ["Lexus LX570", "4 800 000 ₽", "5 184 000 ₽"], ["Jeep GC Trackhawk", "6 000 000 ₽", "6 480 000 ₽"], ["Cadillac Escalade", "6 000 000 ₽", "6 480 000 ₽"], ["Mercedes 560 Sec C126", "6 000 000 ₽", "6 480 000 ₽"], ["Audi RS-7 C7", "3 180 000 ₽", "3 434 400 ₽"], ["BMW X6M F86", "4 200 000 ₽", "4 536 000 ₽"], ["BMW M5 F90 CS", "13 200 000 ₽", "14 256 000 ₽"], ["BMW M5 E39", "6 000 000 ₽", "7 000 000 ₽"], ["Maserati Levante", "3 600 000 ₽", "3 888 000 ₽"], ["BMW i8 Roadster", "6 900 000 ₽", "7 452 000 ₽"], ["Chevrolet Corvette C7", "4 800 000 ₽", "5 184 000 ₽"], ["Mercedes GT63s AMG S", "8 640 000 ₽", "9 331 200 ₽"], ["McLaren P1", "12 000 000 ₽", "12 960 000 ₽"], ["Mercedes e63s AMG W213", "7 380 000 ₽", "7 970 400 ₽"], ["Range Rover Velar", "3 600 000 ₽", "3 888 000 ₽"], ["BMW X7 G07", "7 200 000 ₽", "7 776 000 ₽"], ["BMW M5 F90 LCI", "13 500 000 ₽", "14 720 000 ₽"], ["Acura NSX", "9 000 000 ₽", "9 720 000 ₽"], ["BMW M8 F92", "8 700 000 ₽", "9 396 000 ₽"], ["BMW M4 G82", "6 600 000 ₽", "7 128 000 ₽"], ["Mercedes S63 AMG V222", "6 600 000 ₽", "7 128 000 ₽"], ["Mercedes S500 W222", "3 600 000 ₽", "3 888 000 ₽"], ["Chevrolet Corvette C8", "8 100 000 ₽", "8 748 000 ₽"], ["Ferrari F40", "24 000 000 ₽", "25 920 000 ₽"], ["Lexus LFA", "12 000 000 ₽", "12 960 000 ₽"], ["Porsche 911 Turbo S", "15 000 000 ₽", "16 200 000 ₽"], ["Mercedes SL65 AMG", "6 000 000 ₽", "6 480 000 ₽"], ["Ferrari F430", "9 000 000 ₽", "9 720 000 ₽"], ["BMW X6M F96", "9 000 000 ₽", "9 720 000 ₽"], ["Porsche Taycan Turbo S", "12 000 000 ₽", "12 960 000 ₽"], ["Lamborghini Countach", "15 000 000 ₽", "16 200 000 ₽"], ["Porsche 911 Turbo 930", "8 400 000 ₽", "9 072 000 ₽"], ["BMW M6 F13", "2 400 000 ₽", "2 592 000 ₽"], ["Chevrolet Camaro ZL1", "3 000 000 ₽", "3 240 000 ₽"], ["BMW M635CSI E24", "9 600 000 ₽", "10 368 000 ₽"], ["BMW Z8 E52", "18 000 000 ₽", "19 440 000 ₽"], ["Lamborghini Aventador SVJ", "30 000 000 ₽", "32 400 000 ₽"], ["BMW M5 F10", "2 400 000 ₽", "2 592 000 ₽"], ["Mercedes AMG GT R", "12 000 000 ₽", "12 960 000 ₽"], ["Dodge Charger SRT", "3 000 000 ₽", "3 240 000 ₽"], ["Koenigsegg Jesko", "72 000 000 ₽", "77 760 000 ₽"], ["Austin Seven 24", "90 000 000 ₽", "97 200 000 ₽"], ["McLaren Senna", "60 000 000 ₽", "64 800 000 ₽"], ["Ford VelociRaptor", "10 800 000 ₽", "11 664 000 ₽"], ["Audi RS7 C8", "6 600 000 ₽", "7 128 000 ₽"], ["Audi RS4 B9 Avant", "4 200 000 ₽", "4 536 000 ₽"], ["Audi RS5 F5", "3 300 000 ₽", "3 564 000 ₽"], ["Audi RSQ8", "9 000 000 ₽", "9 720 000 ₽"], ["BMW X7 G07 LCI", "9 000 000 ₽", "9 720 000 ₽"], ["Mercedes C63 C204 BS", "4 800 000 ₽", "5 184 000 ₽"], ["Mercedes S63 AMG V223", "12 000 000 ₽", "12 960 000 ₽"], ["Mercedes S500 W223", "7 200 000 ₽", "7 776 000 ₽"], ["Audi TTRS", "3 000 000 ₽", "3 564 000 ₽"], ["Mercedes GLS 63 AMG", "10 800 000 ₽", "11 664 000 ₽"], ["Dodge RAM TRX", "9 000 000 ₽", "9 720 000 ₽"], ["Audi Etron GT", "7 800 000 ₽", "8 424 000 ₽"], ["BMW X5M F95", "9 000 000 ₽", "9 720 000 ₽"], ["Ferrari 512 TR", "12 000 000 ₽", "12 960 000 ₽"], ["Porshe 959", "8 400 000 ₽", "9 072 000 ₽"], ["BMW M3 F80 CS", "5 400 000 ₽", "5 832 000 ₽"], ["Porsche Cayenne Coupe", "9 600 000 ₽", "10 368 000 ₽"], ["Mercedes V Class", "8 000 000 ₽", "9 000 000 ₽"], ["Audi RS6 C8 Avant", "6 700 000 ₽", "7 400 000 ₽"], ["Bentley Flying Spur", "21 000 000 ₽", "22 680 000 ₽"], ["BMW M3 G81", "7 800 000 ₽", "8 424 000 ₽"], ["BMW 760i G70", "12 000 000 ₽", "12 960 000 ₽"], ["Mercedes E63s A.W213 Estate", "9 000 000 ₽", "9 720 000 ₽"], ["BMW XM", "15 000 000 ₽", "16 200 000 ₽"], ["BMW M8 GC", "10 200 000 ₽", "11 016 000 ₽"], ["Ferrari 812", "21 000 000 ₽", "22 680 000 ₽"], ["Maybach GLS 600 X167", "17 400 000 ₽", "18 792 000 ₽"], ["RollsRoyce Cullinan II", "37 200 000 ₽", "40 176 000 ₽"], ["Koenigsegg Gemera", "75 000 000 ₽", "81 000 000 ₽"], ["Audi S8 D4", "3 600 000 ₽", "3 888 000 ₽"], ["Mercedes GLE63S W166", "3 300 000 ₽", "3 564 000 ₽"], ["Mercedes GLE63s C292", "3 300 000 ₽", "3 564 000 ₽"], ["Mercedes GLE63s W167", "7 500 000 ₽", "8 100 000 ₽"], ["Lamborghini Urus FL", "16 500 000 ₽", "17 820 000 ₽"]
-      ]
+      low: [["Ig 2712","12 000 ₽","20 000 ₽"],["Volvo 850R","70 000 ₽","90 000 ₽"],["Lada 2101","30 000 ₽","40 000 ₽"],["Lada 2107","50 000 ₽","70 000 ₽"],["Ig 27151","15 000 ₽","20 000 ₽"],["Lada 2109","70 000 ₽","85 000 ₽"],["Honda CRX","70 000 ₽","90 000 ₽"],["Volkswagen Golf 2","75 000 ₽","90 000 ₽"],["Audi 80 Avant","100 000 ₽","130 000 ₽"],["Lada 2115","90 000 ₽","100 000 ₽"],["Lada 2108","65 000 ₽","80 000 ₽"],["Daewoo Lanos","90 000 ₽","110 000 ₽"],["Lada 2106","60 000 ₽","70 000 ₽"],["Lada 2114","100 000 ₽","130 000 ₽"],["Lada 2110","60 000 ₽","80 000 ₽"],["Lada 21045","30 000 ₽","35 000 ₽"],["Lada 2105","50 000 ₽","65 000 ₽"],["Alfa Romeo 155","85 000 ₽","95 000 ₽"],["Lada 21099","80 000 ₽","90 000 ₽"],["LADA 21123 купе","110 000 ₽","130 000 ₽"],["LADA 2112","80 000 ₽","90 000 ₽"],["KIA Rio","210 000 ₽","250 000 ₽"],["Skoda Octavia A4 VRS","110 000 ₽","140 000 ₽"],["Audi A4 B5","140 000 ₽","180 000 ₽"],["Renault Logan","110 000 ₽","140 000 ₽"],["Honda Civic Si","180 000 ₽","220 000 ₽"],["BMW 323i E30","200 000 ₽","250 000 ₽"],["Lada Priora","150 000 ₽","180 000 ₽"],["Lada Vesta","240 000 ₽","280 000 ₽"],["BMW M5 E28","90 000 ₽","120 000 ₽"],["Saab 9.3 Turbo","250 000 ₽","300 000 ₽"],["Daewoo Matiz","100 000 ₽","130 000 ₽"],["ZAZ 1102 Tavria","35 000 ₽","40 000 ₽"],["GAZ 24 Волга","140 000 ₽","157 000 ₽"],["Honda Ami","100 000 ₽","112 000 ₽"],["Lada 2103","60 000 ₽","67 000 ₽"],["Lada 2113","76 000 ₽","85 000 ₽"],["Audi A4 B6 Avant","200 000 ₽","224 000 ₽"],["Lada 2102","40 000 ₽","49 000 ₽"],["Volkswagen Passat B3","80 000 ₽","110 000 ₽"]],
+      med: [["BMW X5 E53","850 000 ₽","920 000 ₽"],["Mazda RX-7 Spirit R","1 040 000 ₽","1 133 600 ₽"],["Ford Raptor F150","1 820 000 ₽","1 983 800 ₽"],["BMW 540i E34","585 000 ₽","637 650 ₽"],["Mercedes E420 W210","507 000 ₽","552 630 ₽"],["BMW 540i E39","845 000 ₽","920 050 ₽"],["Toyota Supra A80","1 000 000 ₽","1 150 000 ₽"],["Subaru WRX STI","1 170 000 ₽","1 275 300 ₽"],["Nissan Skyline ER34","780 000 ₽","850 200 ₽"],["Mercedes S600 W140","900 000 ₽","1 000 000 ₽"],["Volkswagen Golf R","1 300 000 ₽","1 400 000 ₽"],["BMW M5 E60","1 950 000 ₽","2 200 000 ₽"],["BMW X6M E71","1 690 000 ₽","1 842 100 ₽"],["BMW X5M E70","1 625 000 ₽","1 771 250 ₽"],["Toyota Chaser","715 000 ₽","779 350 ₽"],["BMW 750i E38","910 000 ₽","991 900 ₽"],["Toyota Mark II 90","682 500 ₽","743 925 ₽"],["Toyota Camry V55","975 000 ₽","1 062 750 ₽"],["Mazda 3 MPS","487 500 ₽","531 375 ₽"],["Mazda MX-5","663 000 ₽","722 670 ₽"],["Nissan Silvia S15","1 040 000 ₽","1 133 600 ₽"],["Jeep Grand Cherokee","400 000 ₽","500 000 ₽"],["Toyota Camry V40","552 500 ₽","602 225 ₽"],["Subaru Impreza WRX STI","975 000 ₽","1 062 750 ₽"],["Audi S3 8V","1 365 000 ₽","1 487 850 ₽"],["Audi RS6 C5","975 000 ₽","1 062 750 ₽"],["Mercedes E55 AMG W211","2 080 000 ₽","2 267 200 ₽"],["Mercedes ML63 AMG W164","1 100 000 ₽","1 250 000 ₽"],["BMW 740 F02","1 885 000 ₽","2 055 650 ₽"],["Volvo XC90","2 047 500 ₽","2 231 775 ₽"],["Mercedes C63 W204","2 080 000 ₽","2 267 200 ₽"],["Toyota Mark II 100","780 000 ₽","850 200 ₽"],["Honda Civic TypeR FK8","1 300 000 ₽","1 417 000 ₽"],["BMW M3 E46","845 000 ₽","920 050 ₽"],["BMW 1M E82","1 235 000 ₽","1 346 150 ₽"],["Honda Civic TypeR FN2","585 000 ₽","637 650 ₽"],["Skoda Octavia VRS","1 000 000 ₽","1 200 000 ₽"],["Nissan 370Z","1 170 000 ₽","1 275 300 ₽"],["BMW M3 E92","1 625 000 ₽","1 771 250 ₽"],["Toyota LC 100","1 040 000 ₽","1 133 600 ₽"],["Land Rover Defender","3 120 000 ₽","3 400 800 ₽"],["Chevrolet Suburban","780 000 ₽","850 200 ₽"],["Mercedes E320 CDI W210","455 000 ₽","495 950 ₽"],["Mercedes GL63 AMG X166","2 470 000 ₽","2 692 300 ₽"],["Subaru Impreza WRX STI","780 000 ₽","850 200 ₽"],["Volkswagen Touareg II","1 235 000 ₽","1 346 150 ₽"],["Lexus RC-F","2 600 000 ₽","2 834 000 ₽"],["Hyundai Santa Fe","455 000 ₽","495 950 ₽"],["KIA K5","1 950 000 ₽","2 125 500 ₽"],["BMW 330D G20","2 600 000 ₽","2 834 000 ₽"],["Chevrolet Corvette C6","2 925 000 ₽","3 188 250 ₽"],["Volkswagen Passat B8","975 000 ₽","1 062 750 ₽"],["Toyota LC 200 II","2 600 000 ₽","2 834 000 ₽"],["Mercedes E63 AMG W211","2 470 000 ₽","2 692 300 ₽"],["Nissan 180SX","780 000 ₽","850 200 ₽"]],
+      high: [["Porsche Cayenne","6 000 000 ₽","6 480 000 ₽"],["Mercedes E63s AMG W212","3 000 000 ₽","3 240 000 ₽"],["Audi RS-6 C7 Avant","3 600 000 ₽","3 888 000 ₽"],["Rolls-Royce Phantom VII","9 900 000 ₽","10 692 000 ₽"],["Mercedes C63s AMG C205","3 600 000 ₽","3 888 000 ₽"],["Lamborghini Aventador SV","17 400 000 ₽","18 792 000 ₽"],["Maybach X222","7 800 000 ₽","8 424 000 ₽"],["Ferrari 488","12 000 000 ₽","12 960 000 ₽"],["BMW G30 540i LCI","3 600 000 ₽","3 888 000 ₽"],["Toyota LC 200 III","4 200 000 ₽","4 536 000 ₽"],["Land Rover SVA","6 000 000 ₽","6 480 000 ₽"],["Dodge Challenger SRT","3 360 000 ₽","3 628 800 ₽"],["Rolls-Royce Wraith","12 000 000 ₽","12 960 000 ₽"],["Nissan GT-R 35","4 080 000 ₽","4 406 400 ₽"],["Bentley Bentayga","9 000 000 ₽","9 720 000 ₽"],["Porsche 911 / 991","7 440 000 ₽","8 035 200 ₽"],["Ferrari Portofino","7 200 000 ₽","7 776 000 ₽"],["Tesla Model S","3 600 000 ₽","3 888 000 ₽"],["BMW M4 F82 LCI","2 700 000 ₽","2 916 000 ₽"],["Mercedes G63 EXE","10 800 000 ₽","11 664 000 ₽"],["Mercedes G63 W463 TT","4 200 000 ₽","4 536 000 ₽"],["Porsche Panamera","5 040 000 ₽","5 443 200 ₽"],["Lamborghini Huracan","13 200 000 ₽","14 256 000 ₽"],["BMW M2 F87","3 780 000 ₽","4 082 400 ₽"],["Mercedes G63 AMG 6x6","21 000 000 ₽","22 680 000 ₽"],["Mercedes G63 AMG W463 III","11 400 000 ₽","12 312 000 ₽"],["Ford Mustang GT","3 300 000 ₽","3 564 000 ₽"],["BMW X5M F85","4 200 000 ₽","4 536 000 ₽"],["Maybach S650 Pullman","15 000 000 ₽","16 200 000 ₽"],["Lamborghini Urus","15 000 000 ₽","16 200 000 ₽"],["Lexus LX570","4 800 000 ₽","5 184 000 ₽"],["Jeep GC Trackhawk","6 000 000 ₽","6 480 000 ₽"],["Cadillac Escalade","6 000 000 ₽","6 480 000 ₽"],["Mercedes 560 Sec C126","6 000 000 ₽","6 480 000 ₽"],["Audi RS-7 C7","3 180 000 ₽","3 434 400 ₽"],["BMW X6M F86","4 200 000 ₽","4 536 000 ₽"],["BMW M5 F90 CS","13 200 000 ₽","14 256 000 ₽"],["BMW M5 E39","6 000 000 ₽","7 000 000 ₽"],["Maserati Levante","3 600 000 ₽","3 888 000 ₽"],["BMW i8 Roadster","6 900 000 ₽","7 452 000 ₽"],["Chevrolet Corvette C7","4 800 000 ₽","5 184 000 ₽"],["Mercedes GT63s AMG S","8 640 000 ₽","9 331 200 ₽"],["McLaren P1","12 000 000 ₽","12 960 000 ₽"],["Mercedes e63s AMG W213","7 380 000 ₽","7 970 400 ₽"],["Range Rover Velar","3 600 000 ₽","3 888 000 ₽"],["BMW X7 G07","7 200 000 ₽","7 776 000 ₽"],["BMW M5 F90 LCI","13 500 000 ₽","14 720 000 ₽"],["Acura NSX","9 000 000 ₽","9 720 000 ₽"],["BMW M8 F92","8 700 000 ₽","9 396 000 ₽"],["BMW M4 G82","6 600 000 ₽","7 128 000 ₽"],["Mercedes S63 AMG V222","6 600 000 ₽","7 128 000 ₽"],["Mercedes S500 W222","3 600 000 ₽","3 888 000 ₽"],["Chevrolet Corvette C8","8 100 000 ₽","8 748 000 ₽"],["Ferrari F40","24 000 000 ₽","25 920 000 ₽"],["Lexus LFA","12 000 000 ₽","12 960 000 ₽"],["Porsche 911 Turbo S","15 000 000 ₽","16 200 000 ₽"],["Mercedes SL65 AMG","6 000 000 ₽","6 480 000 ₽"],["Ferrari F430","9 000 000 ₽","9 720 000 ₽"],["BMW X6M F96","9 000 000 ₽","9 720 000 ₽"],["Porsche Taycan Turbo S","12 000 000 ₽","12 960 000 ₽"],["Lamborghini Countach","15 000 000 ₽","16 200 000 ₽"],["Porsche 911 Turbo 930","8 400 000 ₽","9 072 000 ₽"],["BMW M6 F13","2 400 000 ₽","2 592 000 ₽"],["Chevrolet Camaro ZL1","3 000 000 ₽","3 240 000 ₽"],["BMW M635CSI E24","9 600 000 ₽","10 368 000 ₽"],["BMW Z8 E52","18 000 000 ₽","19 440 000 ₽"],["Lamborghini Aventador SVJ","30 000 000 ₽","32 400 000 ₽"],["BMW M5 F10","2 400 000 ₽","2 592 000 ₽"],["Mercedes AMG GT R","12 000 000 ₽","12 960 000 ₽"],["Dodge Charger SRT","3 000 000 ₽","3 240 000 ₽"],["Koenigsegg Jesko","72 000 000 ₽","77 760 000 ₽"],["Austin Seven 24","90 000 000 ₽","97 200 000 ₽"],["McLaren Senna","60 000 000 ₽","64 800 000 ₽"],["Ford VelociRaptor","10 800 000 ₽","11 664 000 ₽"],["Audi RS7 C8","6 600 000 ₽","7 128 000 ₽"],["Audi RS4 B9 Avant","4 200 000 ₽","4 536 000 ₽"],["Audi RS5 F5","3 300 000 ₽","3 564 000 ₽"],["Audi RSQ8","9 000 000 ₽","9 720 000 ₽"],["BMW X7 G07 LCI","9 000 000 ₽","9 720 000 ₽"],["Mercedes C63 C204 BS","4 800 000 ₽","5 184 000 ₽"],["Mercedes S63 AMG V223","12 000 000 ₽","12 960 000 ₽"],["Mercedes S500 W223","7 200 000 ₽","7 776 000 ₽"],["Audi TTRS","3 000 000 ₽","3 564 000 ₽"],["Mercedes GLS 63 AMG","10 800 000 ₽","11 664 000 ₽"],["Dodge RAM TRX","9 000 000 ₽","9 720 000 ₽"],["Audi Etron GT","7 800 000 ₽","8 424 000 ₽"],["BMW X5M F95","9 000 000 ₽","9 720 000 ₽"],["Ferrari 512 TR","12 000 000 ₽","12 960 000 ₽"],["Porshe 959","8 400 000 ₽","9 072 000 ₽"],["BMW M3 F80 CS","5 400 000 ₽","5 832 000 ₽"],["Porsche Cayenne Coupe","9 600 000 ₽","10 368 000 ₽"],["Mercedes V Class","8 000 000 ₽","9 000 000 ₽"],["Audi RS6 C8 Avant","6 700 000 ₽","7 400 000 ₽"],["Bentley Flying Spur","21 000 000 ₽","22 680 000 ₽"],["BMW M3 G81","7 800 000 ₽","8 424 000 ₽"],["BMW 760i G70","12 000 000 ₽","12 960 000 ₽"],["Mercedes E63s A.W213 Estate","9 000 000 ₽","9 720 000 ₽"],["BMW XM","15 000 000 ₽","16 200 000 ₽"],["BMW M8 GC","10 200 000 ₽","11 016 000 ₽"],["Ferrari 812","21 000 000 ₽","22 680 000 ₽"],["Maybach GLS 600 X167","17 400 000 ₽","18 792 000 ₽"],["RollsRoyce Cullinan II","37 200 000 ₽","40 176 000 ₽"],["Koenigsegg Gemera","75 000 000 ₽","81 000 000 ₽"],["Audi S8 D4","3 600 000 ₽","3 888 000 ₽"],["Mercedes GLE63S W166","3 300 000 ₽","3 564 000 ₽"],["Mercedes GLE63s C292","3 300 000 ₽","3 564 000 ₽"],["Mercedes GLE63s W167","7 500 000 ₽","8 100 000 ₽"],["Lamborghini Urus FL","16 500 000 ₽","17 820 000 ₽"]]
     };
 
     let currentFaqCategory = 'low';
@@ -1494,14 +1505,12 @@
       const query = (faqSearchInput ? faqSearchInput.value : '').trim().toLowerCase();
       const filtered = list.filter(([name]) => name.toLowerCase().includes(query));
       if (faqCountBadge) faqCountBadge.innerText = `Авто: ${filtered.length}`;
-
       if (filtered.length === 0) {
         faqTableBody.innerHTML = `<tr><td colspan="4" style="text-align:center; padding:2rem; color:var(--text-dim)">Не найдено.</td></tr>`;
         return;
       }
-
       faqTableBody.innerHTML = filtered.map(([name, buy, sell]) => `
-        <tr data-copy-car="${name}" data-buy="${buy}" data-sell="${sell}" title="Кликните, чтобы скопировать">
+        <tr data-copy-car="${name}" data-buy="${buy}" data-sell="${sell}">
           <td><div class="faq-car-name"><span style="color:var(--accent-highlight)">•</span><span>${name}</span></div></td>
           <td class="faq-price-buy">${buy}</td>
           <td class="faq-price-sell">${sell}</td>
@@ -1510,7 +1519,6 @@
       `).join('');
     }
 
-    // Обработчик переключения категории цен (только те, у которых data-sub)
     faqSubnavBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         faqSubnavBtns.forEach(b => b.classList.remove('active'));
@@ -1522,7 +1530,6 @@
         renderFaqTable();
       });
     });
-
     if (faqSearchInput) faqSearchInput.addEventListener('input', renderFaqTable);
     if (faqTableBody) {
       faqTableBody.addEventListener('click', (e) => {
@@ -1532,23 +1539,22 @@
       });
     }
 
-    // Никнеймы
+    /* NICKNAMES */
     const DB = {
-      russiaMaleNames: ["Aleksandr", "Dmitriy", "Sergey", "Andrey", "Mikhail", "Artem", "Ivan", "Daniil", "Kirill", "Nikita", "Maxim", "Vladimir", "Yaroslav", "Vladislav", "Ilya", "Matvey", "Roman", "Denis", "Pavel", "Timofey", "Gleb", "Bogdan", "Egor", "Vadim", "Oleg", "Anton", "Igor", "Vitaliy", "Stanislav", "Ruslan", "Viktor", "Timur", "Alexey", "Nikolay", "Stepan", "Yuri", "Konstantin", "Mark", "Lev", "Semyon", "Arseniy", "Georgiy", "Vyacheslav", "Valentin", "Petr", "Vasiliy", "Eduard", "Anatoliy", "Boris", "German", "Kliment", "Saveliy", "Fedor", "Arkadiy", "Trofim", "Elisey", "Vsevolod", "Rodion", "Iosif", "Emil", "Kamil", "Rinat", "Damir", "Marat", "Alan", "Artur", "Robert", "David", "Makar", "Yegor", "Arsen", "Matvey", "Miroslav", "Savva"],
-      usMaleNames: ["James", "John", "Robert", "Michael", "William", "David", "Richard", "Thomas", "Daniel", "Matthew"],
-      italyMaleNames: ["Marco", "Matteo", "Giovanni", "Leonardo", "Alessandro", "Lorenzo", "Federico", "Antonio", "Enzo"],
-      japanMaleNames: ["Kenji", "Ren", "Hiroshi", "Daiki", "Kazuto", "Ryota", "Shinji", "Takeshi", "Hayato"],
-      russiaFemaleNames: ["Alina", "Polina", "Daria", "Anna", "Ekaterina", "Anastasia", "Milana", "Sofia", "Kristina", "Elena", "Yulia", "Veronika", "Maria", "Victoria", "Diana", "Ksenia", "Arina", "Valeria", "Elizaveta", "Kira", "Eva", "Varvara", "Vasilisa", "Alisa", "Alexandra", "Angelina", "Vladislava", "Ulyana", "Yana", "Zlata", "Margarita", "Vera", "Nadezhda", "Lyubov", "Olga", "Irina", "Svetlana", "Natalia", "Marina", "Galina", "Tatyana", "Larisa", "Ludmila", "Oksana", "Alyona", "Inna", "Raisa", "Regina", "Stella", "Emma", "Bella", "Yeseniya", "Zoya", "Lidia", "Maya", "Nina", "Olesya", "Rimma", "Rosa", "Tamara", "Elina", "Yuliana", "Aida", "Aigul", "Aliya", "Amina", "Karina", "Leysan", "Liliya", "Elvira", "Gulnara", "Zukhra", "Aisylu", "Chulpan", "Rezeda", "Landysh"],
-      usFemaleNames: ["Emily", "Jessica", "Ashley", "Sarah", "Amanda", "Megan", "Elizabeth", "Chloe", "Emma", "Olivia"],
-      italyFemaleNames: ["Giulia", "Sofia", "Chiara", "Francesca", "Alessia", "Elena", "Martina", "Valentina"],
-      japanFemaleNames: ["Yuki", "Sakura", "Hana", "Aoi", "Rin", "Mei", "Nana", "Yui", "Kaori"],
-      russiaSurnames: ["Morozov", "Volkov", "Kuznetsov", "Voronov", "Smirnov", "Popov", "Sokolov", "Lebedev", "Novikov", "Medvedev", "Solovyov", "Zaytsev", "Pavlov", "Bogdanov", "Fedorov", "Mikhailov", "Belyaev", "Tarasov", "Belov", "Komarov", "Orlov", "Makarov", "Kovalev", "Romanov", "Bratskiy", "Raskolnikov", "Korshun", "Zverev", "Severov", "Molot", "Voronin", "Stepanov", "Nikolaev", "Egorov", "Kozlov", "Semenov", "Golubev", "Vinogradov", "Vorobyov", "Krylov", "Nikitin", "Kuzmin", "Petrov", "Scherbakov", "Yakovlev", "Sorokin", "Sergeev", "Zakharov", "Ivanov", "Dmitriev", "Kiselev", "Ilyin", "Gusev", "Titov", "Kudryavtsev", "Baranov", "Kulikov", "Alekseev"],
-      usSurnames: ["Smith", "Johnson", "Williams", "Brown", "Jones", "Miller", "Davis", "Wilson"],
-      italySurnames: ["Moretti", "Rossi", "Romano", "Ferrari", "Esposito", "Ricci", "Marino"],
-      japanSurnames: ["Sato", "Suzuki", "Takahashi", "Tanaka", "Watanabe", "Ito", "Yamamoto"],
-      fixedSurnames: ["Borz", "Gasparyan", "Mirzoyan", "Korshun", "Molot", "Smith", "Johnson", "Rossi", "Ferrari", "Sato"]
+      russiaMaleNames: ["Aleksandr","Dmitriy","Sergey","Andrey","Mikhail","Artem","Ivan","Daniil","Kirill","Nikita","Maxim","Vladimir","Yaroslav","Vladislav","Ilya","Matvey","Roman","Denis","Pavel","Timofey","Gleb","Bogdan","Egor","Vadim","Oleg","Anton","Igor","Vitaliy","Stanislav","Ruslan","Viktor","Timur","Alexey","Nikolay","Stepan","Yuri","Konstantin","Mark","Lev","Semyon","Arseniy","Georgiy","Vyacheslav","Valentin","Petr","Vasiliy","Eduard","Anatoliy","Boris","German","Kliment","Saveliy","Fedor","Arkadiy","Trofim","Elisey","Vsevolod","Rodion","Iosif","Emil","Kamil","Rinat","Damir","Marat","Alan","Artur","Robert","David","Makar","Yegor","Arsen","Miroslav","Savva"],
+      usMaleNames: ["James","John","Robert","Michael","William","David","Richard","Thomas","Daniel","Matthew"],
+      italyMaleNames: ["Marco","Matteo","Giovanni","Leonardo","Alessandro","Lorenzo","Federico","Antonio","Enzo"],
+      japanMaleNames: ["Kenji","Ren","Hiroshi","Daiki","Kazuto","Ryota","Shinji","Takeshi","Hayato"],
+      russiaFemaleNames: ["Alina","Polina","Daria","Anna","Ekaterina","Anastasia","Milana","Sofia","Kristina","Elena","Yulia","Veronika","Maria","Victoria","Diana","Ksenia","Arina","Valeria","Elizaveta","Kira","Eva","Varvara","Vasilisa","Alisa","Alexandra","Angelina","Vladislava","Ulyana","Yana","Zlata","Margarita","Vera","Nadezhda","Lyubov","Olga","Irina","Svetlana","Natalia","Marina","Galina","Tatyana","Larisa","Ludmila","Oksana","Alyona","Inna","Raisa","Regina","Stella","Emma","Bella","Yeseniya","Zoya","Lidia","Maya","Nina","Olesya","Rimma","Rosa","Tamara","Elina","Yuliana","Aida","Aigul","Aliya","Amina","Karina","Leysan","Liliya","Elvira","Gulnara","Zukhra","Aisylu","Chulpan","Rezeda","Landysh"],
+      usFemaleNames: ["Emily","Jessica","Ashley","Sarah","Amanda","Megan","Elizabeth","Chloe","Emma","Olivia"],
+      italyFemaleNames: ["Giulia","Sofia","Chiara","Francesca","Alessia","Elena","Martina","Valentina"],
+      japanFemaleNames: ["Yuki","Sakura","Hana","Aoi","Rin","Mei","Nana","Yui","Kaori"],
+      russiaSurnames: ["Morozov","Volkov","Kuznetsov","Voronov","Smirnov","Popov","Sokolov","Lebedev","Novikov","Medvedev","Solovyov","Zaytsev","Pavlov","Bogdanov","Fedorov","Mikhailov","Belyaev","Tarasov","Belov","Komarov","Orlov","Makarov","Kovalev","Romanov","Bratskiy","Raskolnikov","Korshun","Zverev","Severov","Molot","Voronin","Stepanov","Nikolaev","Egorov","Kozlov","Semenov","Golubev","Vinogradov","Vorobyov","Krylov","Nikitin","Kuzmin","Petrov","Scherbakov","Yakovlev","Sorokin","Sergeev","Zakharov","Ivanov","Dmitriev","Kiselev","Ilyin","Gusev","Titov","Kudryavtsev","Baranov","Kulikov","Alekseev"],
+      usSurnames: ["Smith","Johnson","Williams","Brown","Jones","Miller","Davis","Wilson"],
+      italySurnames: ["Moretti","Rossi","Romano","Ferrari","Esposito","Ricci","Marino"],
+      japanSurnames: ["Sato","Suzuki","Takahashi","Tanaka","Watanabe","Ito","Yamamoto"],
+      fixedSurnames: ["Borz","Gasparyan","Mirzoyan","Korshun","Molot","Smith","Johnson","Rossi","Ferrari","Sato"]
     };
-
     function declineFemaleSurname(en) {
       if (DB.fixedSurnames.includes(en)) return en;
       if (en.endsWith("ov") || en.endsWith("ev") || en.endsWith("in")) return en + "a";
@@ -1556,11 +1562,9 @@
       if (en.endsWith("sky")) return en.slice(0, -3) + "skaya";
       return en;
     }
-
     const rand = arr => arr[(Math.random() * arr.length) | 0];
-
     function createNickname(countryCode, isFemale, customSurname) {
-      let pool = countryCode === 'all' ? ['russia', 'russia', 'us', 'italy', 'japan'] : [countryCode];
+      let pool = countryCode === 'all' ? ['russia','russia','us','italy','japan'] : [countryCode];
       let active = rand(pool);
       let baseSurname = customSurname;
       if (!baseSurname) {
@@ -1588,7 +1592,6 @@
     let currentList = [];
     let recentHistory = JSON.parse(localStorage.getItem('roleid_history_v1') || '[]');
     let isSpinning = false;
-
     function saveHistory(nick) {
       if (!recentHistory.includes(nick)) {
         recentHistory.unshift(nick);
@@ -1597,7 +1600,6 @@
         renderHistory();
       }
     }
-
     function renderHistory() {
       const container = document.getElementById('history-chips');
       const countEl = document.getElementById('history-count');
@@ -1606,7 +1608,6 @@
       if (!recentHistory.length) { container.innerHTML = `<span style="color:var(--text-dim); font-size:0.85rem;">История пуста.</span>`; return; }
       container.innerHTML = recentHistory.map(n => `<div class="nick-chip" data-copy="${n}"><span>${n}</span></div>`).join('');
     }
-
     const namesGrid = document.getElementById('names-grid');
     const btnGenerate = document.getElementById('btn-generate');
 
@@ -1617,7 +1618,6 @@
       const count = Math.min(parseInt(document.getElementById('filter-count')?.value, 10) || 3, 6);
       let customSurname = document.getElementById('custom-surname')?.value.trim() || '';
       if (customSurname) customSurname = customSurname.charAt(0).toUpperCase() + customSurname.slice(1);
-
       const results = [], seen = new Set();
       let tries = count * 8;
       while (results.length < count && tries-- > 0) {
@@ -1628,7 +1628,6 @@
       currentList = results;
       isSpinning = true;
       if (btnGenerate) btnGenerate.disabled = true;
-
       const ITEM_HEIGHT = 38, DECOY_COUNT = 12;
       let html = '';
       for (let i = 0; i < currentList.length; i++) {
@@ -1645,7 +1644,6 @@
           </div>`;
       }
       namesGrid.innerHTML = html;
-
       let completed = 0;
       currentList.forEach((item, i) => {
         const reel = document.getElementById(`reel-${i}`);
@@ -1659,11 +1657,20 @@
         }, dur);
       });
     }
-
     namesGrid?.addEventListener('click', e => { const card = e.target.closest('.modern-card'); if (card?.dataset.nick) copyText(card.dataset.nick); });
     btnGenerate?.addEventListener('click', generate);
+    document.getElementById('btn-copy-all')?.addEventListener('click', () => {
+      if (!currentList.length) return;
+      copyText(currentList.map(i => i.nick).join('\n'));
+    });
+    document.getElementById('btn-clear-history')?.addEventListener('click', () => {
+      recentHistory = [];
+      localStorage.removeItem('roleid_history_v1');
+      renderHistory();
+      showToast('История очищена');
+    });
 
-    // Биографии
+    /* BIO */
     const BIO_TEMPLATES = {
       gos: ["С ранних лет проявлял интерес к закону. Окончив Нижегородскую академию МВД, поступил на службу, доказав верность присяге."],
       opg: ["Столкнувшись с несправедливостью улиц, быстро понял цену верному слову и силе. Сколотив круг надежных людей, завоевал авторитет среди бригад."],
@@ -1683,7 +1690,7 @@
     document.getElementById('btn-copy-unique-bb')?.addEventListener('click', () => { if (genBio) { copyText(genBio); showToast('BB-код скопирован!'); } });
     document.getElementById('btn-copy-unique-plain')?.addEventListener('click', () => { if (genBio) { copyText(genBio.replace(/\[\/?b\]/g, '')); showToast('Текст скопирован!'); } });
 
-    // Рандомайзер
+    /* RANDOM */
     let isRollingNumber = false;
     document.getElementById('btn-roll-number')?.addEventListener('click', () => {
       if (isRollingNumber) return;
@@ -1718,12 +1725,11 @@
       }, intervalTime);
     });
 
-    // Рулетка
+    /* WHEEL */
     const canvas = document.getElementById('roulette-canvas');
     const ctx = canvas?.getContext('2d');
     let wheelAngle = 0;
     let isWheelSpinning = false;
-
     function drawWheel() {
       if (!ctx || !canvas) return;
       const segs = (document.getElementById('wheel-segments-input')?.value || '1,2,3,4').split(',').map(s => s.trim()).filter(Boolean);
@@ -1751,9 +1757,7 @@
       ctx.fillStyle = '#0f1118';
       ctx.fill();
     }
-
     document.getElementById('wheel-segments-input')?.addEventListener('input', drawWheel);
-
     document.getElementById('btn-spin-wheel')?.addEventListener('click', () => {
       if (isWheelSpinning) return;
       const segs = (document.getElementById('wheel-segments-input')?.value || '1,2,3,4').split(',').map(s => s.trim()).filter(Boolean);
@@ -1789,7 +1793,7 @@
       requestAnimationFrame(animateWheel);
     });
 
-    // Утилиты
+    /* UTILS */
     const toast = document.getElementById('toast'), toastMsg = document.getElementById('toast-msg');
     function showToast(txt) { if (!toast || !toastMsg) return; toastMsg.innerText = txt; toast.classList.add('active'); setTimeout(() => toast.classList.remove('active'), 1800); }
     function copyText(str) { navigator.clipboard.writeText(str).then(() => showToast('Скопировано!')); }
@@ -1801,21 +1805,14 @@
     });
     document.getElementById('btn-close-qr')?.addEventListener('click', () => document.getElementById('qr-modal')?.classList.remove('open'));
 
-    /* ============================================================
-       ГОРЯЧИЕ КЛАВИШИ
-    ============================================================ */
+    /* KEYBOARD */
     document.addEventListener('keydown', (e) => {
-      // Space — генерация ников
       if (e.code === 'Space') {
         const tag = document.activeElement?.tagName;
         if (tag === 'INPUT' || tag === 'SELECT' || tag === 'TEXTAREA') return;
         const activeTab = document.querySelector('.tab-content.active');
-        if (activeTab?.id === 'tab-names') {
-          e.preventDefault();
-          generate();
-        }
+        if (activeTab?.id === 'tab-names') { e.preventDefault(); generate(); }
       }
-      // Escape — закрытие всего
       if (e.key === 'Escape') {
         closeSidebar();
         document.getElementById('qr-modal')?.classList.remove('open');
@@ -1823,7 +1820,7 @@
       }
     });
 
-    // Инициализация
+    /* INIT */
     applyLang(currentLang);
     renderHistory();
     renderFaqTable();
