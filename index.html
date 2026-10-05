@@ -95,6 +95,7 @@
       border-right: 1px solid var(--card-border); box-shadow: 15px 0 40px rgba(0,0,0,0.7);
       padding: 1.6rem 1.2rem; display: flex; flex-direction: column; gap: 1.5rem;
       transform: translateX(-100%); transition: transform 0.26s cubic-bezier(0.16,1,0.3,1); z-index: 1100;
+      overflow-y: auto;
     }
     .sidebar-drawer.open { transform: translateX(0); }
     .sidebar-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
@@ -115,13 +116,69 @@
     .sidebar-nav-item:hover { background: #181c27; color: #fff; border-color: rgba(255,255,255,0.2); transform: translateX(3px); }
     .sidebar-nav-item.active { background: rgba(192,132,252,0.12); color: #fff; border-color: var(--accent-highlight); box-shadow: 0 4px 15px rgba(192,132,252,0.15); }
 
-    .sidebar-footer { margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    /* ФУТЕР БОКОВОГО МЕНЮ — С СОЦСЕТЯМИ */
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 1.1rem;
+    }
     .sidebar-contact-btn {
       width: 100%; display: flex; align-items: center; gap: 0.8rem; padding: 0.75rem 0.95rem;
       border-radius: 12px; background: #12141c; border: 1px solid var(--card-border); color: var(--text-muted);
       text-decoration: none; transition: all 0.18s ease;
     }
     .sidebar-contact-btn:hover { background: #181c27; border-color: rgba(192,132,252,0.35); color: #fff; transform: translateY(-2px); }
+
+    .sidebar-social-title {
+      font-size: 0.68rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      padding: 0 0.2rem;
+    }
+
+    .sidebar-socials {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+    }
+
+    .social-icon-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 44px;
+      border-radius: 12px;
+      background: #12141c;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      transition: all 0.2s cubic-bezier(0.16,1,0.3,1);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+    }
+    .social-icon-btn::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, var(--accent-highlight), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    .social-icon-btn:hover {
+      color: #fff;
+      border-color: var(--accent-highlight);
+      background: rgba(192,132,252,0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(192,132,252,0.2);
+    }
+    .social-icon-btn:hover::before { opacity: 0.15; }
+    .social-icon-btn svg { width: 18px; height: 18px; position: relative; z-index: 1; }
 
     .container { position: relative; z-index: 1; width: 100%; max-width: 1200px; margin: 0 auto; padding: 2.2rem 1.5rem 1.5rem; flex: 1; display: flex; flex-direction: column; }
 
@@ -157,7 +214,7 @@
     .tab-content { display: none; animation: cardEntrance 0.32s cubic-bezier(0.16,1,0.3,1) both; }
     .tab-content.active { display: block; }
 
-    /* ГЛАВНЫЙ ЭКРАН (SPLIT) */
+    /* ГЛАВНЫЙ ЭКРАН */
     .hero-split {
       flex: 1; display: grid; grid-template-columns: 1fr 1fr;
       align-items: center; gap: 4rem; padding: 3rem 0;
@@ -232,7 +289,7 @@
 
     @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(24px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    /* ПЛАВАЮЩИЕ КАРТОЧКИ — ИСПРАВЛЕНО */
+    /* ПЛАВАЮЩИЕ КАРТОЧКИ */
     .hero-visual { position: relative; width: 100%; height: 100%; min-height: 540px; }
     .visual-card {
       position: absolute; width: 130px; height: 130px;
@@ -349,9 +406,7 @@
     }
     .news-react-pick-btn:hover { background: #181c27; transform: scale(1.15); }
 
-    /* ============================================================
-       ТУР (ПОЛНОСТЬЮ ПЕРЕДЕЛАННЫЙ)
-    ============================================================ */
+    /* ТУР */
     .tour-overlay {
       position: fixed; inset: 0;
       background: rgba(5, 5, 8, 0);
@@ -395,7 +450,6 @@
       pointer-events: none;
     }
 
-    /* Прогресс-бар сверху */
     .tour-progress-bar {
       position: absolute; top: 0; left: 0; right: 0;
       height: 3px;
@@ -419,10 +473,7 @@
       margin-bottom: 1.6rem;
       display: flex; align-items: center; gap: 0.5rem;
     }
-    .tour-counter strong {
-      color: var(--accent-highlight);
-      font-weight: 800;
-    }
+    .tour-counter strong { color: var(--accent-highlight); font-weight: 800; }
 
     .tour-icon-wrap {
       position: relative;
@@ -480,7 +531,6 @@
       color: var(--accent-highlight);
     }
 
-    /* Анимации контента при смене шага */
     @keyframes tourIconIn {
       0% { transform: scale(0.4) rotate(-15deg); opacity: 0; }
       100% { transform: scale(1) rotate(0); opacity: 1; }
@@ -555,31 +605,104 @@
     }
 
     /* FAQ */
-    .faq-section-header { margin-bottom: 1.75rem; }
+    .faq-section-header { margin-bottom: 2rem; }
     .faq-section-header h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
     .faq-section-header p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
 
+    /* ПЕРЕДЕЛАННЫЙ САБНАВ FAQ */
     .faq-subnav {
-      display: flex; gap: 0.3rem; padding: 0.35rem;
-      background: #0a0c12; border: 1px solid var(--card-border);
-      border-radius: 14px; margin-bottom: 2rem;
-      overflow-x: auto; scrollbar-width: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      margin-bottom: 2rem;
     }
-    .faq-subnav::-webkit-scrollbar { display: none; }
     .faq-subnav-btn {
-      flex: 1; min-width: 150px; padding: 0.7rem 1rem;
-      background: transparent; border: none; border-radius: 10px;
-      color: var(--text-muted); font-family: inherit;
-      font-size: 0.86rem; font-weight: 700; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      transition: all 0.2s ease; white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1.05rem 1.15rem;
+      background: #0b0d13;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
     }
-    .faq-subnav-btn:hover { color: #fff; background: rgba(255,255,255,0.03); }
-    .faq-subnav-btn.active {
-      background: rgba(192, 132, 252, 0.12);
+    .faq-subnav-btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, var(--accent-highlight), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+      mix-blend-mode: overlay;
+    }
+    .faq-subnav-btn:hover {
+      background: #12141c;
+      border-color: rgba(255,255,255,0.15);
       color: #fff;
-      box-shadow: inset 0 0 0 1px var(--accent-highlight);
+      transform: translateY(-2px);
     }
+    .faq-subnav-btn:hover::before { opacity: 0.08; }
+    .faq-subnav-btn.active {
+      background: linear-gradient(180deg, rgba(192,132,252,0.1), rgba(192,132,252,0.02));
+      border-color: var(--accent-highlight);
+      color: #fff;
+      box-shadow: 0 10px 28px rgba(192,132,252,0.18), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .faq-subnav-btn.active::before { opacity: 0.15; }
+
+    .faq-subnav-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: #141720;
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 1.25rem;
+      line-height: 1;
+      transition: all 0.25s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .faq-subnav-btn.active .faq-subnav-icon {
+      background: rgba(192,132,252,0.15);
+      border-color: rgba(192,132,252,0.35);
+      transform: scale(1.05);
+      box-shadow: 0 6px 18px rgba(192,132,252,0.25);
+    }
+
+    .faq-subnav-label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      position: relative;
+      z-index: 1;
+      line-height: 1.2;
+    }
+    .faq-subnav-label span {
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+    .faq-subnav-label small {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.25s ease;
+    }
+    .faq-subnav-btn.active .faq-subnav-label small { color: var(--accent-highlight); }
 
     .faq-panel { display: none; animation: cardEntrance 0.28s ease both; }
     .faq-panel.active { display: block; }
@@ -792,12 +915,6 @@
     }
     .creator-box { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); }
     .creator-name { color: #fff; font-weight: 700; }
-    .social-links { display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap; justify-content: center; }
-    .social-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem; background: #12151e; border: 1px solid var(--card-border);
-      color: var(--text-muted); text-decoration: none; padding: 0.45rem 0.95rem; border-radius: 12px; font-size: 0.8rem; font-weight: 600; transition: all 0.18s ease;
-    }
-    .social-btn:hover { transform: translateY(-2px); color: #fff; }
 
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 0; min-height: auto; }
@@ -810,7 +927,8 @@
       .actions-cluster { grid-template-columns: 1fr; }
       .bio-editor-grid { grid-template-columns: 1fr; }
       .faq-rules-list { grid-template-columns: 1fr; }
-      .faq-subnav-btn { min-width: 120px; font-size: 0.8rem; }
+      .faq-subnav { grid-template-columns: 1fr; }
+      .faq-subnav-btn { padding: 0.95rem 1rem; }
       .tour-modal { padding: 1.8rem 1.5rem 1.5rem; }
       .tour-title { font-size: 1.3rem; }
       .tour-desc { font-size: 0.88rem; }
@@ -889,13 +1007,29 @@
           <span style="font-size: 0.72rem; color: var(--text-dim);">info@roleid.ru</span>
         </div>
       </a>
+
+      <div class="sidebar-social-title" data-i18n="nav.social">Наши соц.сети</div>
+      <div class="sidebar-socials">
+        <a href="https://t.me/roleidnews" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Telegram — @roleidnews">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        </a>
+        <a href="https://youtube.com/@dcartier15?si=UNTOibU7RU9TVIek" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@donaldcartier15?_r=1&_t=ZS-99wiXiDjYgv" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.6 6.7a4.9 4.9 0 0 1-3.6-1.7 4.9 4.9 0 0 1-1-2.5v-.3h-3.3v13.1a2.6 2.6 0 1 1-1.9-2.5v-3.4a6 6 0 1 0 5.2 5.9V9.9a8.2 8.2 0 0 0 4.7 1.5V8.1a4.8 4.8 0 0 1-.1-1.4z"/></svg>
+        </a>
+        <a href="https://www.twitch.tv/dcartier15" target="_blank" rel="noopener noreferrer" class="social-icon-btn" title="Twitch">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+        </a>
+      </div>
     </div>
   </aside>
 
   <div class="container">
     <div class="top-toolbar">
       <div class="toolbar-left">
-        <button class="btn-top-util" id="btn-open-sidebar" data-tour-target="open-sidebar" title="Открыть боковое меню">
+        <button class="btn-top-util" id="btn-open-sidebar" title="Открыть боковое меню">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
           <span data-i18n="nav.sections">Разделы</span>
         </button>
@@ -1032,9 +1166,27 @@
         </div>
 
         <div class="faq-subnav">
-          <button class="faq-subnav-btn active" data-panel="faq-prices">💰 <span data-i18n="faq.tab.prices">Цены перекупа</span></button>
-          <button class="faq-subnav-btn" data-panel="faq-terms">📖 <span data-i18n="faq.tab.terms">Термины CRMP</span></button>
-          <button class="faq-subnav-btn" data-panel="faq-factions">🏛️ <span data-i18n="faq.tab.factions">Фракции</span></button>
+          <button class="faq-subnav-btn active" data-panel="faq-prices">
+            <span class="faq-subnav-icon">💰</span>
+            <span class="faq-subnav-label">
+              <span data-i18n="faq.tab.prices">Цены перекупа</span>
+              <small>Б/У рынок</small>
+            </span>
+          </button>
+          <button class="faq-subnav-btn" data-panel="faq-terms">
+            <span class="faq-subnav-icon">📖</span>
+            <span class="faq-subnav-label">
+              <span data-i18n="faq.tab.terms">Термины CRMP</span>
+              <small>Словарь</small>
+            </span>
+          </button>
+          <button class="faq-subnav-btn" data-panel="faq-factions">
+            <span class="faq-subnav-icon">🏛️</span>
+            <span class="faq-subnav-label">
+              <span data-i18n="faq.tab.factions">Фракции</span>
+              <small>Гос / Криминал</small>
+            </span>
+          </button>
         </div>
 
         <div class="faq-panel active" id="faq-prices">
@@ -1210,7 +1362,7 @@
     </div>
   </div>
 
-  <!-- КУРС ДЕЛА (ПОЛНОСТЬЮ ПЕРЕДЕЛАННЫЙ) -->
+  <!-- КУРС ДЕЛА -->
   <div class="tour-overlay" id="tour-overlay">
     <div class="tour-modal" id="tour-modal">
       <div class="tour-progress-bar">
@@ -1241,7 +1393,7 @@
   </div>
 
   <!-- ИИ-ЧАТ -->
-  <button class="ai-chat-fab" id="btn-toggle-ai-chat" data-tour-target="ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
+  <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
   <div class="ai-chat-modal" id="ai-chat-modal">
     <div class="ai-chat-header">
       <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #fff;">
@@ -1273,12 +1425,6 @@
 
   <footer>
     <div class="creator-box"><span data-i18n="footer.creator">Создатель проекта:</span><span class="creator-name">dcartier</span></div>
-    <div class="social-links">
-      <a href="https://t.me/dcartier15" target="_blank" rel="noopener noreferrer" class="social-btn">Telegram</a>
-      <a href="https://youtube.com/@dcartier15?si=UNTOibU7RU9TVIek" target="_blank" rel="noopener noreferrer" class="social-btn">YouTube</a>
-      <a href="https://www.tiktok.com/@donaldcartier15?_r=1&_t=ZS-99wiXiDjYgv" target="_blank" rel="noopener noreferrer" class="social-btn">TikTok</a>
-      <a href="https://www.twitch.tv/dcartier15" target="_blank" rel="noopener noreferrer" class="social-btn">Twitch</a>
-    </div>
     <div style="color: var(--text-dim); font-size: 0.75rem;">ROLEID &bull; Radmir RP Edition &bull; 2026</div>
   </footer>
 
@@ -1295,7 +1441,7 @@
         'nav.news': 'Новости и обновления', 'nav.names': 'Генератор RP ников',
         'nav.bio': 'RP Биографии', 'nav.random': 'Рандомайзер чисел',
         'nav.wheel': 'Рулетка (Колесо)', 'nav.tour': 'Курс дела (Обучение)',
-        'nav.contact': 'Связаться с нами',
+        'nav.contact': 'Связаться с нами', 'nav.social': 'Наши соц.сети',
         'hero.badge': 'ROLEID • RADMIR RP',
         'hero.subtitle': 'Экосистема инструментов, таблиц и аналитики для игроков серверов Radmir RP',
         'hero.cta': 'Перейти к разделам',
@@ -1318,7 +1464,7 @@
         'nav.news': 'News & Updates', 'nav.names': 'RP Nickname Generator',
         'nav.bio': 'RP Biographies', 'nav.random': 'Number Randomizer',
         'nav.wheel': 'Roulette (Wheel)', 'nav.tour': 'Guide (Tutorial)',
-        'nav.contact': 'Contact Us',
+        'nav.contact': 'Contact Us', 'nav.social': 'Our socials',
         'hero.badge': 'ROLEID • RADMIR RP',
         'hero.subtitle': 'Ecosystem of tools, tables and analytics for Radmir RP players',
         'hero.cta': 'Go to Sections',
@@ -1715,9 +1861,7 @@
 
     btnRefreshNews?.addEventListener('click', () => { loadProjectNews(); showToast('Лента обновлена!'); });
 
-    /* ============================================================
-       ТУР (КУРС ДЕЛА) — ПОЛНОСТЬЮ ПЕРЕДЕЛАН
-    ============================================================ */
+    /* ТУР */
     const TOUR_STEPS = [
       {
         icon: '👋',
@@ -1732,7 +1876,7 @@
       {
         icon: '💰',
         title: 'Как заработать первые деньги',
-        desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены скупки и продажи — в разделе <b>«Цены»</b>.'
+        desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.'
       },
       {
         icon: '🪪',
@@ -1748,7 +1892,6 @@
 
     let curTour = 0;
     const tourOverlay = document.getElementById('tour-overlay');
-    const tourModal = document.getElementById('tour-modal');
     const tourIcon = document.getElementById('tour-icon');
     const tourTitle = document.getElementById('tour-title');
     const tourDesc = document.getElementById('tour-desc');
@@ -1773,16 +1916,13 @@
       curTour = idx;
       const step = TOUR_STEPS[idx];
 
-      // Контент
       if (tourIcon) tourIcon.innerText = step.icon;
       if (tourTitle) tourTitle.innerText = step.title;
       if (tourDesc) tourDesc.innerHTML = step.desc;
 
-      // Счётчик и прогресс
       if (tourCounterVal) tourCounterVal.innerText = `${idx + 1} из ${TOUR_STEPS.length}`;
       if (tourProgressFill) tourProgressFill.style.width = `${((idx + 1) / TOUR_STEPS.length) * 100}%`;
 
-      // Точки
       if (tourDots) {
         tourDots.innerHTML = TOUR_STEPS.map((_, i) => {
           let cls = 'tour-dot';
@@ -1798,7 +1938,6 @@
         });
       }
 
-      // Кнопки
       if (btnTourBack) btnTourBack.disabled = idx === 0;
       if (btnTourNext) {
         if (idx === TOUR_STEPS.length - 1) {
@@ -1810,7 +1949,6 @@
         }
       }
 
-      // Реанимация
       reanimateTourContent();
     }
 
