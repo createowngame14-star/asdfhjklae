@@ -969,7 +969,7 @@
     .bio-editor-grid { display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 0.75rem; margin-bottom: 1rem; }
     .bio-result-card { background: #141720; border: 1px solid var(--card-border); border-radius: 16px; padding: 1.4rem; font-size: 0.92rem; line-height: 1.7; color: #e2e8f0; white-space: pre-line; max-height: 520px; overflow-y: auto; margin: 1.2rem 0; }
 
-    /* МОДАЛКИ И ИИ-ЧАТ */
+    /* МОДАЛКИ */
     .app-modal-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); z-index: 1000;
       display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
@@ -984,29 +984,6 @@
       position: absolute; top: 1rem; right: 1rem; background: #141720; border: 1px solid var(--card-border); color: var(--text-muted);
       border-radius: 50%; width: 32px; height: 32px; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
     }
-
-    .ai-chat-fab {
-      position: fixed; bottom: 2rem; right: 2rem; width: 52px; height: 52px; border-radius: 50%; background: var(--accent-flow);
-      border: 1px solid rgba(255,255,255,0.2); color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer;
-      box-shadow: 0 10px 25px rgba(99,102,241,0.35); z-index: 998; transition: transform 0.2s ease;
-    }
-    .ai-chat-fab:hover { transform: scale(1.08); }
-
-    .ai-chat-modal {
-      position: fixed; bottom: 5.8rem; right: 2rem; width: 360px; max-width: calc(100vw - 2.5rem); height: 480px;
-      background: #0f1118; border: 1px solid var(--card-border); border-radius: 20px; display: flex; flex-direction: column;
-      overflow: hidden; z-index: 999; opacity: 0; pointer-events: none; transform: translateY(20px) scale(0.96); transition: all 0.22s ease;
-    }
-    .ai-chat-modal.open { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
-
-    .ai-chat-header { padding: 0.85rem 1.1rem; background: #141720; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: space-between; }
-    .ai-chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.86rem; }
-    .ai-msg { max-width: 85%; padding: 0.65rem 0.9rem; border-radius: 14px; word-break: break-word; }
-    .ai-msg.bot { align-self: flex-start; background: #181c27; color: #f1f5f9; border: 1px solid var(--card-border); }
-    .ai-msg.user { align-self: flex-end; background: var(--accent-flow); color: #fff; }
-
-    .ai-chat-input-bar { padding: 0.75rem; background: #141720; display: flex; gap: 0.5rem; }
-    .ai-chat-input { flex: 1; background: #0b0d13; border: 1px solid var(--card-border); border-radius: 10px; padding: 0.5rem 0.8rem; color: #fff; outline: none; }
 
     .toast {
       position: fixed; bottom: 2rem; left: 2rem; background: #141720; border: 1px solid rgba(255,255,255,0.12);
@@ -1045,8 +1022,6 @@
     }
     @media (max-width: 500px) {
       .filters-cluster { grid-template-columns: 1fr; }
-      .ai-chat-fab { bottom: 1.5rem; right: 1.5rem; }
-      .ai-chat-modal { bottom: 5.5rem; right: 1.5rem; }
       .hero-title { font-size: 3.5rem; }
       .tour-icon-wrap { width: 76px; height: 76px; }
       .tour-icon { font-size: 2.2rem; }
@@ -1351,7 +1326,6 @@
 
           <div class="faq-content">
             <div class="faq-panel active" id="faq-prices">
-              <!-- ПЕРЕКЛЮЧАТЕЛЬ ТРЁХ БУ -->
               <div class="faq-prices-tabs">
                 <button class="faq-price-tab active" data-sub="low">🚗 Низкий БУ</button>
                 <button class="faq-price-tab" data-sub="med">🚙 Средний БУ</button>
@@ -1557,24 +1531,6 @@
     </div>
   </div>
 
-  <button class="ai-chat-fab" id="btn-toggle-ai-chat" title="Задать вопрос AI"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></button>
-  <div class="ai-chat-modal" id="ai-chat-modal">
-    <div class="ai-chat-header">
-      <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; font-weight: 700; color: #fff;">
-        <span style="width: 7px; height: 7px; border-radius: 50%; background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
-        <span>ROLEID Radmir Ассистент</span>
-      </div>
-      <button id="btn-close-ai-chat" style="background: transparent; border: none; color: var(--text-dim); font-size: 1.3rem; cursor: pointer;">&times;</button>
-    </div>
-    <div class="ai-chat-messages" id="ai-chat-messages">
-      <div class="ai-msg bot">Привет! Я официальный ИИ-помощник проекта ROLEID для Radmir RP. Подскажу цены, термины, бинды и правила. Что интересует?</div>
-    </div>
-    <div class="ai-chat-input-bar">
-      <input type="text" id="ai-chat-input" class="ai-chat-input" placeholder="Спросить..." autocomplete="off">
-      <button id="ai-chat-send" style="background: var(--accent-flow); border: none; border-radius: 10px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; color: #fff; cursor: pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
-    </div>
-  </div>
-
   <div class="app-modal-backdrop" id="qr-modal">
     <div class="app-modal-card" style="text-align: center;">
       <button class="btn-close-modal" id="btn-close-qr">&times;</button>
@@ -1593,7 +1549,6 @@
   </footer>
 
   <script>
-    const WORKER_URL = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
     const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
     const SERVERS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
 
@@ -1698,52 +1653,6 @@
       { name: 'Мафия', icon: '💼', type: 'crime', desc: 'Организованная преступность. Крупные сделки, влияние на бизнес.' },
       { name: 'Автошкола', icon: '🚗', type: 'civil', desc: 'Обучение вождению, выдача водительских прав.' }
     ];
-
-    const FREE_MODELS = [
-      "meta-llama/llama-3.3-70b-instruct:free",
-      "google/gemini-2.0-flash-exp:free"
-    ];
-    let chatHistory = [{ role: "system", content: "Ты официальный ИИ-помощник проекта ROLEID для Radmir RP. Отвечай кратко, уважительно и на русском языке." }];
-
-    const btnToggleChat = document.getElementById('btn-toggle-ai-chat');
-    const btnCloseChat = document.getElementById('btn-close-ai-chat');
-    const chatModal = document.getElementById('ai-chat-modal');
-    const chatInput = document.getElementById('ai-chat-input');
-    const btnSendChat = document.getElementById('ai-chat-send');
-    const chatMessages = document.getElementById('ai-chat-messages');
-
-    if (btnToggleChat && chatModal) btnToggleChat.addEventListener('click', () => { chatModal.classList.toggle('open'); if (chatModal.classList.contains('open')) chatInput.focus(); });
-    if (btnCloseChat && chatModal) btnCloseChat.addEventListener('click', () => chatModal.classList.remove('open'));
-
-    async function sendAiMessage() {
-      if (!chatInput) return;
-      const query = chatInput.value.trim();
-      if (!query) return;
-      chatMessages.innerHTML += `<div class="ai-msg user">${query}</div>`;
-      chatInput.value = '';
-      chatHistory.push({ role: "user", content: query });
-      const loading = document.createElement('div');
-      loading.className = 'ai-msg bot';
-      loading.innerText = 'ROLEID AI печатает...';
-      chatMessages.appendChild(loading);
-      let done = false;
-      for (const m of FREE_MODELS) {
-        try {
-          const res = await fetch(WORKER_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ model: m, messages: chatHistory, temperature: 0.7 }) });
-          if (!res.ok) continue;
-          const data = await res.json();
-          if (data.choices?.[0]?.message) {
-            loading.innerText = data.choices[0].message.content;
-            chatHistory.push({ role: "assistant", content: data.choices[0].message.content });
-            done = true; break;
-          }
-        } catch (e) {}
-      }
-      if (!done) loading.innerText = 'Ошибка связи с сервером.';
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    if (btnSendChat) btnSendChat.addEventListener('click', sendAiMessage);
-    if (chatInput) chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendAiMessage(); });
 
     const sidebarDrawer = document.getElementById('sidebar-drawer');
     const sidebarBackdrop = document.getElementById('sidebar-backdrop');
@@ -2099,7 +2008,7 @@
       { icon: '🎮', title: 'Что такое Radmir RP', desc: 'Огромный ролевой мир на 16+ серверах. Работы, фракции, перекуп авто — ты строишь собственную историю в Нижегородской области.' },
       { icon: '💰', title: 'Как заработать первые деньги', desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.' },
       { icon: '🪪', title: 'Правильный ник для сервера', desc: 'Ник в формате Имя_Фамилия, без цифр и мата. В разделе <b>«Ники»</b> генератор создаст одобренный ник под твою фаму. Бонус: нажми <kbd>Пробел</kbd> в разделе.' },
-      { icon: '🚀', title: 'Всё нужное — под рукой', desc: 'В <b>FAQ</b> собраны CRMP-термины, карточки фракций и цены. А если что-то непонятно — жми кнопку чата справа снизу.' }
+      { icon: '🚀', title: 'Всё нужное — под рукой', desc: 'В <b>FAQ</b> собраны CRMP-термины, карточки фракций и цены. А ещё есть генератор ников, био и рандомайзер — открывай и пользуйся.' }
     ];
 
     let curTour = 0;
@@ -2524,7 +2433,6 @@
       if (e.key === 'Escape') {
         closeSidebar();
         document.getElementById('qr-modal')?.classList.remove('open');
-        chatModal?.classList.remove('open');
       }
     });
 
