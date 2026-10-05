@@ -83,7 +83,6 @@
     @keyframes floatGlow1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(80px,60px) scale(1.15); } }
     @keyframes floatGlow2 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(-80px,-60px) scale(1.2); } }
 
-    /* СКЕЛЕТОНЫ */
     .skeleton {
       background: linear-gradient(90deg, #141720 25%, #1e2330 50%, #141720 75%);
       background-size: 200% 100%;
@@ -126,7 +125,6 @@
       margin-bottom: 0.6rem;
     }
 
-    /* ИНДИКАТОР НАГРУЗКИ */
     .server-progress-fill.low { background: linear-gradient(90deg, #10b981, #34d399) !important; }
     .server-progress-fill.mid { background: linear-gradient(90deg, #f59e0b, #fbbf24) !important; }
     .server-progress-fill.high { background: linear-gradient(90deg, #ef4444, #f87171) !important; }
@@ -137,7 +135,6 @@
     .server-load-percent.mid { color: #fbbf24 !important; }
     .server-load-percent.high { color: #f87171 !important; }
 
-    /* BADGE НА НОВОСТЯХ */
     .sidebar-nav-item { position: relative; }
     .sidebar-badge {
       position: absolute;
@@ -165,7 +162,6 @@
       50% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.9); }
     }
 
-    /* БОКОВОЕ МЕНЮ */
     .sidebar-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,0.65); backdrop-filter: blur(5px);
       opacity: 0; pointer-events: none; transition: opacity 0.25s ease; z-index: 1050;
@@ -278,7 +274,6 @@
     .tab-content { display: none; animation: cardEntrance 0.32s cubic-bezier(0.16,1,0.3,1) both; }
     .tab-content.active { display: block; }
 
-    /* ГЛАВНЫЙ ЭКРАН */
     .hero-split {
       flex: 1; display: grid; grid-template-columns: 1fr 1fr;
       align-items: center; gap: 4rem; padding: 0;
@@ -393,7 +388,6 @@
     }
     .back-to-hub-btn:hover { color: #fff; border-color: rgba(255,255,255,0.25); background: #141720; }
 
-    /* ОНЛАЙН СЕРВЕРОВ */
     .servers-header-box { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem; }
     .servers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1rem; }
     .server-card {
@@ -408,7 +402,6 @@
     .server-progress-fill { height: 100%; background: var(--accent-flow); border-radius: 9999px; transition: width 0.5s ease, background 0.3s ease; }
     .server-card-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.84rem; color: var(--text-muted); }
 
-    /* НОВОСТИ */
     .news-header-box { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.4rem; }
     .news-feed-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 780px; margin: 0 auto; }
     .news-card { background: #12141c; border: 1px solid var(--card-border); border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
@@ -476,7 +469,6 @@
     }
     .news-react-pick-btn:hover { background: #181c27; transform: scale(1.15); }
 
-    /* ТУР */
     .tour-overlay {
       position: fixed; inset: 0;
       background: rgba(5, 5, 8, 0);
@@ -674,7 +666,6 @@
       50% { box-shadow: 0 12px 35px rgba(192,132,252,0.6), 0 0 0 6px rgba(192,132,252,0.1); }
     }
 
-    /* FAQ */
     .faq-section-header { margin-bottom: 1.75rem; }
     .faq-section-header h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.4rem; letter-spacing: -0.01em; }
     .faq-section-header p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.5; }
@@ -786,7 +777,6 @@
     .faq-panel { display: none; animation: cardEntrance 0.28s ease both; }
     .faq-panel.active { display: block; }
 
-    /* ПЕРЕКЛЮЧАТЕЛЬ ТРЁХ БУ */
     .faq-prices-tabs {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -864,7 +854,6 @@
       border-radius: 8px; padding: 0.2rem 0.55rem; display: inline-block; white-space: nowrap; font-size: 0.8rem;
     }
 
-    /* ТЕРМИНЫ */
     .terms-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.4rem; }
     .term-row {
       display: flex; align-items: flex-start; gap: 1rem;
@@ -882,7 +871,6 @@
     .term-row-full { font-size: 0.82rem; font-weight: 700; color: #e2e8f0; margin-bottom: 0.15rem; }
     .term-row-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
-    /* ФРАКЦИИ */
     .factions-container { display: flex; flex-direction: column; gap: 2.25rem; }
     .factions-group-title {
       display: flex; align-items: center; gap: 0.65rem;
@@ -906,7 +894,6 @@
     .faction-item-name { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; letter-spacing: -0.01em; }
     .faction-item-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
-    /* ФОРМЫ */
     .command-bar { background: #0d0f15; border: 1px solid var(--card-border); border-radius: 20px; padding: 1.15rem 1.25rem; display: flex; flex-direction: column; gap: 0.85rem; }
     .filters-cluster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; width: 100%; }
     .pill-select-wrapper, .pill-input-wrapper {
@@ -969,7 +956,6 @@
     .bio-editor-grid { display: grid; grid-template-columns: 2fr 1fr 2fr; gap: 0.75rem; margin-bottom: 1rem; }
     .bio-result-card { background: #141720; border: 1px solid var(--card-border); border-radius: 16px; padding: 1.4rem; font-size: 0.92rem; line-height: 1.7; color: #e2e8f0; white-space: pre-line; max-height: 520px; overflow-y: auto; margin: 1.2rem 0; }
 
-    /* МОДАЛКИ */
     .app-modal-backdrop {
       position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(10px); z-index: 1000;
       display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; pointer-events: none; transition: opacity 0.2s ease;
@@ -1203,27 +1189,11 @@
           <div>
             <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 0.35rem;" data-i18n="servers.title">Онлайн серверов Radmir RP</h3>
             <p style="color: var(--text-muted); font-size: 0.88rem;" id="servers-subtitle" data-i18n="servers.loading">
-              Загрузка текущего онлайна... (Автообновление каждые 2 минуты)
+              Загрузка текущего онлайна... (Автообновление каждые 15 минут)
             </p>
-          </div>
-          <div>
-            <button class="btn-icon-copy" id="btn-refresh-servers" style="height: 38px; padding: 0 1rem; font-size: 0.8rem; width: auto;">
-              🔄 <span data-i18n="btn.refresh">Обновить сейчас</span>
-            </button>
           </div>
         </div>
         <div class="servers-grid" id="servers-grid">
-          <div class="skeleton-server-card">
-            <div class="skeleton-server-top">
-              <span class="skeleton" style="width: 55%; height: 16px;"></span>
-              <span class="skeleton" style="width: 10px; height: 10px; border-radius: 50%;"></span>
-            </div>
-            <div class="skeleton-bar"></div>
-            <div style="display: flex; justify-content: space-between;">
-              <span class="skeleton" style="width: 40%; height: 12px;"></span>
-              <span class="skeleton" style="width: 40px; height: 12px;"></span>
-            </div>
-          </div>
           <div class="skeleton-server-card">
             <div class="skeleton-server-top">
               <span class="skeleton" style="width: 55%; height: 16px;"></span>
@@ -1270,11 +1240,6 @@
             <p style="color: var(--text-muted); font-size: 0.88rem;" data-i18n="news.subtitle">
               Официальная лента свежих событий, анонсов и новостей серверов Radmir RP
             </p>
-          </div>
-          <div>
-            <button class="btn-icon-copy" id="btn-refresh-news" style="height: 38px; padding: 0 1rem; font-size: 0.82rem; width: auto;">
-              🔄 <span data-i18n="btn.refreshFeed">Обновить ленту</span>
-            </button>
           </div>
         </div>
         <div class="news-cache-note" id="news-cache-note">
@@ -1552,6 +1517,9 @@
     const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
     const SERVERS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
 
+    /* Интервалы автообновления: 15 минут */
+    const REFRESH_INTERVAL_MS = 15 * 60 * 1000; // 900 000 мс
+
     const I18N = {
       ru: {
         'nav.sections': 'Разделы', 'nav.theme': 'ТЕМА:', 'nav.home': 'Главная',
@@ -1565,10 +1533,9 @@
         'hero.cta': 'Перейти к разделам',
         'card.online': 'Онлайн', 'card.prices': 'Цены', 'card.news': 'Новости',
         'card.nicks': 'Ники', 'card.bio': 'Биографии', 'card.wheel': 'Рулетка',
-        'btn.back': 'На главную', 'btn.refresh': 'Обновить сейчас',
-        'btn.refreshFeed': 'Обновить ленту',
+        'btn.back': 'На главную',
         'servers.title': 'Онлайн серверов Radmir RP',
-        'servers.loading': 'Загрузка текущего онлайна... (Автообновление каждые 2 минуты)',
+        'servers.loading': 'Загрузка текущего онлайна... (Автообновление каждые 15 минут)',
         'news.title': 'Новости и обновления',
         'news.subtitle': 'Официальная лента свежих событий, анонсов и новостей серверов Radmir RP',
         'faq.title': 'FAQ / База знаний Radmir RP',
@@ -1588,10 +1555,9 @@
         'hero.cta': 'Go to Sections',
         'card.online': 'Online', 'card.prices': 'Prices', 'card.news': 'News',
         'card.nicks': 'Nicknames', 'card.bio': 'Bios', 'card.wheel': 'Roulette',
-        'btn.back': 'Back to Home', 'btn.refresh': 'Refresh now',
-        'btn.refreshFeed': 'Refresh feed',
+        'btn.back': 'Back to Home',
         'servers.title': 'Radmir RP Servers Online',
-        'servers.loading': 'Loading current online... (Auto-refresh every 2 minutes)',
+        'servers.loading': 'Loading current online... (Auto-refresh every 15 minutes)',
         'news.title': 'News & Updates',
         'news.subtitle': 'Official feed of fresh events, announcements and news of Radmir RP servers',
         'faq.title': 'FAQ / Radmir RP Knowledge Base',
@@ -1758,7 +1724,6 @@
     /* СЕРВЕРЫ */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
-    const btnRefreshServers = document.getElementById('btn-refresh-servers');
     let serversTimer = null;
 
     function getServersSkeletonHTML(count = 6) {
@@ -1824,14 +1789,17 @@
         </div>`;
       }).join('');
     }
-    if (btnRefreshServers) btnRefreshServers.addEventListener('click', () => { loadServersOnline(); showToast('Обновлено!'); });
-    if (!serversTimer) serversTimer = setInterval(loadServersOnline, 120000);
+
+    // Автообновление серверов каждые 15 минут
+    if (!serversTimer) {
+      serversTimer = setInterval(loadServersOnline, REFRESH_INTERVAL_MS);
+    }
 
     /* НОВОСТИ + КЭШ + BADGE */
     const newsGrid = document.getElementById('news-grid');
-    const btnRefreshNews = document.getElementById('btn-refresh-news');
     const newsCacheNote = document.getElementById('news-cache-note');
     const newsBadge = document.getElementById('news-badge');
+    let newsTimer = null;
 
     let userReactions = JSON.parse(localStorage.getItem('roleid_user_reactions') || '{}');
     const SITE_REACTIONS = ['👍', '🔥', '❤️', '😍', '😂'];
@@ -2000,7 +1968,10 @@
       }
     });
 
-    btnRefreshNews?.addEventListener('click', () => { loadProjectNews(false); showToast('Лента обновлена!'); });
+    // Автообновление новостей каждые 15 минут (в silent-режиме, без скелетонов)
+    if (!newsTimer) {
+      newsTimer = setInterval(() => loadProjectNews(true), REFRESH_INTERVAL_MS);
+    }
 
     /* ТУР */
     const TOUR_STEPS = [
