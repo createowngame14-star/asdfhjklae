@@ -964,6 +964,7 @@
     .app-modal-card {
       background: #0f1118; border: 1px solid var(--card-border); border-radius: 24px; padding: 2rem; max-width: 440px; width: 100%;
       box-shadow: 0 20px 50px rgba(0,0,0,0.6); transform: scale(0.95); transition: transform 0.2s ease; position: relative;
+      max-height: 92vh; overflow-y: auto;
     }
     .app-modal-backdrop.open .app-modal-card { transform: scale(1); }
     .btn-close-modal {
@@ -975,6 +976,7 @@
       position: fixed; bottom: 2rem; left: 2rem; background: #141720; border: 1px solid rgba(255,255,255,0.12);
       color: #fff; padding: 0.8rem 1.4rem; border-radius: 9999px; font-size: 0.85rem; font-weight: 600;
       transform: translateY(80px); opacity: 0; transition: transform 0.2s ease, opacity 0.2s ease; z-index: 1300; display: flex; align-items: center; gap: 0.5rem;
+      max-width: calc(100vw - 4rem);
     }
     .toast.active { transform: translateY(0); opacity: 1; }
 
@@ -1030,10 +1032,22 @@
       display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
     }
     .market-card-bottom {
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.74rem; color: var(--text-dim); padding-top: 0.7rem;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      display: flex; justify-content: space-between; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem; color: var(--text-dim); padding-top: 0.7rem;
+      border-top: 1px solid rgba(255,255,255,0.04); flex-wrap: wrap;
     }
+
+    .market-guest-banner {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(217,70,239,0.05));
+      border: 1px solid rgba(192,132,252,0.22);
+      border-radius: 14px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.2rem;
+    }
+    .market-guest-banner b { color: var(--accent-highlight); }
 
     .market-empty {
       grid-column: 1/-1; text-align: center; padding: 3rem 1rem;
@@ -1251,6 +1265,10 @@
             <div class="vc-icon">🚗</div>
             <div class="vc-label" data-i18n="card.prices">Цены</div>
           </div>
+          <div class="visual-card" data-open-tab="tab-market">
+            <div class="vc-icon">🛒</div>
+            <div class="vc-label">Барахолка</div>
+          </div>
           <div class="visual-card" data-open-tab="tab-news">
             <div class="vc-icon">📢</div>
             <div class="vc-label" data-i18n="card.news">Новости</div>
@@ -1262,10 +1280,6 @@
           <div class="visual-card" data-open-tab="tab-bio">
             <div class="vc-icon">📜</div>
             <div class="vc-label" data-i18n="card.bio">Биографии</div>
-          </div>
-          <div class="visual-card" data-open-tab="tab-wheel">
-            <div class="vc-icon">🎡</div>
-            <div class="vc-label" data-i18n="card.wheel">Рулетка</div>
           </div>
         </div>
       </div>
@@ -1326,24 +1340,11 @@
     <div class="tab-content" id="tab-market">
       <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
 
-      <!-- Экран 1: не залогинен -->
-      <div id="market-guest" class="glass-box" style="max-width: 520px; margin: 2rem auto; text-align: center; display: none;">
-        <div style="font-size: 3.5rem; line-height: 1; margin-bottom: 1rem;">🛒</div>
-        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Барахолка Radmir RP</h3>
-        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.6rem;">
-          Войдите через Telegram, чтобы видеть объявления своего сервера и размещать свои.
-        </p>
-        <div id="tg-login-container" style="display: flex; justify-content: center; min-height: 44px;"></div>
-        <p style="color: var(--text-dim); font-size: 0.72rem; margin-top: 1rem;">
-          Мы не получаем доступ к вашим сообщениям — только имя и username.
-        </p>
-      </div>
-
-      <!-- Экран 2: выбор сервера -->
+      <!-- Экран выбора сервера (только для залогиненных без сервера) -->
       <div id="market-select-server" class="glass-box" style="max-width: 520px; margin: 2rem auto; display: none;">
         <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Выбор сервера</h3>
         <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.4rem;">
-          Укажите, на каком сервере Radmir RP вы играете. Вы будете видеть объявления только с этого сервера.
+          Укажите, на каком сервере Radmir RP вы играете. Вы будете видеть объявления только с этого сервера и сможете подавать свои.
         </p>
         <div class="pill-select-wrapper" style="margin-bottom: 1rem;">
           <select id="market-server-select" class="pill-select"></select>
@@ -1354,22 +1355,26 @@
         </p>
       </div>
 
-      <!-- Экран 3: лента объявлений -->
+      <!-- Экран ленты (для всех: и гостей, и залогиненных) -->
       <div id="market-feed" style="display: none;">
         <div class="glass-box" style="margin-bottom: 1rem;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
-            <div>
+            <div style="min-width: 220px;">
               <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem;">Барахолка Radmir RP</h3>
-              <p style="color: var(--text-muted); font-size: 0.85rem;">
-                Сервер: <b id="market-current-server" style="color: var(--accent-highlight);">—</b>
-                &nbsp;•&nbsp; Игрок: <b id="market-current-user">—</b>
-              </p>
+              <p id="market-status-line" style="color: var(--text-muted); font-size: 0.85rem;"></p>
             </div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <button class="btn-generate" id="btn-open-create" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; width: auto;">+ Разместить</button>
-              <button class="btn-icon-copy" id="btn-open-my" style="width: auto; padding: 0 1rem;">Мои</button>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center;">
+              <div id="tg-login-header" style="display: none;"></div>
+              <button class="btn-generate" id="btn-open-create" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; width: auto; display: none;">+ Разместить</button>
+              <button class="btn-icon-copy" id="btn-open-my" style="width: auto; padding: 0 1rem; display: none;">Мои</button>
               <button class="btn-icon-copy" id="btn-market-admin" style="width: auto; padding: 0 1rem; display: none;">🛡 Модерация</button>
+              <button class="btn-icon-copy" id="btn-market-logout" style="width: auto; padding: 0 1rem; display: none;">Выйти</button>
             </div>
+          </div>
+
+          <div id="market-guest-banner" class="market-guest-banner" style="display: none;">
+            👀 Вы просматриваете барахолку как <b>гость</b> — видны объявления со <b>всех серверов</b> Radmir RP.
+            Войдите через Telegram (кнопка сверху справа), чтобы размещать свои объявления и видеть только свой сервер.
           </div>
 
           <!-- Категории -->
@@ -1722,17 +1727,8 @@
           <textarea id="mc-description" class="custom-fame-input" placeholder="Описание (20–2000 символов): состояние, тюнинг, стейдж, торг..." maxlength="2000" style="resize: vertical; min-height: 90px; font-family: inherit;"></textarea>
         </div>
 
-        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 0.6rem;">
-          <div class="pill-select-wrapper">
-            <select id="mc-contact-type" class="pill-select">
-              <option value="telegram">Telegram</option>
-              <option value="discord">Discord</option>
-              <option value="vk">VK</option>
-            </select>
-          </div>
-          <div class="pill-input-wrapper">
-            <input type="text" id="mc-contact-value" class="custom-fame-input" placeholder="@username или ссылка" maxlength="100">
-          </div>
+        <div style="background: rgba(56,189,248,0.06); border: 1px solid rgba(56,189,248,0.2); border-radius: 10px; padding: 0.7rem 0.9rem; font-size: 0.82rem; color: var(--text-muted);">
+          📩 Связь только через Telegram: <b id="mc-contact-preview" style="color: #38bdf8; font-family: ui-monospace, monospace;">@—</b>
         </div>
 
         <div id="mc-error" style="color: #f87171; font-size: 0.82rem; display: none;"></div>
@@ -2244,7 +2240,7 @@
       { icon: '👋', title: 'Добро пожаловать в ROLEID!', desc: 'Твой карманный помощник для игры на Radmir RP. За минуту покажу всё, что здесь есть.' },
       { icon: '🎮', title: 'Что такое Radmir RP', desc: 'Огромный ролевой мир на 21 сервере. Работы, фракции, перекуп авто — ты строишь собственную историю в Нижегородской области.' },
       { icon: '💰', title: 'Как заработать первые деньги', desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.' },
-      { icon: '🛒', title: 'Барахолка ROLEID', desc: 'Продавай и покупай авто, предметы, недвижимость и бизнес прямо на сайте. Вход — через Telegram, объявления видят только игроки твоего сервера.' },
+      { icon: '🛒', title: 'Барахолка ROLEID', desc: 'Продавай и покупай авто, предметы, недвижимость и бизнес прямо на сайте. Вход — через Telegram, объявления видны только игрокам твоего сервера.' },
       { icon: '🚀', title: 'Всё нужное — под рукой', desc: 'В <b>FAQ</b> собраны CRMP-термины, карточки фракций и цены. А ещё есть генератор ников, био и рандомайзер — открывай и пользуйся.' }
     ];
 
@@ -2674,12 +2670,11 @@
     });
 
     // ============================================================
-    // БАРАХОЛКА (Marketplace)
+    // БАРАХОЛКА (Marketplace) v2
     // ============================================================
     const MARKET_API = 'https://roleid-market.wamq812.workers.dev'; // ⚠️ URL твоего воркера
     const BOT_USERNAME = 'roleid_market_bot';                       // ⚠️ username бота БЕЗ @
 
-    // 21 сервер Radmir RP
     const RADMIR_SERVERS = [
       'Radmir RP #1','Radmir RP #2','Radmir RP #3','Radmir RP #4','Radmir RP #5',
       'Radmir RP #6','Radmir RP #7','Radmir RP #8','Radmir RP #9','Radmir RP #10',
@@ -2722,6 +2717,9 @@
         localStorage.setItem('roleid_market_token', marketToken);
         localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
         localStorage.setItem('roleid_market_is_admin', marketIsAdmin ? '1' : '0');
+        // Сброс виджета, чтобы не рендерился заново
+        const c = document.getElementById('tg-login-header');
+        if (c) { c.dataset.rendered = ''; c.innerHTML = ''; }
         renderMarketTab();
         showToast('Добро пожаловать, ' + (user.first_name || 'игрок') + '!');
       } catch (e) {
@@ -2730,16 +2728,16 @@
     };
 
     function renderTgWidget() {
-      const c = document.getElementById('tg-login-container');
-      if (!c || c.dataset.rendered) return;
+      const c = document.getElementById('tg-login-header');
+      if (!c || c.dataset.rendered === '1') return;
       c.dataset.rendered = '1';
       c.innerHTML = '';
       const s = document.createElement('script');
       s.async = true;
       s.src = 'https://telegram.org/js/telegram-widget.js?22';
       s.setAttribute('data-telegram-login', BOT_USERNAME);
-      s.setAttribute('data-size', 'large');
-      s.setAttribute('data-radius', '12');
+      s.setAttribute('data-size', 'medium');
+      s.setAttribute('data-radius', '10');
       s.setAttribute('data-onauth', 'onTelegramAuth(user)');
       s.setAttribute('data-request-access', 'write');
       c.appendChild(s);
@@ -2748,51 +2746,73 @@
     function initMarketTab() { renderMarketTab(); }
 
     async function renderMarketTab() {
-      const guestEl  = document.getElementById('market-guest');
-      const serverEl = document.getElementById('market-select-server');
-      const feedEl   = document.getElementById('market-feed');
-      if (!guestEl) return;
+      const serverEl  = document.getElementById('market-select-server');
+      const feedEl    = document.getElementById('market-feed');
+      const bannerEl  = document.getElementById('market-guest-banner');
+      const statusLine = document.getElementById('market-status-line');
+      const btnCreate = document.getElementById('btn-open-create');
+      const btnMy     = document.getElementById('btn-open-my');
+      const btnAdmin  = document.getElementById('btn-market-admin');
+      const btnLogout = document.getElementById('btn-market-logout');
+      const tgHeader  = document.getElementById('tg-login-header');
+      if (!feedEl) return;
 
-      if (!marketToken) {
-        guestEl.style.display = 'block';
-        serverEl.style.display = 'none';
-        feedEl.style.display = 'none';
-        renderTgWidget();
-        return;
+      // Проверка токена
+      if (marketToken) {
+        try {
+          const me = await marketAPI('me');
+          marketUser = me.user;
+          marketIsAdmin = me.isAdmin;
+          localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
+          localStorage.setItem('roleid_market_is_admin', marketIsAdmin ? '1' : '0');
+        } catch (e) {
+          // Токен протух
+          marketToken = '';
+          marketUser = null;
+          marketIsAdmin = false;
+          localStorage.removeItem('roleid_market_token');
+          localStorage.removeItem('roleid_market_user');
+          localStorage.removeItem('roleid_market_is_admin');
+        }
+      } else {
+        marketUser = null;
+        marketIsAdmin = false;
       }
 
-      try {
-        const me = await marketAPI('me');
-        marketUser = me.user;
-        marketIsAdmin = me.isAdmin;
-        localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
-        localStorage.setItem('roleid_market_is_admin', marketIsAdmin ? '1' : '0');
-      } catch (e) {
-        marketToken = '';
-        localStorage.removeItem('roleid_market_token');
-        localStorage.removeItem('roleid_market_user');
-        guestEl.style.display = 'block';
-        serverEl.style.display = 'none';
-        feedEl.style.display = 'none';
-        renderTgWidget();
-        return;
-      }
-
-      if (!marketUser.server) {
-        guestEl.style.display = 'none';
+      // Залогинен, но сервер не выбран — показываем выбор сервера
+      if (marketUser && !marketUser.server) {
         serverEl.style.display = 'block';
         feedEl.style.display = 'none';
         fillServerSelect();
         return;
       }
 
-      guestEl.style.display = 'none';
+      // Гость ИЛИ залогиненный с сервером — показываем ленту
       serverEl.style.display = 'none';
       feedEl.style.display = 'block';
 
-      document.getElementById('market-current-server').innerText = marketUser.server;
-      document.getElementById('market-current-user').innerText = (marketUser.first_name || marketUser.username || 'игрок');
-      document.getElementById('btn-market-admin').style.display = marketIsAdmin ? 'inline-flex' : 'none';
+      if (marketUser) {
+        // Залогиненный
+        statusLine.innerHTML = `Сервер: <b style="color: var(--accent-highlight);">${escapeHtml(marketUser.server)}</b> &nbsp;•&nbsp; Игрок: <b>${escapeHtml(marketUser.first_name || marketUser.username || 'игрок')}</b>`;
+        btnCreate.style.display = 'inline-flex';
+        btnMy.style.display = 'inline-flex';
+        btnAdmin.style.display = marketIsAdmin ? 'inline-flex' : 'none';
+        btnLogout.style.display = 'inline-flex';
+        tgHeader.style.display = 'none';
+        tgHeader.innerHTML = '';
+        tgHeader.dataset.rendered = '';
+        bannerEl.style.display = 'none';
+      } else {
+        // Гость
+        statusLine.innerHTML = `Режим просмотра &nbsp;•&nbsp; <b style="color: var(--accent-highlight);">все серверы</b>`;
+        btnCreate.style.display = 'none';
+        btnMy.style.display = 'none';
+        btnAdmin.style.display = 'none';
+        btnLogout.style.display = 'none';
+        tgHeader.style.display = 'flex';
+        bannerEl.style.display = 'block';
+        renderTgWidget();
+      }
 
       loadMarketListings();
     }
@@ -2835,8 +2855,9 @@
           <div class="market-card-price">${formatPrice(l.price)}</div>
           <div class="market-card-desc">${escapeHtml(l.description)}</div>
           <div class="market-card-bottom">
+            <span>🖥 ${escapeHtml(l.server)}</span>
             <span>👤 ${escapeHtml(seller)}</span>
-            <span>${ago}</span>
+            <span style="margin-left: auto;">${ago}</span>
           </div>
         </div>`;
     }
@@ -2868,6 +2889,10 @@
         ? `https://t.me/${l.contact_value.replace('@','')}`
         : l.contact_value;
       const seller = l.seller_first_name || l.seller_username || 'игрок';
+      const isGuest = !marketUser;
+      const reportBtn = isGuest ? '' : `
+          <button class="market-mini-btn danger" id="btn-report" data-id="${l.id}" style="height: 42px;">🚩 Жалоба</button>`;
+      const grid = isGuest ? '1fr' : '2fr 1fr';
       document.getElementById('mv-content').innerHTML = `
         <div class="market-view-title">${escapeHtml(l.title)}</div>
         <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
@@ -2881,32 +2906,37 @@
           <span>👁 ${l.views || 0}</span>
           <span>🕐 ${timeAgo(l.created_at)}</span>
         </div>
-        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.5rem;">
+        <div style="display: grid; grid-template-columns: ${grid}; gap: 0.5rem;">
           <a href="${escapeHtml(contact)}" target="_blank" rel="noopener" class="btn-generate" style="text-decoration: none; justify-content: center; height: 42px; font-size: 0.88rem;">
-            💬 Связаться с продавцом
+            💬 Написать в Telegram
           </a>
-          <button class="market-mini-btn danger" id="btn-report" data-id="${l.id}" style="height: 42px;">🚩 Жалоба</button>
+          ${reportBtn}
         </div>
+        ${isGuest ? '<p style="color: var(--text-dim); font-size: 0.74rem; text-align: center; margin-top: 0.7rem;">Войдите через Telegram, чтобы жаловаться на объявления</p>' : ''}
       `;
       document.getElementById('market-modal-view').classList.add('open');
-      document.getElementById('btn-report')?.addEventListener('click', async () => {
-        if (!confirm('Отправить жалобу на это объявление?')) return;
-        try {
-          await marketAPI('report', {}, { method: 'POST', body: { id: l.id } });
-          showToast('Жалоба отправлена');
-          document.getElementById('market-modal-view').classList.remove('open');
-        } catch (err) { showToast(err.message); }
-      });
+      if (!isGuest) {
+        document.getElementById('btn-report')?.addEventListener('click', async () => {
+          if (!confirm('Отправить жалобу на это объявление?')) return;
+          try {
+            await marketAPI('report', {}, { method: 'POST', body: { id: l.id } });
+            showToast('Жалоба отправлена');
+            document.getElementById('market-modal-view').classList.remove('open');
+          } catch (err) { showToast(err.message); }
+        });
+      }
     }
 
     document.getElementById('btn-open-create')?.addEventListener('click', () => {
+      if (!marketUser) { showToast('Войдите, чтобы разместить'); return; }
+      if (!marketUser.username) { showToast('Установите @username в Telegram!'); return; }
       editingListingId = null;
       document.getElementById('market-create-title').innerText = 'Новое объявление';
       document.getElementById('btn-mc-submit').innerText = 'Отправить на модерацию';
-      ['mc-title','mc-price','mc-description','mc-contact-value'].forEach(id => document.getElementById(id).value = '');
+      ['mc-title','mc-price','mc-description'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('mc-category').value = 'auto';
-      document.getElementById('mc-contact-type').value = 'telegram';
       document.getElementById('mc-error').style.display = 'none';
+      document.getElementById('mc-contact-preview').innerText = '@' + marketUser.username;
       updateSubcatVisibility();
       document.getElementById('market-modal-create').classList.add('open');
     });
@@ -2923,9 +2953,7 @@
         category: document.getElementById('mc-category').value,
         subcategory: document.getElementById('mc-category').value === 'auto' ? document.getElementById('mc-subcategory').value : null,
         price: parseInt(document.getElementById('mc-price').value, 10),
-        description: document.getElementById('mc-description').value.trim(),
-        contact_type: document.getElementById('mc-contact-type').value,
-        contact_value: document.getElementById('mc-contact-value').value.trim()
+        description: document.getElementById('mc-description').value.trim()
       };
       const err = document.getElementById('mc-error');
       err.style.display = 'none';
@@ -2946,6 +2974,7 @@
     });
 
     document.getElementById('btn-open-my')?.addEventListener('click', async () => {
+      if (!marketUser) return;
       document.getElementById('my-server-label').innerText = marketUser?.server || '—';
       const list = document.getElementById('my-listings-list');
       list.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 1rem;">Загрузка...</div>';
@@ -3016,8 +3045,7 @@
           document.getElementById('mc-title').value = l.title;
           document.getElementById('mc-price').value = l.price;
           document.getElementById('mc-description').value = l.description;
-          document.getElementById('mc-contact-type').value = l.contact_type;
-          document.getElementById('mc-contact-value').value = l.contact_value;
+          document.getElementById('mc-contact-preview').innerText = '@' + (marketUser?.username || '—');
           updateSubcatVisibility();
           document.getElementById('market-modal-my').classList.remove('open');
           document.getElementById('market-modal-create').classList.add('open');
@@ -3030,7 +3058,6 @@
       marketUser.server = null;
       document.getElementById('market-select-server').style.display = 'block';
       document.getElementById('market-feed').style.display = 'none';
-      document.getElementById('market-guest').style.display = 'none';
       fillServerSelect();
     });
 
@@ -3044,6 +3071,21 @@
         showToast('Сервер сохранён: ' + server);
         renderMarketTab();
       } catch (e) { showToast(e.message); }
+    });
+
+    // Кнопка «Выйти»
+    document.getElementById('btn-market-logout')?.addEventListener('click', () => {
+      if (!confirm('Выйти с аккаунта Telegram?')) return;
+      marketToken = '';
+      marketUser = null;
+      marketIsAdmin = false;
+      localStorage.removeItem('roleid_market_token');
+      localStorage.removeItem('roleid_market_user');
+      localStorage.removeItem('roleid_market_is_admin');
+      const c = document.getElementById('tg-login-header');
+      if (c) { c.dataset.rendered = ''; c.innerHTML = ''; }
+      showToast('Вы вышли с аккаунта');
+      renderMarketTab();
     });
 
     document.getElementById('market-cats')?.addEventListener('click', (e) => {
@@ -3105,7 +3147,7 @@
           </div>
           <div style="color: var(--accent-highlight); font-weight: 800; font-family: ui-monospace, monospace;">${formatPrice(l.price)}</div>
           <div style="color: var(--text-muted); font-size: 0.82rem; white-space: pre-line; max-height: 100px; overflow-y: auto; background: #0f1118; padding: 0.6rem; border-radius: 8px;">${escapeHtml(l.description)}</div>
-          <div style="font-size: 0.76rem; color: var(--text-dim);">👤 ${escapeHtml(seller)} • 📞 ${escapeHtml(l.contact_type)}: ${escapeHtml(l.contact_value)}</div>
+          <div style="font-size: 0.76rem; color: var(--text-dim);">👤 ${escapeHtml(seller)} • 📞 ${escapeHtml(l.contact_type)}: ${escapeHtml(l.contact_value)} • 🖥 ${escapeHtml(l.server)}</div>
           <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
             <button class="market-mini-btn success" data-admin-action="approve" data-admin-id="${l.id}">✓ Одобрить</button>
             <button class="market-mini-btn danger" data-admin-action="reject" data-admin-id="${l.id}">✕ Отклонить</button>
