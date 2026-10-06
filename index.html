@@ -147,7 +147,6 @@ body {
 .tab-content { display: none; animation: cardEntrance 0.32s cubic-bezier(0.16,1,0.3,1) both; }
 .tab-content.active { display: block; }
 
-/* HERO — умещается в 1 экран */
 .hero-split { flex: 1; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 3rem; padding: 0; min-height: calc(100vh - 260px); }
 .hero-left { display: flex; flex-direction: column; align-items: flex-start; gap: 1.2rem; }
 .top-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1.1rem; background: #0f1118; border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px; font-size: 0.76rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.07em; text-transform: uppercase; opacity: 0; animation: fadeInUp 0.7s ease-out 0.1s forwards; }
@@ -342,7 +341,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
 .creator-box { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); }
 .creator-name { color: #fff; font-weight: 700; }
 
-/* БАРАХОЛКА */
 .market-cats { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .market-cat { background: #141720; border: 1px solid var(--card-border); color: var(--text-muted); padding: 0.55rem 1rem; border-radius: 9999px; font-family: inherit; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
 .market-cat:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
@@ -514,7 +512,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- ГЛАВНАЯ -->
   <div class="tab-content active" id="tab-hub">
     <div class="hero-split">
       <div class="hero-left">
@@ -538,7 +535,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- СЕРВЕРЫ -->
   <div class="tab-content" id="tab-servers">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box">
@@ -552,7 +548,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- БАРАХОЛКА -->
   <div class="tab-content" id="tab-market">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
 
@@ -617,7 +612,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- НОВОСТИ -->
   <div class="tab-content" id="tab-news">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box">
@@ -632,7 +626,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- FAQ -->
   <div class="tab-content" id="tab-faq">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box">
@@ -670,7 +663,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- НИКИ -->
   <div class="tab-content" id="tab-names">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="command-bar">
@@ -718,7 +710,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- БИО -->
   <div class="tab-content" id="tab-bio">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box">
@@ -745,7 +736,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- РАНДОМ -->
   <div class="tab-content" id="tab-random">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box" style="max-width: 600px; margin: 0 auto;">
@@ -762,7 +752,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
     </div>
   </div>
 
-  <!-- РУЛЕТКА -->
   <div class="tab-content" id="tab-wheel">
     <button class="back-to-hub-btn" data-back-to-hub>&larr; На главную</button>
     <div class="glass-box" style="max-width: 600px; margin: 0 auto; text-align: center;">
@@ -776,7 +765,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- TOUR -->
 <div class="tour-overlay" id="tour-overlay">
   <div class="tour-modal">
     <div class="tour-progress-bar"><div class="tour-progress-fill" id="tour-progress-fill"></div></div>
@@ -795,7 +783,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- QR -->
 <div class="app-modal-backdrop" id="qr-modal">
   <div class="app-modal-card" style="text-align: center;">
     <button class="btn-close-modal" id="btn-close-qr">&times;</button>
@@ -806,7 +793,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: CREATE -->
 <div class="app-modal-backdrop" id="market-modal-create">
   <div class="app-modal-card" style="max-width: 560px;">
     <button class="btn-close-modal" data-close-modal="market-modal-create">&times;</button>
@@ -842,7 +828,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: VIEW -->
 <div class="app-modal-backdrop" id="market-modal-view">
   <div class="app-modal-card" style="max-width: 520px;">
     <button class="btn-close-modal" data-close-modal="market-modal-view">&times;</button>
@@ -850,7 +835,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: REPORT (выбор причины) -->
 <div class="app-modal-backdrop" id="market-modal-report">
   <div class="app-modal-card" style="max-width: 460px;">
     <button class="btn-close-modal" data-close-modal="market-modal-report">&times;</button>
@@ -867,7 +851,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: MY -->
 <div class="app-modal-backdrop" id="market-modal-my">
   <div class="app-modal-card" style="max-width: 620px;">
     <button class="btn-close-modal" data-close-modal="market-modal-my">&times;</button>
@@ -880,7 +863,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: ADMIN -->
 <div class="app-modal-backdrop" id="market-modal-admin">
   <div class="app-modal-card" style="max-width: 750px;">
     <button class="btn-close-modal" data-close-modal="market-modal-admin">&times;</button>
@@ -894,7 +876,6 @@ footer { border-top: 1px solid rgba(255,255,255,0.06); background: rgba(5,5,8,0.
   </div>
 </div>
 
-<!-- MARKET: ADMIN EDIT -->
 <div class="app-modal-backdrop" id="market-modal-admin-edit">
   <div class="app-modal-card" style="max-width: 560px;">
     <button class="btn-close-modal" data-close-modal="market-modal-admin-edit">&times;</button>
@@ -1001,7 +982,7 @@ function setTheme(t) {
 themeDots.forEach(d => d.addEventListener('click', () => setTheme(d.dataset.theme)));
 setTheme(currentTheme);
 
-/* ============ БАЗА ТЕРМИНОВ (без перекупа) ============ */
+/* ============ БАЗА ТЕРМИНОВ ============ */
 const CRMP_TERMS = [
   { abbr: 'RP', full: 'RolePlay', desc: 'Отыгрывание роли персонажа.' },
   { abbr: 'DM', full: 'DeathMatch', desc: 'Убийство без RP-причины.' },
@@ -1100,6 +1081,7 @@ let userReactions = JSON.parse(localStorage.getItem('roleid_user_reactions') || 
 const SITE_REACTIONS = ['👍','🔥','❤️','😍','😂'];
 let currentNewsPosts = [];
 function saveUserReactions() { localStorage.setItem('roleid_user_reactions', JSON.stringify(userReactions)); }
+function saveNewsCache(posts) { try { localStorage.setItem('roleid_news_cache', JSON.stringify({ posts, ts: Date.now() })); } catch (e) {} }
 function updateNewsBadge(posts) {
   if (!newsBadge || !posts?.length) return;
   const lastSeen = localStorage.getItem('roleid_news_last_seen') || '';
@@ -1136,6 +1118,7 @@ async function loadProjectNews(silent = false) {
     const data = await res.json();
     if (data?.posts?.length) {
       currentNewsPosts = data.posts;
+      saveNewsCache(data.posts);
       renderNewsPosts(data.posts);
       updateNewsBadge(data.posts);
     } else throw new Error();
@@ -1305,7 +1288,7 @@ btnGenerate?.addEventListener('click', generate);
 document.getElementById('btn-copy-all')?.addEventListener('click', () => { if (currentList.length) copyText(currentList.map(i => i.nick).join('\n')); });
 document.getElementById('btn-clear-history')?.addEventListener('click', () => { recentHistory = []; localStorage.removeItem('roleid_history_v1'); renderHistory(); showToast('История очищена'); });
 
-/* ============ БИО-ГЕНЕРАТОР (много вариантов) ============ */
+/* ============ БИО-ГЕНЕРАТОР ============ */
 const BIO_DB = {
   gos: {
     childhood: [
@@ -1583,11 +1566,11 @@ document.addEventListener('keydown', (e) => {
 });
 
 /* ================================================================
-   БАРАХОЛКА v3
+   БАРАХОЛКА v3 + ПРЕДЗАГРУЗКА
    ================================================================ */
 const MARKET_API = 'https://roleid-market.wamq812.workers.dev';
-const BOT_USERNAME = 'roleid_market_bot';   // username без @ — используется для oauth
-const BOT_ID = '8899678155';                          //  числовой ID бота 
+const BOT_USERNAME = 'roleid_market_bot';
+const BOT_ID = '';
 
 const RADMIR_SERVERS = Array.from({length: 21}, (_,i) => `Radmir RP #${i+1}`);
 
@@ -1601,6 +1584,42 @@ let marketFilters = { category: '', subcategory: '', q: '', sort: 'new' };
 let editingListingId = null;
 let adminEditingId = null;
 let adminCurrentTab = 'pending';
+
+/* --- КЕШ БАРАХОЛКИ (как у новостей) --- */
+let currentListingsCache = [];
+function saveListingsCache(listings) {
+  try { localStorage.setItem('roleid_market_cache', JSON.stringify({ listings, ts: Date.now() })); } catch (e) {}
+}
+function loadListingsCache() {
+  try {
+    const raw = localStorage.getItem('roleid_market_cache');
+    if (!raw) return null;
+    const d = JSON.parse(raw);
+    return (d && Array.isArray(d.listings)) ? d.listings : null;
+  } catch (e) { return null; }
+}
+async function preloadListings() {
+  try {
+    const data = await marketAPI('list', { sort: 'new' });
+    if (data && data.listings) {
+      currentListingsCache = data.listings;
+      saveListingsCache(data.listings);
+      const feedEl = document.getElementById('market-feed');
+      if (feedEl && feedEl.style.display === 'block' && document.getElementById('tab-market')?.classList.contains('active')) {
+        renderMarketListings(data.listings);
+      }
+    }
+  } catch (e) { /* тихо */ }
+}
+function renderMarketListings(listings) {
+  const grid = document.getElementById('market-grid');
+  if (!grid) return;
+  if (!listings || !listings.length) {
+    grid.innerHTML = '<div class="market-empty">Пока нет объявлений. Будьте первым! 🎉</div>';
+    return;
+  }
+  grid.innerHTML = listings.map(renderMarketCard).join('');
+}
 
 async function marketAPI(action, params = {}, opts = {}) {
   const url = new URL(MARKET_API);
@@ -1618,7 +1637,6 @@ async function marketAPI(action, params = {}, opts = {}) {
   return data;
 }
 
-/* ---------- ЛОГИН через oauth.telegram.org ---------- */
 function loginWithTelegram() {
   if (!BOT_ID) { showToast('BOT_ID не настроен — обратитесь к админу'); return; }
   const url = `https://oauth.telegram.org/auth?bot_id=${BOT_ID}&origin=${encodeURIComponent(location.origin)}&embed=0&request_access=write&return_to=${encodeURIComponent(location.origin + location.pathname)}`;
@@ -1626,7 +1644,6 @@ function loginWithTelegram() {
 }
 document.getElementById('btn-market-login')?.addEventListener('click', loginWithTelegram);
 
-// Обработка возврата после oauth
 function processTgHash() {
   if (!location.hash || !location.hash.includes('tgAuthResult=')) return false;
   try {
@@ -1652,11 +1669,21 @@ async function onTelegramAuth(user) {
   } catch (e) { showToast('Ошибка входа: ' + e.message); }
 }
 
-/* ---------- РЕНДЕР ВКЛАДКИ ---------- */
 function initMarketTab() {
   const hadHash = processTgHash();
+  // Мгновенно показываем кеш, потом renderMarketTab сделает запрос
+  const cache = loadListingsCache();
+  const feedEl = document.getElementById('market-feed');
+  const serverEl = document.getElementById('market-select-server');
+  if (cache && cache.length && feedEl && !hadHash) {
+    // Пока не знаем залогинен ли — покажем кеш, дальше renderMarketTab разберётся
+    feedEl.style.display = 'block';
+    if (serverEl) serverEl.style.display = 'none';
+    renderMarketListings(cache);
+  }
   renderMarketTab();
 }
+
 async function renderMarketTab() {
   const serverEl = document.getElementById('market-select-server');
   const feedEl = document.getElementById('market-feed');
@@ -1720,13 +1747,35 @@ function fillServerSelect() {
 async function loadMarketListings() {
   const grid = document.getElementById('market-grid');
   if (!grid) return;
-  grid.innerHTML = '<div class="market-empty">Загрузка...</div>';
+
+  const isDefaultFilters = !marketFilters.category && !marketFilters.subcategory && !marketFilters.q && marketFilters.sort === 'new';
+
+  // 1) Кеш-мгновенно (только для дефолтных фильтров)
+  if (isDefaultFilters) {
+    const cache = loadListingsCache();
+    if (cache && cache.length) {
+      renderMarketListings(cache);
+    } else if (!currentListingsCache.length && !grid.querySelector('.market-card')) {
+      grid.innerHTML = '<div class="market-empty">Загрузка...</div>';
+    }
+  } else {
+    grid.innerHTML = '<div class="market-empty">Загрузка...</div>';
+  }
+
+  // 2) Запрос актуальных
   try {
     const data = await marketAPI('list', marketFilters);
     const list = data.listings || [];
-    if (!list.length) { grid.innerHTML = '<div class="market-empty">Пока нет объявлений. Будьте первым! 🎉</div>'; return; }
-    grid.innerHTML = list.map(renderMarketCard).join('');
-  } catch (e) { grid.innerHTML = `<div class="market-empty">Ошибка: ${escapeHtml(e.message)}</div>`; }
+    if (isDefaultFilters) {
+      currentListingsCache = list;
+      saveListingsCache(list);
+    }
+    renderMarketListings(list);
+  } catch (e) {
+    if (!grid.querySelector('.market-card')) {
+      grid.innerHTML = `<div class="market-empty">Ошибка: ${escapeHtml(e.message)}</div>`;
+    }
+  }
 }
 
 function renderMarketCard(l) {
@@ -1789,7 +1838,6 @@ function openListingView(l) {
   }
 }
 
-// Жалобы — выбор причины
 document.querySelectorAll('[data-report-reason]').forEach(btn => {
   btn.addEventListener('click', async () => {
     const id = document.getElementById('report-listing-id').value;
@@ -1802,7 +1850,6 @@ document.querySelectorAll('[data-report-reason]').forEach(btn => {
   });
 });
 
-// Создание
 document.getElementById('btn-open-create')?.addEventListener('click', () => {
   if (!marketUser) { showToast('Войдите, чтобы разместить'); return; }
   if (!marketUser.username) { showToast('Установите @username в Telegram!'); return; }
@@ -1845,7 +1892,6 @@ document.getElementById('btn-mc-submit')?.addEventListener('click', async () => 
   } catch (e) { err.innerText = e.message; err.style.display = 'block'; }
 });
 
-// Мои
 document.getElementById('btn-open-my')?.addEventListener('click', async () => {
   if (!marketUser) return;
   document.getElementById('my-server-label').innerText = marketUser?.server || '—';
@@ -1915,20 +1961,18 @@ document.getElementById('btn-market-save-server')?.addEventListener('click', asy
   } catch (e) { showToast(e.message); }
 });
 
-// Выход — ПОЛНАЯ очистка + reload (устраняет "прошлый аккаунт")
 document.getElementById('btn-market-logout')?.addEventListener('click', () => {
   if (!confirm('Выйти с аккаунта Telegram?')) return;
   marketToken = ''; marketUser = null; marketIsAdmin = false;
   localStorage.removeItem('roleid_market_token');
   localStorage.removeItem('roleid_market_user');
   localStorage.removeItem('roleid_market_is_admin');
+  localStorage.removeItem('roleid_market_cache');
   sessionStorage.clear();
-  // Полная перезагрузка страницы — сбрасывает кеш виджета
-  location.href = location.pathname + '?logout=' + Date.now() + '#market';
+  location.href = location.pathname + '?logout=' + Date.now();
   location.reload();
 });
 
-// Фильтры
 document.getElementById('market-cats')?.addEventListener('click', (e) => {
   const b = e.target.closest('.market-cat'); if (!b) return;
   document.querySelectorAll('.market-cat').forEach(x => x.classList.remove('active'));
@@ -1976,9 +2020,11 @@ async function loadAdminList() {
     const action = adminCurrentTab === 'pending' ? 'admin-pending' : 'admin-reports';
     const data = await marketAPI(action);
     const arr = data.listings || [];
-    // Обновляем бейджи
     if (adminCurrentTab === 'pending') {
       const b = document.getElementById('admin-pending-count');
+      if (b) { b.textContent = arr.length; b.style.display = arr.length ? 'inline-block' : 'none'; }
+    } else {
+      const b = document.getElementById('admin-reports-count');
       if (b) { b.textContent = arr.length; b.style.display = arr.length ? 'inline-block' : 'none'; }
     }
     if (!arr.length) {
@@ -2056,7 +2102,6 @@ document.getElementById('btn-ae-save')?.addEventListener('click', async () => {
   } catch (e) { err.innerText = e.message; err.style.display = 'block'; }
 });
 
-// Закрытие модалок
 document.querySelectorAll('[data-close-modal]').forEach(btn => {
   btn.addEventListener('click', () => document.getElementById(btn.dataset.closeModal).classList.remove('open'));
 });
@@ -2064,7 +2109,6 @@ document.querySelectorAll('.app-modal-backdrop').forEach(bd => {
   bd.addEventListener('click', (e) => { if (e.target === bd) bd.classList.remove('open'); });
 });
 
-/* ---------- Восстановление после F5 ---------- */
 try {
   const saved = localStorage.getItem('roleid_market_user');
   if (saved) marketUser = JSON.parse(saved);
@@ -2079,7 +2123,23 @@ generate();
 loadProjectNews(true);
 loadServersOnline();
 
-// Автопроцесс tg hash при загрузке
+/* ★ Мгновенная отрисовка ленты из кеша СРАЗУ */
+(function showCachedListings() {
+  const cache = loadListingsCache();
+  if (cache && cache.length) {
+    currentListingsCache = cache;
+    const grid = document.getElementById('market-grid');
+    if (grid) renderMarketListings(cache);
+  }
+})();
+
+/* ★ Фоновая предзагрузка через 300мс */
+setTimeout(preloadListings, 300);
+
+/* ★ Автообновление ленты каждые 15 минут */
+setInterval(preloadListings, REFRESH_INTERVAL_MS);
+
+/* Автопроцесс tg hash при загрузке */
 if (location.hash.includes('tgAuthResult=')) { processTgHash(); }
 </script>
 </body>
