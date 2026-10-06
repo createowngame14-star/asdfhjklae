@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
 
-  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: онлайн серверов, новости проекта, таблицы цен перекупа, генератор никнеймов и RP биографии.">
+  <meta name="description" content="Официальный сервис ROLEID для игроков Radmir RP: онлайн серверов, новости проекта, таблицы цен перекупа, генератор никнеймов, RP биографии и барахолка.">
 
   <style>
     :root {
@@ -985,6 +985,90 @@
     .creator-box { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-muted); }
     .creator-name { color: #fff; font-weight: 700; }
 
+    /* ===== БАРАХОЛКА ===== */
+    .market-cats { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .market-cat {
+      background: #141720; border: 1px solid var(--card-border); color: var(--text-muted);
+      padding: 0.55rem 1rem; border-radius: 9999px; font-family: inherit;
+      font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    }
+    .market-cat:hover { color: #fff; border-color: rgba(255,255,255,0.2); }
+    .market-cat.active { background: rgba(192,132,252,0.14); color: #fff; border-color: var(--accent-highlight); }
+
+    .market-subcats { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding-top: 0.7rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .market-subcat {
+      background: transparent; border: 1px solid var(--card-border); color: var(--text-muted);
+      padding: 0.3rem 0.75rem; border-radius: 9999px; font-family: inherit;
+      font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    }
+    .market-subcat:hover { color: #fff; }
+    .market-subcat.active { background: var(--accent-flow); color: #fff; border-color: transparent; }
+
+    .market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 0.9rem; }
+
+    .market-card {
+      background: #12141c; border: 1px solid var(--card-border); border-radius: 16px;
+      padding: 1.1rem 1.2rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.7rem;
+      transition: transform 0.15s, border-color 0.2s, background 0.2s;
+      animation: cardEntrance 0.3s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .market-card:hover { transform: translateY(-2px); border-color: var(--card-hover-border); background: #151824; }
+
+    .market-card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; }
+    .market-card-title { font-size: 1rem; font-weight: 800; color: #fff; line-height: 1.3; word-break: break-word; }
+    .market-cat-badge {
+      font-size: 0.68rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px;
+      background: rgba(192,132,252,0.1); color: var(--accent-highlight);
+      border: 1px solid rgba(192,132,252,0.22); white-space: nowrap; text-transform: uppercase;
+    }
+    .market-card-price {
+      font-size: 1.3rem; font-weight: 800; font-family: ui-monospace, monospace;
+      background: var(--accent-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .market-card-desc {
+      color: var(--text-muted); font-size: 0.82rem; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .market-card-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.74rem; color: var(--text-dim); padding-top: 0.7rem;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .market-empty {
+      grid-column: 1/-1; text-align: center; padding: 3rem 1rem;
+      color: var(--text-dim); font-size: 0.9rem;
+    }
+
+    .market-mylist-item {
+      background: #141720; border: 1px solid var(--card-border); border-radius: 12px;
+      padding: 0.9rem 1rem; display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .market-status-badge {
+      font-size: 0.68rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 6px;
+      text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;
+    }
+    .market-status-badge.pending  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); }
+    .market-status-badge.active   { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.3); }
+    .market-status-badge.rejected { background: rgba(239,68,68,0.12); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+    .market-status-badge.sold     { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3); }
+    .market-status-badge.expired  { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3); }
+
+    .market-mini-btn {
+      background: #0f1118; border: 1px solid var(--card-border); color: var(--text-muted);
+      padding: 0.4rem 0.8rem; border-radius: 8px; font-family: inherit;
+      font-size: 0.76rem; font-weight: 700; cursor: pointer; transition: all 0.15s;
+    }
+    .market-mini-btn:hover { color: #fff; border-color: rgba(255,255,255,0.25); background: #181c27; }
+    .market-mini-btn.danger:hover { color: #f87171; border-color: rgba(239,68,68,0.4); }
+    .market-mini-btn.success:hover { color: #34d399; border-color: rgba(16,185,129,0.4); }
+
+    .market-view-title { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 0.3rem; }
+    .market-view-price { font-size: 1.6rem; font-weight: 800; font-family: ui-monospace, monospace; background: var(--accent-flow); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0.6rem 0 1rem; }
+    .market-view-desc { color: #e2e8f0; font-size: 0.9rem; line-height: 1.65; white-space: pre-line; padding: 1rem; background: #0f1118; border: 1px solid var(--card-border); border-radius: 12px; margin-bottom: 1rem; }
+    .market-view-meta { display: flex; gap: 0.6rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1rem; }
+    .market-view-meta span { background: #141720; padding: 0.25rem 0.6rem; border-radius: 6px; border: 1px solid var(--card-border); }
+
     @media (max-width: 900px) {
       .hero-split { grid-template-columns: 1fr; gap: 2rem; padding: 2rem 0; min-height: auto; }
       .hero-left { align-items: center; text-align: center; }
@@ -1041,6 +1125,11 @@
       <button class="sidebar-nav-item" data-tab="tab-faq">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
         <span data-i18n="nav.faq">FAQ / База знаний</span>
+      </button>
+      <button class="sidebar-nav-item" data-tab="tab-market">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span data-i18n="nav.market">Барахолка</span>
+        <span class="sidebar-badge" id="market-badge"></span>
       </button>
       <button class="sidebar-nav-item" data-tab="tab-news">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 20H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v1m2 13a2 2 0 0 1-2-2V7m2 13a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
@@ -1228,6 +1317,96 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ============================== -->
+    <!-- БАРАХОЛКА -->
+    <!-- ============================== -->
+    <div class="tab-content" id="tab-market">
+      <button class="back-to-hub-btn" data-back-to-hub>&larr; <span data-i18n="btn.back">На главную</span></button>
+
+      <!-- Экран 1: не залогинен -->
+      <div id="market-guest" class="glass-box" style="max-width: 520px; margin: 2rem auto; text-align: center; display: none;">
+        <div style="font-size: 3.5rem; line-height: 1; margin-bottom: 1rem;">🛒</div>
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.5rem;">Барахолка Radmir RP</h3>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.6rem;">
+          Войдите через Telegram, чтобы видеть объявления своего сервера и размещать свои.
+        </p>
+        <div id="tg-login-container" style="display: flex; justify-content: center; min-height: 44px;"></div>
+        <p style="color: var(--text-dim); font-size: 0.72rem; margin-top: 1rem;">
+          Мы не получаем доступ к вашим сообщениям — только имя и username.
+        </p>
+      </div>
+
+      <!-- Экран 2: выбор сервера -->
+      <div id="market-select-server" class="glass-box" style="max-width: 520px; margin: 2rem auto; display: none;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem;">Выбор сервера</h3>
+        <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.4rem;">
+          Укажите, на каком сервере Radmir RP вы играете. Вы будете видеть объявления только с этого сервера.
+        </p>
+        <div class="pill-select-wrapper" style="margin-bottom: 1rem;">
+          <select id="market-server-select" class="pill-select"></select>
+        </div>
+        <button class="btn-generate" id="btn-market-save-server" style="width: 100%;">Сохранить сервер</button>
+        <p style="color: var(--text-dim); font-size: 0.72rem; margin-top: 1rem; text-align: center;">
+          Можно менять в любой момент в разделе «Мои объявления».
+        </p>
+      </div>
+
+      <!-- Экран 3: лента объявлений -->
+      <div id="market-feed" style="display: none;">
+        <div class="glass-box" style="margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+            <div>
+              <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem;">Барахолка Radmir RP</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Сервер: <b id="market-current-server" style="color: var(--accent-highlight);">—</b>
+                &nbsp;•&nbsp; Игрок: <b id="market-current-user">—</b>
+              </p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button class="btn-generate" id="btn-open-create" style="padding: 0.6rem 1.2rem; font-size: 0.85rem; width: auto;">+ Разместить</button>
+              <button class="btn-icon-copy" id="btn-open-my" style="width: auto; padding: 0 1rem;">Мои</button>
+              <button class="btn-icon-copy" id="btn-market-admin" style="width: auto; padding: 0 1rem; display: none;">🛡 Модерация</button>
+            </div>
+          </div>
+
+          <!-- Категории -->
+          <div class="market-cats" id="market-cats">
+            <button class="market-cat active" data-cat="">Все</button>
+            <button class="market-cat" data-cat="auto">🚗 Авто</button>
+            <button class="market-cat" data-cat="item">🎒 Предметы</button>
+            <button class="market-cat" data-cat="realty">🏠 Недвижимость</button>
+            <button class="market-cat" data-cat="business">💼 Бизнес</button>
+          </div>
+
+          <!-- Подкатегории авто -->
+          <div class="market-subcats" id="market-subcats" style="display: none;">
+            <span style="font-size: 0.78rem; color: var(--text-dim); margin-right: 0.4rem;">Класс:</span>
+            <button class="market-subcat active" data-sub="">Все</button>
+            <button class="market-subcat" data-sub="low">Низкий</button>
+            <button class="market-subcat" data-sub="med">Средний</button>
+            <button class="market-subcat" data-sub="high">Высокий</button>
+          </div>
+
+          <!-- Поиск и сортировка -->
+          <div style="display: grid; grid-template-columns: 1fr 200px; gap: 0.6rem; margin-top: 1rem;">
+            <div class="pill-input-wrapper">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 0.4rem;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="text" id="market-search" class="custom-fame-input" placeholder="Поиск..." autocomplete="off">
+            </div>
+            <div class="pill-select-wrapper">
+              <select id="market-sort" class="pill-select">
+                <option value="new">Сначала новые</option>
+                <option value="price_asc">Дешевле</option>
+                <option value="price_desc">Дороже</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="market-grid" id="market-grid"></div>
       </div>
     </div>
 
@@ -1506,6 +1685,94 @@
     </div>
   </div>
 
+  <!-- МОДАЛКА: Создать/редактировать объявление -->
+  <div class="app-modal-backdrop" id="market-modal-create">
+    <div class="app-modal-card" style="max-width: 560px;">
+      <button class="btn-close-modal" data-close-modal="market-modal-create">&times;</button>
+      <h3 id="market-create-title" style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.3rem;">Новое объявление</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1.2rem;">Объявление появится после проверки модератором.</p>
+
+      <div style="display: flex; flex-direction: column; gap: 0.7rem;">
+        <div class="pill-select-wrapper">
+          <select id="mc-category" class="pill-select">
+            <option value="auto">🚗 Авто</option>
+            <option value="item">🎒 Предметы</option>
+            <option value="realty">🏠 Недвижимость</option>
+            <option value="business">💼 Бизнес</option>
+          </select>
+        </div>
+
+        <div class="pill-select-wrapper" id="mc-subcat-wrap" style="display: none;">
+          <select id="mc-subcategory" class="pill-select">
+            <option value="low">Низкий класс</option>
+            <option value="med">Средний класс</option>
+            <option value="high">Высокий класс</option>
+          </select>
+        </div>
+
+        <div class="pill-input-wrapper">
+          <input type="text" id="mc-title" class="custom-fame-input" placeholder="Название (например: BMW M5 F90)" maxlength="100">
+        </div>
+
+        <div class="pill-input-wrapper">
+          <input type="number" id="mc-price" class="custom-fame-input" placeholder="Цена в рублях" min="1000" max="500000000">
+        </div>
+
+        <div class="pill-input-wrapper" style="height: auto; padding: 0.7rem 0.85rem;">
+          <textarea id="mc-description" class="custom-fame-input" placeholder="Описание (20–2000 символов): состояние, тюнинг, стейдж, торг..." maxlength="2000" style="resize: vertical; min-height: 90px; font-family: inherit;"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 0.6rem;">
+          <div class="pill-select-wrapper">
+            <select id="mc-contact-type" class="pill-select">
+              <option value="telegram">Telegram</option>
+              <option value="discord">Discord</option>
+              <option value="vk">VK</option>
+            </select>
+          </div>
+          <div class="pill-input-wrapper">
+            <input type="text" id="mc-contact-value" class="custom-fame-input" placeholder="@username или ссылка" maxlength="100">
+          </div>
+        </div>
+
+        <div id="mc-error" style="color: #f87171; font-size: 0.82rem; display: none;"></div>
+
+        <button class="btn-generate" id="btn-mc-submit" style="width: 100%; margin-top: 0.4rem;">Отправить на модерацию</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА: Просмотр объявления -->
+  <div class="app-modal-backdrop" id="market-modal-view">
+    <div class="app-modal-card" style="max-width: 520px;">
+      <button class="btn-close-modal" data-close-modal="market-modal-view">&times;</button>
+      <div id="mv-content"></div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА: Мои объявления -->
+  <div class="app-modal-backdrop" id="market-modal-my">
+    <div class="app-modal-card" style="max-width: 620px;">
+      <button class="btn-close-modal" data-close-modal="market-modal-my">&times;</button>
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.3rem;">Мои объявления</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">
+        Сервер: <b id="my-server-label">—</b>
+        <button class="btn-icon-copy" id="btn-change-server" style="width: auto; padding: 0 0.7rem; height: 26px; font-size: 0.72rem; margin-left: 0.5rem;">Сменить сервер</button>
+      </p>
+      <div id="my-listings-list" style="max-height: 60vh; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem;"></div>
+    </div>
+  </div>
+
+  <!-- МОДАЛКА: Админ-панель -->
+  <div class="app-modal-backdrop" id="market-modal-admin">
+    <div class="app-modal-card" style="max-width: 700px;">
+      <button class="btn-close-modal" data-close-modal="market-modal-admin">&times;</button>
+      <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 0.3rem;">🛡 Модерация</h3>
+      <p style="color: var(--text-muted); font-size: 0.82rem; margin-bottom: 1rem;">Объявления в статусе <b>pending</b>, ожидающие вашего решения.</p>
+      <div id="admin-list" style="max-height: 65vh; overflow-y: auto; display: flex; flex-direction: column; gap: 0.7rem;"></div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"><span style="color: #34d399;">✓</span><span id="toast-msg">Скопировано</span></div>
 
   <footer>
@@ -1516,9 +1783,7 @@
   <script>
     const NEWS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/";
     const SERVERS_API_ENDPOINT = "https://dark-flower-96f7.wamq812.workers.dev/?action=servers";
-
-    /* Интервалы автообновления: 15 минут */
-    const REFRESH_INTERVAL_MS = 15 * 60 * 1000; // 900 000 мс
+    const REFRESH_INTERVAL_MS = 15 * 60 * 1000;
 
     const I18N = {
       ru: {
@@ -1528,6 +1793,7 @@
         'nav.bio': 'RP Биографии', 'nav.random': 'Рандомайзер чисел',
         'nav.wheel': 'Рулетка (Колесо)', 'nav.tour': 'Курс дела (Обучение)',
         'nav.contact': 'Связаться с нами', 'nav.social': 'Наши соц.сети',
+        'nav.market': 'Барахолка',
         'hero.badge': 'ROLEID • RADMIR RP',
         'hero.subtitle': 'Экосистема инструментов, таблиц и аналитики для игроков серверов Radmir RP',
         'hero.cta': 'Перейти к разделам',
@@ -1550,6 +1816,7 @@
         'nav.bio': 'RP Biographies', 'nav.random': 'Number Randomizer',
         'nav.wheel': 'Roulette (Wheel)', 'nav.tour': 'Guide (Tutorial)',
         'nav.contact': 'Contact Us', 'nav.social': 'Our socials',
+        'nav.market': 'Marketplace',
         'hero.badge': 'ROLEID • RADMIR RP',
         'hero.subtitle': 'Ecosystem of tools, tables and analytics for Radmir RP players',
         'hero.cta': 'Go to Sections',
@@ -1644,6 +1911,7 @@
       if (tabId === 'tab-faq') { renderFaqTable(); renderTerms(); renderFactions(); }
       if (tabId === 'tab-news') { loadProjectNews(); markNewsAsSeen(); }
       if (tabId === 'tab-servers') loadServersOnline();
+      if (tabId === 'tab-market') initMarketTab();
       closeSidebar();
     }
     window.switchTab = switchTab;
@@ -1721,7 +1989,7 @@
       grid.innerHTML = html;
     }
 
-    /* СЕРВЕРЫ */
+    /* ==================== СЕРВЕРЫ ==================== */
     const serversGrid = document.getElementById('servers-grid');
     const serversSubtitle = document.getElementById('servers-subtitle');
     let serversTimer = null;
@@ -1790,12 +2058,11 @@
       }).join('');
     }
 
-    // Автообновление серверов каждые 15 минут
     if (!serversTimer) {
       serversTimer = setInterval(loadServersOnline, REFRESH_INTERVAL_MS);
     }
 
-    /* НОВОСТИ + КЭШ + BADGE */
+    /* ==================== НОВОСТИ + КЭШ + BADGE ==================== */
     const newsGrid = document.getElementById('news-grid');
     const newsCacheNote = document.getElementById('news-cache-note');
     const newsBadge = document.getElementById('news-badge');
@@ -1968,17 +2235,16 @@
       }
     });
 
-    // Автообновление новостей каждые 15 минут (в silent-режиме, без скелетонов)
     if (!newsTimer) {
       newsTimer = setInterval(() => loadProjectNews(true), REFRESH_INTERVAL_MS);
     }
 
-    /* ТУР */
+    /* ==================== ТУР ==================== */
     const TOUR_STEPS = [
       { icon: '👋', title: 'Добро пожаловать в ROLEID!', desc: 'Твой карманный помощник для игры на Radmir RP. За минуту покажу всё, что здесь есть.' },
-      { icon: '🎮', title: 'Что такое Radmir RP', desc: 'Огромный ролевой мир на 16+ серверах. Работы, фракции, перекуп авто — ты строишь собственную историю в Нижегородской области.' },
+      { icon: '🎮', title: 'Что такое Radmir RP', desc: 'Огромный ролевой мир на 21 сервере. Работы, фракции, перекуп авто — ты строишь собственную историю в Нижегородской области.' },
       { icon: '💰', title: 'Как заработать первые деньги', desc: 'Новичку проще всего начать с работ: дальнобойщик, шахтёр, таксист. Опытные игроки зарабатывают на перекупе Б/У авто. Актуальные цены — в разделе <b>«Цены»</b>.' },
-      { icon: '🪪', title: 'Правильный ник для сервера', desc: 'Ник в формате Имя_Фамилия, без цифр и мата. В разделе <b>«Ники»</b> генератор создаст одобренный ник под твою фаму. Бонус: нажми <kbd>Пробел</kbd> в разделе.' },
+      { icon: '🛒', title: 'Барахолка ROLEID', desc: 'Продавай и покупай авто, предметы, недвижимость и бизнес прямо на сайте. Вход — через Telegram, объявления видят только игроки твоего сервера.' },
       { icon: '🚀', title: 'Всё нужное — под рукой', desc: 'В <b>FAQ</b> собраны CRMP-термины, карточки фракций и цены. А ещё есть генератор ников, био и рандомайзер — открывай и пользуйся.' }
     ];
 
@@ -2407,6 +2673,484 @@
       }
     });
 
+    // ============================================================
+    // БАРАХОЛКА (Marketplace)
+    // ============================================================
+    const MARKET_API = 'https://roleid-market.wamq812.workers.dev'; // ⚠️ URL твоего воркера
+    const BOT_USERNAME = 'roleid_market_bot';                       // ⚠️ username бота БЕЗ @
+
+    // 21 сервер Radmir RP
+    const RADMIR_SERVERS = [
+      'Radmir RP #1','Radmir RP #2','Radmir RP #3','Radmir RP #4','Radmir RP #5',
+      'Radmir RP #6','Radmir RP #7','Radmir RP #8','Radmir RP #9','Radmir RP #10',
+      'Radmir RP #11','Radmir RP #12','Radmir RP #13','Radmir RP #14','Radmir RP #15',
+      'Radmir RP #16','Radmir RP #17','Radmir RP #18','Radmir RP #19','Radmir RP #20',
+      'Radmir RP #21'
+    ];
+
+    const CATEGORY_LABELS = { auto: '🚗 Авто', item: '🎒 Предметы', realty: '🏠 Недвижимость', business: '💼 Бизнес' };
+    const STATUS_LABELS = { pending: 'На модерации', active: 'Активно', rejected: 'Отклонено', sold: 'Продано', expired: 'Истекло' };
+
+    let marketUser = null;
+    let marketIsAdmin = false;
+    let marketToken = localStorage.getItem('roleid_market_token') || '';
+    let marketFilters = { category: '', subcategory: '', q: '', sort: 'new' };
+    let editingListingId = null;
+
+    async function marketAPI(action, params = {}, opts = {}) {
+      const url = new URL(MARKET_API);
+      url.searchParams.set('action', action);
+      for (const k in params) if (params[k] != null && params[k] !== '') url.searchParams.set(k, params[k]);
+      const headers = { 'Content-Type': 'application/json' };
+      if (marketToken) headers['Authorization'] = 'Bearer ' + marketToken;
+      const res = await fetch(url.toString(), {
+        method: opts.method || 'GET',
+        headers,
+        body: opts.body ? JSON.stringify(opts.body) : undefined
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      return data;
+    }
+
+    window.onTelegramAuth = async (user) => {
+      try {
+        const data = await marketAPI('auth', {}, { method: 'POST', body: user });
+        marketToken = data.token;
+        marketUser = data.user;
+        marketIsAdmin = data.isAdmin;
+        localStorage.setItem('roleid_market_token', marketToken);
+        localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
+        localStorage.setItem('roleid_market_is_admin', marketIsAdmin ? '1' : '0');
+        renderMarketTab();
+        showToast('Добро пожаловать, ' + (user.first_name || 'игрок') + '!');
+      } catch (e) {
+        showToast('Ошибка входа: ' + e.message);
+      }
+    };
+
+    function renderTgWidget() {
+      const c = document.getElementById('tg-login-container');
+      if (!c || c.dataset.rendered) return;
+      c.dataset.rendered = '1';
+      c.innerHTML = '';
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://telegram.org/js/telegram-widget.js?22';
+      s.setAttribute('data-telegram-login', BOT_USERNAME);
+      s.setAttribute('data-size', 'large');
+      s.setAttribute('data-radius', '12');
+      s.setAttribute('data-onauth', 'onTelegramAuth(user)');
+      s.setAttribute('data-request-access', 'write');
+      c.appendChild(s);
+    }
+
+    function initMarketTab() { renderMarketTab(); }
+
+    async function renderMarketTab() {
+      const guestEl  = document.getElementById('market-guest');
+      const serverEl = document.getElementById('market-select-server');
+      const feedEl   = document.getElementById('market-feed');
+      if (!guestEl) return;
+
+      if (!marketToken) {
+        guestEl.style.display = 'block';
+        serverEl.style.display = 'none';
+        feedEl.style.display = 'none';
+        renderTgWidget();
+        return;
+      }
+
+      try {
+        const me = await marketAPI('me');
+        marketUser = me.user;
+        marketIsAdmin = me.isAdmin;
+        localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
+        localStorage.setItem('roleid_market_is_admin', marketIsAdmin ? '1' : '0');
+      } catch (e) {
+        marketToken = '';
+        localStorage.removeItem('roleid_market_token');
+        localStorage.removeItem('roleid_market_user');
+        guestEl.style.display = 'block';
+        serverEl.style.display = 'none';
+        feedEl.style.display = 'none';
+        renderTgWidget();
+        return;
+      }
+
+      if (!marketUser.server) {
+        guestEl.style.display = 'none';
+        serverEl.style.display = 'block';
+        feedEl.style.display = 'none';
+        fillServerSelect();
+        return;
+      }
+
+      guestEl.style.display = 'none';
+      serverEl.style.display = 'none';
+      feedEl.style.display = 'block';
+
+      document.getElementById('market-current-server').innerText = marketUser.server;
+      document.getElementById('market-current-user').innerText = (marketUser.first_name || marketUser.username || 'игрок');
+      document.getElementById('btn-market-admin').style.display = marketIsAdmin ? 'inline-flex' : 'none';
+
+      loadMarketListings();
+    }
+
+    function fillServerSelect() {
+      const sel = document.getElementById('market-server-select');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">— выберите сервер —</option>' +
+        RADMIR_SERVERS.map(s => `<option value="${s}">${s}</option>`).join('');
+      if (marketUser?.server) sel.value = marketUser.server;
+    }
+
+    async function loadMarketListings() {
+      const grid = document.getElementById('market-grid');
+      if (!grid) return;
+      grid.innerHTML = '<div class="market-empty">Загрузка...</div>';
+      try {
+        const data = await marketAPI('list', marketFilters);
+        const list = data.listings || [];
+        if (!list.length) {
+          grid.innerHTML = '<div class="market-empty">Пока нет объявлений. Будьте первым! 🎉</div>';
+          return;
+        }
+        grid.innerHTML = list.map(renderMarketCard).join('');
+      } catch (e) {
+        grid.innerHTML = `<div class="market-empty">Ошибка: ${escapeHtml(e.message)}</div>`;
+      }
+    }
+
+    function renderMarketCard(l) {
+      const cat = CATEGORY_LABELS[l.category] || l.category;
+      const ago = timeAgo(l.created_at);
+      const seller = l.seller_first_name || l.seller_username || 'игрок';
+      return `
+        <div class="market-card" data-listing-id="${l.id}">
+          <div class="market-card-top">
+            <div class="market-card-title">${escapeHtml(l.title)}</div>
+            <div class="market-cat-badge">${cat}</div>
+          </div>
+          <div class="market-card-price">${formatPrice(l.price)}</div>
+          <div class="market-card-desc">${escapeHtml(l.description)}</div>
+          <div class="market-card-bottom">
+            <span>👤 ${escapeHtml(seller)}</span>
+            <span>${ago}</span>
+          </div>
+        </div>`;
+    }
+
+    function formatPrice(n) { return Number(n).toLocaleString('ru-RU') + ' ₽'; }
+    function timeAgo(ts) {
+      const diff = Math.floor(Date.now() / 1000) - ts;
+      if (diff < 60) return 'только что';
+      if (diff < 3600) return Math.floor(diff / 60) + ' мин назад';
+      if (diff < 86400) return Math.floor(diff / 3600) + ' ч назад';
+      return Math.floor(diff / 86400) + ' дн назад';
+    }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    document.getElementById('market-grid')?.addEventListener('click', async (e) => {
+      const card = e.target.closest('[data-listing-id]');
+      if (!card) return;
+      try {
+        const data = await marketAPI('get', { id: card.dataset.listingId });
+        openListingView(data.listing);
+      } catch (err) { showToast(err.message); }
+    });
+
+    function openListingView(l) {
+      const cat = CATEGORY_LABELS[l.category] || l.category;
+      const contact = l.contact_type === 'telegram'
+        ? `https://t.me/${l.contact_value.replace('@','')}`
+        : l.contact_value;
+      const seller = l.seller_first_name || l.seller_username || 'игрок';
+      document.getElementById('mv-content').innerHTML = `
+        <div class="market-view-title">${escapeHtml(l.title)}</div>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem;">
+          <span class="market-cat-badge">${cat}</span>
+          <span class="market-cat-badge" style="background: rgba(56,189,248,0.1); color: #38bdf8; border-color: rgba(56,189,248,0.25);">${escapeHtml(l.server)}</span>
+        </div>
+        <div class="market-view-price">${formatPrice(l.price)}</div>
+        <div class="market-view-desc">${escapeHtml(l.description)}</div>
+        <div class="market-view-meta">
+          <span>👤 ${escapeHtml(seller)}</span>
+          <span>👁 ${l.views || 0}</span>
+          <span>🕐 ${timeAgo(l.created_at)}</span>
+        </div>
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 0.5rem;">
+          <a href="${escapeHtml(contact)}" target="_blank" rel="noopener" class="btn-generate" style="text-decoration: none; justify-content: center; height: 42px; font-size: 0.88rem;">
+            💬 Связаться с продавцом
+          </a>
+          <button class="market-mini-btn danger" id="btn-report" data-id="${l.id}" style="height: 42px;">🚩 Жалоба</button>
+        </div>
+      `;
+      document.getElementById('market-modal-view').classList.add('open');
+      document.getElementById('btn-report')?.addEventListener('click', async () => {
+        if (!confirm('Отправить жалобу на это объявление?')) return;
+        try {
+          await marketAPI('report', {}, { method: 'POST', body: { id: l.id } });
+          showToast('Жалоба отправлена');
+          document.getElementById('market-modal-view').classList.remove('open');
+        } catch (err) { showToast(err.message); }
+      });
+    }
+
+    document.getElementById('btn-open-create')?.addEventListener('click', () => {
+      editingListingId = null;
+      document.getElementById('market-create-title').innerText = 'Новое объявление';
+      document.getElementById('btn-mc-submit').innerText = 'Отправить на модерацию';
+      ['mc-title','mc-price','mc-description','mc-contact-value'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('mc-category').value = 'auto';
+      document.getElementById('mc-contact-type').value = 'telegram';
+      document.getElementById('mc-error').style.display = 'none';
+      updateSubcatVisibility();
+      document.getElementById('market-modal-create').classList.add('open');
+    });
+
+    function updateSubcatVisibility() {
+      const cat = document.getElementById('mc-category').value;
+      document.getElementById('mc-subcat-wrap').style.display = cat === 'auto' ? 'flex' : 'none';
+    }
+    document.getElementById('mc-category')?.addEventListener('change', updateSubcatVisibility);
+
+    document.getElementById('btn-mc-submit')?.addEventListener('click', async () => {
+      const payload = {
+        title: document.getElementById('mc-title').value.trim(),
+        category: document.getElementById('mc-category').value,
+        subcategory: document.getElementById('mc-category').value === 'auto' ? document.getElementById('mc-subcategory').value : null,
+        price: parseInt(document.getElementById('mc-price').value, 10),
+        description: document.getElementById('mc-description').value.trim(),
+        contact_type: document.getElementById('mc-contact-type').value,
+        contact_value: document.getElementById('mc-contact-value').value.trim()
+      };
+      const err = document.getElementById('mc-error');
+      err.style.display = 'none';
+      try {
+        if (editingListingId) {
+          await marketAPI('update', {}, { method: 'POST', body: { ...payload, id: editingListingId } });
+          showToast('Объявление обновлено и отправлено на модерацию');
+        } else {
+          await marketAPI('create', {}, { method: 'POST', body: payload });
+          showToast('Объявление отправлено на модерацию');
+        }
+        document.getElementById('market-modal-create').classList.remove('open');
+        loadMarketListings();
+      } catch (e) {
+        err.innerText = e.message;
+        err.style.display = 'block';
+      }
+    });
+
+    document.getElementById('btn-open-my')?.addEventListener('click', async () => {
+      document.getElementById('my-server-label').innerText = marketUser?.server || '—';
+      const list = document.getElementById('my-listings-list');
+      list.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 1rem;">Загрузка...</div>';
+      document.getElementById('market-modal-my').classList.add('open');
+      try {
+        const data = await marketAPI('my');
+        const arr = data.listings || [];
+        if (!arr.length) {
+          list.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 1.5rem;">У вас пока нет объявлений.</div>';
+          return;
+        }
+        list.innerHTML = arr.map(renderMyListing).join('');
+      } catch (e) {
+        list.innerHTML = `<div style="color: #f87171; padding: 1rem;">Ошибка: ${escapeHtml(e.message)}</div>`;
+      }
+    });
+
+    function renderMyListing(l) {
+      const status = STATUS_LABELS[l.status] || l.status;
+      const rejectNote = l.reject_reason ? `<div style="color: #f87171; font-size: 0.76rem;">Причина: ${escapeHtml(l.reject_reason)}</div>` : '';
+      const actions = [];
+      if (l.status === 'active') {
+        actions.push(`<button class="market-mini-btn success" data-my-action="sold" data-my-id="${l.id}">✓ Продано</button>`);
+        actions.push(`<button class="market-mini-btn" data-my-action="edit" data-my-id="${l.id}">✎ Изменить</button>`);
+      }
+      if (l.status === 'rejected' || l.status === 'expired') {
+        actions.push(`<button class="market-mini-btn" data-my-action="edit" data-my-id="${l.id}">✎ Изменить и переотправить</button>`);
+      }
+      actions.push(`<button class="market-mini-btn danger" data-my-action="delete" data-my-id="${l.id}">🗑 Удалить</button>`);
+
+      return `
+        <div class="market-mylist-item">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div style="font-weight: 800; color: #fff; font-size: 0.95rem;">${escapeHtml(l.title)}</div>
+            <span class="market-status-badge ${l.status}">${status}</span>
+          </div>
+          <div style="color: var(--accent-highlight); font-weight: 800; font-family: ui-monospace, monospace; font-size: 1.05rem;">${formatPrice(l.price)}</div>
+          ${rejectNote}
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">${actions.join('')}</div>
+        </div>`;
+    }
+
+    document.getElementById('my-listings-list')?.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-my-action]');
+      if (!btn) return;
+      const id = btn.dataset.myId;
+      const action = btn.dataset.myAction;
+      try {
+        if (action === 'sold') {
+          if (!confirm('Отметить как продано?')) return;
+          await marketAPI('sold', {}, { method: 'POST', body: { id } });
+          showToast('Отмечено как продано');
+          document.getElementById('btn-open-my').click();
+        } else if (action === 'delete') {
+          if (!confirm('Удалить объявление навсегда?')) return;
+          await marketAPI('delete', {}, { method: 'POST', body: { id } });
+          showToast('Удалено');
+          document.getElementById('btn-open-my').click();
+          loadMarketListings();
+        } else if (action === 'edit') {
+          const data = await marketAPI('get', { id });
+          const l = data.listing;
+          editingListingId = l.id;
+          document.getElementById('market-create-title').innerText = 'Редактирование';
+          document.getElementById('btn-mc-submit').innerText = 'Сохранить и отправить на модерацию';
+          document.getElementById('mc-category').value = l.category;
+          document.getElementById('mc-subcategory').value = l.subcategory || 'low';
+          document.getElementById('mc-title').value = l.title;
+          document.getElementById('mc-price').value = l.price;
+          document.getElementById('mc-description').value = l.description;
+          document.getElementById('mc-contact-type').value = l.contact_type;
+          document.getElementById('mc-contact-value').value = l.contact_value;
+          updateSubcatVisibility();
+          document.getElementById('market-modal-my').classList.remove('open');
+          document.getElementById('market-modal-create').classList.add('open');
+        }
+      } catch (err) { showToast(err.message); }
+    });
+
+    document.getElementById('btn-change-server')?.addEventListener('click', () => {
+      document.getElementById('market-modal-my').classList.remove('open');
+      marketUser.server = null;
+      document.getElementById('market-select-server').style.display = 'block';
+      document.getElementById('market-feed').style.display = 'none';
+      document.getElementById('market-guest').style.display = 'none';
+      fillServerSelect();
+    });
+
+    document.getElementById('btn-market-save-server')?.addEventListener('click', async () => {
+      const server = document.getElementById('market-server-select').value;
+      if (!server) { showToast('Выберите сервер'); return; }
+      try {
+        await marketAPI('set-server', {}, { method: 'POST', body: { server } });
+        marketUser.server = server;
+        localStorage.setItem('roleid_market_user', JSON.stringify(marketUser));
+        showToast('Сервер сохранён: ' + server);
+        renderMarketTab();
+      } catch (e) { showToast(e.message); }
+    });
+
+    document.getElementById('market-cats')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.market-cat');
+      if (!btn) return;
+      document.querySelectorAll('.market-cat').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      marketFilters.category = btn.dataset.cat;
+      document.getElementById('market-subcats').style.display = btn.dataset.cat === 'auto' ? 'flex' : 'none';
+      if (btn.dataset.cat !== 'auto') marketFilters.subcategory = '';
+      loadMarketListings();
+    });
+
+    document.getElementById('market-subcats')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('.market-subcat');
+      if (!btn) return;
+      document.querySelectorAll('.market-subcat').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      marketFilters.subcategory = btn.dataset.sub;
+      loadMarketListings();
+    });
+
+    let searchTimer = null;
+    document.getElementById('market-search')?.addEventListener('input', (e) => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => { marketFilters.q = e.target.value.trim(); loadMarketListings(); }, 350);
+    });
+
+    document.getElementById('market-sort')?.addEventListener('change', (e) => {
+      marketFilters.sort = e.target.value;
+      loadMarketListings();
+    });
+
+    document.getElementById('btn-market-admin')?.addEventListener('click', async () => {
+      document.getElementById('market-modal-admin').classList.add('open');
+      const list = document.getElementById('admin-list');
+      list.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 1rem;">Загрузка...</div>';
+      try {
+        const data = await marketAPI('admin-pending');
+        const arr = data.listings || [];
+        if (!arr.length) {
+          list.innerHTML = '<div style="color: var(--text-dim); text-align: center; padding: 1.5rem;">Нет объявлений на модерации ✨</div>';
+          return;
+        }
+        list.innerHTML = arr.map(renderAdminItem).join('');
+      } catch (e) {
+        list.innerHTML = `<div style="color: #f87171; padding: 1rem;">Ошибка: ${escapeHtml(e.message)}</div>`;
+      }
+    });
+
+    function renderAdminItem(l) {
+      const cat = CATEGORY_LABELS[l.category] || l.category;
+      const seller = l.seller_first_name || l.seller_username || 'игрок';
+      return `
+        <div class="market-mylist-item">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem;">
+            <div style="font-weight: 800; color: #fff; font-size: 1rem;">${escapeHtml(l.title)}</div>
+            <span class="market-cat-badge">${cat}</span>
+          </div>
+          <div style="color: var(--accent-highlight); font-weight: 800; font-family: ui-monospace, monospace;">${formatPrice(l.price)}</div>
+          <div style="color: var(--text-muted); font-size: 0.82rem; white-space: pre-line; max-height: 100px; overflow-y: auto; background: #0f1118; padding: 0.6rem; border-radius: 8px;">${escapeHtml(l.description)}</div>
+          <div style="font-size: 0.76rem; color: var(--text-dim);">👤 ${escapeHtml(seller)} • 📞 ${escapeHtml(l.contact_type)}: ${escapeHtml(l.contact_value)}</div>
+          <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+            <button class="market-mini-btn success" data-admin-action="approve" data-admin-id="${l.id}">✓ Одобрить</button>
+            <button class="market-mini-btn danger" data-admin-action="reject" data-admin-id="${l.id}">✕ Отклонить</button>
+            <button class="market-mini-btn danger" data-admin-action="banuser" data-admin-id="${l.id}">🚫 Забанить юзера</button>
+          </div>
+        </div>`;
+    }
+
+    document.getElementById('admin-list')?.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-admin-action]');
+      if (!btn) return;
+      const id = btn.dataset.adminId;
+      const decision = btn.dataset.adminAction;
+      let reason = '';
+      if (decision === 'reject') {
+        reason = prompt('Причина отклонения (увидит продавец):', 'Нарушение правил') || 'Нарушение правил';
+      }
+      if (decision === 'banuser' && !confirm('Забанить пользователя? Все его объявления будут удалены.')) return;
+      try {
+        await marketAPI('admin-moderate', {}, { method: 'POST', body: { id, decision, reason } });
+        showToast('Готово');
+        document.getElementById('btn-market-admin').click();
+      } catch (err) { showToast(err.message); }
+    });
+
+    document.querySelectorAll('[data-close-modal]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(btn.dataset.closeModal).classList.remove('open');
+      });
+    });
+    document.querySelectorAll('.app-modal-backdrop').forEach(bd => {
+      bd.addEventListener('click', (e) => {
+        if (e.target === bd) bd.classList.remove('open');
+      });
+    });
+
+    try {
+      const saved = localStorage.getItem('roleid_market_user');
+      if (saved) marketUser = JSON.parse(saved);
+      marketIsAdmin = localStorage.getItem('roleid_market_is_admin') === '1';
+    } catch (e) {}
+
+    // ============================================================
+    // ИНИЦИАЛИЗАЦИЯ
+    // ============================================================
     applyLang(currentLang);
     renderHistory();
     renderFaqTable();
